@@ -40,7 +40,7 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 .sum-card.v4 .value{color:var(--green);}
 /* STORE TAB */
 .main{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 270px);}
-.side-list{background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;max-height:calc(100vh - 270px);}
+.side-list{background:var(--surface);border-right:1px solid var(--border);overflow-y:visible;}
 .side-search{padding:11px 13px;border-bottom:1px solid var(--border);}
 .side-search input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:7px;padding:6px 10px;color:var(--text);font-size:12px;font-family:inherit;outline:none;}
 .side-search input:focus{border-color:var(--accent);}
@@ -51,7 +51,7 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 .side-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .side-name{font-size:12px;flex:1;line-height:1.3;}
 .side-badge{font-size:10px;color:var(--accent2);white-space:nowrap;}
-.content{padding:18px 22px;overflow-y:auto;max-height:calc(100vh - 270px);}
+.content{padding:18px 22px;overflow-y:visible;}
 .content-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
 .page-title{font-size:17px;font-weight:700;}
 .page-meta{font-size:11px;color:var(--muted);margin-top:2px;}
@@ -88,7 +88,7 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 .bar-fill{height:5px;border-radius:3px;background:linear-gradient(90deg,#d4567a,#e8729a);}
 .disc-tag{font-size:9px;background:rgba(217,79,106,.1);color:var(--warn);border-radius:3px;padding:1px 4px;margin-left:3px;}
 /* BRAND TAB */
-#brandTab{padding:18px 32px;overflow-y:auto;max-height:calc(100vh - 270px);}
+#brandTab{padding:18px 32px;overflow-y:visible;}
 .brand-selector{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
 .brand-btn{display:flex;align-items:center;gap:8px;background:var(--card);border:2px solid var(--border);border-radius:10px;padding:10px 18px;cursor:pointer;font-family:inherit;font-size:13px;color:var(--text);transition:all .2s;}
 .brand-btn:hover{border-color:var(--accent);}
@@ -287,7 +287,7 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
   <div style="padding:16px 32px 0">
     <div class="brand-selector" id="brandSelector"></div>
   </div>
-  <div id="brandContent" style="padding:0 32px 24px;overflow-y:auto;max-height:calc(100vh - 360px);">
+  <div id="brandContent" style="padding:0 32px 24px;overflow-y:visible;">
     <div class="empty"><div class="e-icon">👆</div><p>选择上方品牌查看 Top 30 单品<br>及各店铺销售与库存明细</p></div>
   </div>
 </div>
@@ -1118,7 +1118,7 @@ document.getElementById('storeItems').innerHTML='<div style="padding:20px 14px;f
 </script>
 
 <!-- RANKING TAB -->
-<div id="rankingTab" style="display:none;padding:18px 32px;overflow-y:auto;max-height:calc(100vh - 270px);">
+<div id="rankingTab" style="display:none;padding:18px 32px;overflow-y:visible;">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
     <div>
       <div style="font-size:17px;font-weight:700;">📊 门店排名</div>
@@ -1135,7 +1135,7 @@ document.getElementById('storeItems').innerHTML='<div style="padding:20px 14px;f
 </div>
 
 <!-- HOT TAB -->
-<div id="hotTab" style="display:none;padding:18px 32px;overflow-y:auto;max-height:calc(100vh - 270px);">
+<div id="hotTab" style="display:none;padding:18px 32px;overflow-y:visible;">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
     <div>
       <div style="font-size:17px;font-weight:700;">🏆 全网爆款</div>
