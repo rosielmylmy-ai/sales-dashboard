@@ -7,15 +7,15 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="烨权">
-<meta name="theme-color" content="#2d1554">
+<meta name="theme-color" content="#c9a020">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>销售追踪看板</title>
 <style>
-:root{--bg:#f3f0fd;--surface:#f8f5ff;--card:#ffffff;--border:#d8d0f0;--accent:#7c5cbf;--accent2:#9b7de0;--warn:#d94f6a;--gold:#c47d20;--text:#1a1a2d;--muted:#9080b0;--green:#3db88a;}
+:root{--bg:#faf8f0;--surface:#fdf9f0;--card:#ffffff;--border:#e8dfc8;--accent:#c9a020;--accent2:#d4b040;--warn:#d94f6a;--gold:#c47d20;--text:#1a1a2d;--muted:#9080b0;--green:#3db88a;--purple:#7c5cbf;--purple2:#9b7de0;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;}
-.header{background:linear-gradient(135deg,#f0eeff,#e8e0ff);border-bottom:1px solid #d0c8f0;padding:16px 32px;display:flex;box-shadow:0 1px 4px rgba(0,0,0,.06);align-items:center;justify-content:space-between;}
-.header h1{font-size:20px;font-weight:700;background:linear-gradient(90deg,#7c5cbf,#9b7de0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.header{background:linear-gradient(135deg,#fdf5e0,#f8ecc8);border-bottom:1px solid #e0d4a8;padding:16px 32px;display:flex;box-shadow:0 1px 4px rgba(0,0,0,.06);align-items:center;justify-content:space-between;}
+.header h1{font-size:20px;font-weight:700;background:linear-gradient(90deg,#c9a020,#d4b040);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .header .subtitle{font-size:11px;color:var(--muted);margin-top:3px;}
 .period-badge{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:5px 12px;font-size:12px;color:var(--accent2);}
 .upload-zone{margin:14px 32px;background:var(--card);border:2px dashed #c8b8f0;border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color .2s;}
@@ -129,9 +129,9 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 20px;color:var(--muted);text-align:center;}
 .empty .e-icon{font-size:44px;margin-bottom:12px;}
 .empty p{font-size:13px;line-height:1.6;}
- 
- 
- 
+
+
+
 .date-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 .date-bar label{font-size:12px;color:var(--muted);}
 .date-input{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:5px 10px;color:var(--text);font-size:12px;font-family:inherit;outline:none;cursor:pointer;}
@@ -141,13 +141,13 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 .date-reset{background:var(--card);color:var(--muted);border:1px solid var(--border);border-radius:7px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;}
 .date-reset:hover{color:var(--text);}
 .date-range-label{font-size:11px;color:var(--accent2);background:rgba(78,205,196,.1);border-radius:6px;padding:3px 10px;}
- 
- 
+
+
 .export-btn{background:#fff;color:var(--accent);border:1.5px solid var(--accent);border-radius:7px;padding:5px 13px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:5px;}
 .export-btn:hover{background:var(--accent);color:#fff;}
- 
- 
- 
+
+
+
 /* Bar chart */
 .bar-chart{display:flex;flex-direction:column;gap:7px;}
 .bc-row{display:flex;align-items:center;gap:8px;}
@@ -178,29 +178,29 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 .restock-soon{background:rgba(240,165,0,.15);color:#c07000;}
 .restock-ok{background:rgba(6,210,160,.15);color:#059970;}
 @media(max-width:900px){.g-grid-2{grid-template-columns:1fr;}}
- 
- 
+
+
 /* RANKING */
 .rank-bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;transition:all .15s;cursor:pointer;}
 .rank-bar-row:hover{box-shadow:0 2px 8px rgba(124,92,191,.1);}
 .rank-num{width:28px;font-size:12px;font-weight:700;color:var(--muted);text-align:right;flex-shrink:0;}
 .rank-store-name{width:160px;font-size:12px;flex-shrink:0;font-weight:500;}
 .rank-bar-wrap{flex:1;background:var(--border);border-radius:4px;height:18px;position:relative;}
-.rank-bar-fill{height:18px;border-radius:4px;background:linear-gradient(90deg,var(--accent),#9b7de0);display:flex;align-items:center;padding-left:8px;min-width:2px;}
+.rank-bar-fill{height:18px;border-radius:4px;background:linear-gradient(90deg,var(--accent),#d4b040);display:flex;align-items:center;padding-left:8px;min-width:2px;}
 .rank-bar-label{font-size:10px;color:#fff;font-weight:600;white-space:nowrap;}
 .rank-meta{width:90px;text-align:right;font-size:11px;color:var(--muted);flex-shrink:0;}
 .inv-health-ok{color:var(--green);}
 .inv-health-warn{color:var(--gold);}
 .inv-health-bad{color:var(--warn);}
 /* HOT */
- 
+
 .hot-row{background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;}
 .hot-row-header{padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .15s;}
 .hot-row-header:hover{background:rgba(124,92,191,.05);}
 .hot-row-header.open{background:rgba(124,92,191,.07);border-bottom:1px solid var(--border);}
 .hot-row-detail{display:none;padding:10px 14px 12px;}
 .hot-row-detail.open{display:block;}
- 
+
 .hot-days-ok{background:rgba(6,214,160,.12);color:var(--green);border-radius:5px;padding:2px 8px;font-size:11px;font-weight:700;}
 .hot-days-warn{background:rgba(196,125,32,.12);color:var(--gold);border-radius:5px;padding:2px 8px;font-size:11px;font-weight:700;}
 .hot-days-urgent{background:rgba(224,80,80,.12);color:var(--warn);border-radius:5px;padding:2px 8px;font-size:11px;font-weight:700;}
@@ -208,13 +208,13 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 /* STALE badge */
 .stale-badge{display:inline-block;background:rgba(155,125,224,.12);color:var(--accent);border:1px solid rgba(124,92,191,.2);border-radius:4px;padding:1px 6px;font-size:10px;margin-left:6px;cursor:pointer;}
 .stale-badge:hover{background:rgba(124,92,191,.2);}
- 
- 
+
+
 .chart-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:18px;}
 .chart-title{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 .chart-title::after{content:"";flex:1;height:1px;background:var(--border);}
 .chart-wrap{position:relative;height:220px;}
- 
+
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:#c8b8f0;border-radius:3px;}
@@ -225,41 +225,41 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
   .brand-selector{gap:8px;}
   .bi-totals{gap:8px;}
 }
- 
- 
- 
+
+
+
 </style>
 </head>
- 
+
 </head>
 <body>
- 
- 
+
+
 <div class="header">
   <div><h1>🏪 销售追踪看板</h1><div class="subtitle">店铺销售 · 品牌钻取分析 · 库存状态</div></div>
-  <div class="period-badge" id="periodBadge">3月1日 – 18日</div>
+  <div class="period-badge" id="periodBadge">未上传数据</div>
 </div>
 <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
   <input type="file" id="fileInput" accept=".xlsx,.xls" onchange="handleFile(event)">
   <div class="upload-icon">📂</div>
   <div class="upload-text">
     <strong>上传新数据</strong>
-    <span>支持 .xlsx，需包含「销售明细」和「库存」工作表</span>
-    <div class="upload-status" id="uploadStatus">当前：3月1日–18日销售明细（已加载）</div>
+    <span>支持 .xlsx，创美系统 + 拉夏系统均可，需包含「销售」和「库存」工作表</span>
+    <div class="upload-status" id="uploadStatus">请上传Excel数据文件</div>
   </div>
   <button class="upload-btn" onclick="event.stopPropagation();document.getElementById('fileInput').click()">选择文件</button>
 </div>
- 
+
 <div class="date-bar" id="dateBar">
   <label>📅 日期范围：</label>
-  <input type="date" id="dateFrom" class="date-input" value="2026-03-01">
+  <input type="date" id="dateFrom" class="date-input" value="">
   <span style="color:var(--muted);font-size:12px">至</span>
-  <input type="date" id="dateTo" class="date-input" value="2026-03-18">
+  <input type="date" id="dateTo" class="date-input" value="">
   <button class="date-apply" onclick="applyDateFilter()">筛选</button>
   <button class="date-reset" onclick="resetDateFilter()">重置</button>
-  <span class="date-range-label" id="dateRangeLabel">3月1日 – 18日 · 全部数据</span>
+  <span class="date-range-label" id="dateRangeLabel">请上传数据</span>
 </div>
- 
+
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('store')">🏬 店铺追踪</button>
   <button class="tab-btn" onclick="switchTab('brand')">🏷️ 品牌分析</button>
@@ -291,35 +291,35 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
     <div class="empty"><div class="e-icon">👆</div><p>选择上方品牌查看 Top 30 单品<br>及各店铺销售与库存明细</p></div>
   </div>
 </div>
- 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
- 
- 
- 
- 
+
+
+
+
 // ── DATA ──────────────────────────────────────────────────────────────────────
 let RAW_SALES = [];
 let RAW_INV = [];
 const INIT_STORE = {"storeData":{},"storeInv":{},"storeSales":{}};
 const INIT_BRAND = {};
- 
+
 let DATA         = INIT_STORE;
 let BDATA        = INIT_BRAND;
-let dateFrom     = 20260301;
-let dateTo       = 20260318;
+let dateFrom     = 0;
+let dateTo       = 99999999;
 let currentStore = null;
 let currentBrand = null;
 let sortMode     = 'amount';
 let brandSortMode= 'amount';
 let activeTab    = 'store';
 let openItems    = new Set();
- 
+
 const BRAND_PALETTE = ["#c75b7a","#6c63ff","#ffd166","#4ecdc4","#06d6a0","#ff6b6b","#e07b9a","#2bb5ad"];
 const BRAND_DOT = {};
 const STORE_DOT  = {"创美":"#6c63ff","江苏":"#4ecdc4","秦西厢":"#ffd166","美丽":"#ff6b6b","上海":"#4ecdc4"};
- 
+
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 function fmt(n,d=0){if(n===undefined||n===null)return"—";if(Math.abs(n)>=10000)return(n/10000).toFixed(1)+"万";return Number(n).toLocaleString("zh-CN",{minimumFractionDigits:d,maximumFractionDigits:d});}
 function storeDot(n){for(const[k,c]of Object.entries(STORE_DOT))if(n.startsWith(k))return c;return"#7b82a0";}
@@ -327,7 +327,7 @@ function disc(r,a){if(!r||r<=0)return null;const d=Math.round((a/r)*10)/10;if(d>
 function invCls(q){return q<0?"inv-neg":q===0?"inv-out":q<=2?"inv-low":"inv-ok";}
 function invLbl(q){return q<0?"负库存":q===0?"售罄":q<=2?"低库存":"正常";}
 function fmtDate(s){const c=s.replace(/-/g,'');return parseInt(c.substring(4,6))+"月"+parseInt(c.substring(6,8))+"日";}
- 
+
 function colorTags(sc,ic){
   const all=new Set([...Object.keys(sc||{}), ...Object.keys(ic||{})]);
   if(!all.size)return'';
@@ -342,7 +342,7 @@ function colorTags(sc,ic){
   }
   return`<div style="margin-top:4px;line-height:1.8">${t}</div>`;
 }
- 
+
 // ── SUMMARY ───────────────────────────────────────────────────────────────────
 function initSummary(){
   const filtered=RAW_SALES.filter(r=>r['日期']>=dateFrom&&r['日期']<=dateTo);
@@ -355,7 +355,7 @@ function initSummary(){
   document.getElementById("sc3").textContent="¥"+fmt(totalActual);
   document.getElementById("sc4").textContent="¥"+fmt(totalInv);
 }
- 
+
 // ── DATE FILTER ───────────────────────────────────────────────────────────────
 function applyDateFilter(){
   const f=document.getElementById('dateFrom').value.replace(/-/g,'');
@@ -366,7 +366,7 @@ function applyDateFilter(){
   document.getElementById('periodBadge').textContent=fmtDate(f)+' – '+fmtDate(t);
   rebuildFromRaw();
 }
- 
+
 function resetDateFilter(){
   const dates=RAW_SALES.map(r=>r['日期']).filter(Boolean);
   if(dates.length){
@@ -375,15 +375,15 @@ function resetDateFilter(){
     document.getElementById('dateFrom').value=toStr(dateFrom);
     document.getElementById('dateTo').value=toStr(dateTo);
   } else {
-    dateFrom=20260301; dateTo=20260318;
-    document.getElementById('dateFrom').value='2026-03-01';
-    document.getElementById('dateTo').value='2026-03-18';
+    dateFrom=0; dateTo=99999999;
+    document.getElementById('dateFrom').value='';
+    document.getElementById('dateTo').value='';
   }
   document.getElementById('dateRangeLabel').textContent='全部数据';
-  document.getElementById('periodBadge').textContent='3月1日 – 18日';
+  document.getElementById('periodBadge').textContent='全部数据';
   rebuildFromRaw();
 }
- 
+
 function rebuildFromRaw(){
   const filtered=RAW_SALES.filter(r=>r['日期']>=dateFrom&&r['日期']<=dateTo);
   // Store sales map
@@ -407,7 +407,7 @@ function rebuildFromRaw(){
     storeData[st]=its.slice(0,10).map((it,i)=>({rank:i+1,款号:it.sku,品名:it.name,销售数量:it.qty,零售金额:Math.round(it.ret*10)/10,成交金额:Math.round(it.act*10)/10,库存数量:0,库存金额:0,销售颜色:it.colors,库存颜色:{}}));
   }
   // Inventory map
-  const invMap={}, stInv={};
+  const invMap={}, stInv={}, invByStoreSku={};
   for(const r of RAW_INV){
     const store=r['店仓'],sku=r['款号'],name=r['品名'],color=r['颜色']||'';
     const qty=r['库存数量']||0,amt=r['库存金额']||0;
@@ -415,13 +415,20 @@ function rebuildFromRaw(){
     if(!invMap[k])invMap[k]={qty:0,amt:0,colors:{}};
     invMap[k].qty+=qty; invMap[k].amt+=amt;
     if(color&&qty>0){if(!invMap[k].colors[color])invMap[k].colors[color]=0; invMap[k].colors[color]+=qty;}
+    // Fallback index by store+sku only (for cross-system matching where names differ)
+    const k2=store+'||'+sku;
+    if(!invByStoreSku[k2])invByStoreSku[k2]={qty:0,amt:0,colors:{}};
+    invByStoreSku[k2].qty+=qty; invByStoreSku[k2].amt+=amt;
+    if(color&&qty>0){if(!invByStoreSku[k2].colors[color])invByStoreSku[k2].colors[color]=0; invByStoreSku[k2].colors[color]+=qty;}
     if(!stInv[store])stInv[store]={总库存数量:0,总库存金额:0};
     stInv[store].总库存数量+=qty; stInv[store].总库存金额+=amt;
   }
   for(const[st,its]of Object.entries(storeData)){
     for(const it of its){
       const k=st+'||'+it.款号+'||'+it.品名;
-      if(invMap[k]){it.库存数量=invMap[k].qty;it.库存金额=Math.round(invMap[k].amt*10)/10;it.库存颜色=invMap[k].colors;}
+      const k2=st+'||'+it.款号;
+      const inv=invMap[k]||invByStoreSku[k2];
+      if(inv){it.库存数量=inv.qty;it.库存金额=Math.round(inv.amt*10)/10;it.库存颜色=inv.colors;}
     }
   }
   DATA={storeData,storeInv:stInv,storeSales:stSales};
@@ -439,7 +446,7 @@ function rebuildFromRaw(){
     bSaleMap[k].store_map[store].qty+=qty;bSaleMap[k].store_map[store].ret+=ret;bSaleMap[k].store_map[store].act+=act;
     if(color){if(!bSaleMap[k].store_map[store].colors[color])bSaleMap[k].store_map[store].colors[color]=0;bSaleMap[k].store_map[store].colors[color]+=qty;}
   }
-  const bInvMap={};
+  const bInvMap={}, bInvBySku={};
   for(const r of RAW_INV){
     const brand=r['品牌'],store=r['店仓'],sku=r['款号'],name=r['品名'],color=r['颜色']||'';
     const qty=r['库存数量']||0,amt=r['库存金额']||0;
@@ -450,6 +457,13 @@ function rebuildFromRaw(){
     if(!bInvMap[k].store_map[store])bInvMap[k].store_map[store]={qty:0,amt:0,colors:{}};
     bInvMap[k].store_map[store].qty+=qty;bInvMap[k].store_map[store].amt+=amt;
     if(color&&qty>0){if(!bInvMap[k].store_map[store].colors[color])bInvMap[k].store_map[store].colors[color]=0;bInvMap[k].store_map[store].colors[color]+=qty;}
+    // Fallback index by brand+sku only
+    const k2=brand+'||'+sku;
+    if(!bInvBySku[k2])bInvBySku[k2]={colors:{},store_map:{}};
+    if(color&&qty>0){if(!bInvBySku[k2].colors[color])bInvBySku[k2].colors[color]=0;bInvBySku[k2].colors[color]+=qty;}
+    if(!bInvBySku[k2].store_map[store])bInvBySku[k2].store_map[store]={qty:0,amt:0,colors:{}};
+    bInvBySku[k2].store_map[store].qty+=qty;bInvBySku[k2].store_map[store].amt+=amt;
+    if(color&&qty>0){if(!bInvBySku[k2].store_map[store].colors[color])bInvBySku[k2].store_map[store].colors[color]=0;bInvBySku[k2].store_map[store].colors[color]+=qty;}
   }
   const newBdata={};
   const dynamicBrands=[...new Set(Object.values(bSaleMap).map(x=>x.brand))].filter(Boolean);
@@ -458,13 +472,15 @@ function rebuildFromRaw(){
     const bItems=Object.values(bSaleMap).filter(x=>x.brand===brand).sort((a,b)=>b.t_act-a.t_act).slice(0,30);
     newBdata[brand]=bItems.map(it=>{
       const k=brand+'||'+it.sku+'||'+it.name;
-      const allStores=new Set([...Object.keys(it.store_map),...Object.keys((bInvMap[k]||{}).store_map||{})]);
+      const k2=brand+'||'+it.sku;
+      const bInv=bInvMap[k]||bInvBySku[k2]||{colors:{},store_map:{}};
+      const allStores=new Set([...Object.keys(it.store_map),...Object.keys(bInv.store_map||{})]);
       const storeDetails=[...allStores].map(store=>{
         const s=it.store_map[store]||{qty:0,ret:0,act:0,colors:{}};
-        const inv2=(bInvMap[k]?.store_map[store])||{qty:0,amt:0,colors:{}};
+        const inv2=(bInv.store_map[store])||{qty:0,amt:0,colors:{}};
         return{店仓:store,销售件数:s.qty,零售金额:Math.round(s.ret*10)/10,成交金额:Math.round(s.act*10)/10,库存件数:inv2.qty,库存金额:Math.round(inv2.amt*10)/10,销售颜色:s.colors,库存颜色:inv2.colors};
       }).sort((a,b)=>b.成交金额-a.成交金额);
-      return{款号:it.sku,品名:it.name,总销售件数:it.t_qty,总零售金额:Math.round(it.t_ret*10)/10,总成交金额:Math.round(it.t_act*10)/10,销售颜色:it.colors,库存颜色:(bInvMap[k]||{}).colors||{},店铺明细:storeDetails};
+      return{款号:it.sku,品名:it.name,总销售件数:it.t_qty,总零售金额:Math.round(it.t_ret*10)/10,总成交金额:Math.round(it.t_act*10)/10,销售颜色:it.colors,库存颜色:bInv.colors||{},店铺明细:storeDetails};
     });
   }
   BDATA=newBdata;
@@ -474,7 +490,7 @@ function rebuildFromRaw(){
   if(activeTab==='brand'){renderBrandSelector();document.getElementById('brandContent').innerHTML='<div class="empty"><div class="e-icon">👆</div><p>选择上方品牌查看分析</p></div>';}
   if(activeTab==='global')renderGlobalTab();
 }
- 
+
 // ── TAB ───────────────────────────────────────────────────────────────────────
 function switchTab(t){
   activeTab=t;
@@ -487,7 +503,7 @@ function switchTab(t){
   if(t==="ranking") renderRanking();
   if(t==="hot") renderHot();
 }
- 
+
 // ── STORE LIST ────────────────────────────────────────────────────────────────
 function groupStores(stores){
   const g={};
@@ -516,7 +532,7 @@ function renderStoreList(filter=""){
 }
 function filterStores(){renderStoreList(document.getElementById("storeSearch").value);}
 function selectStore(name){currentStore=name;renderStoreList(document.getElementById("storeSearch").value);renderStoreContent(name);}
- 
+
 // ── STORE CONTENT ─────────────────────────────────────────────────────────────
 function renderStoreContent(name){
   const items=(DATA.storeData[name]||[]).slice();
@@ -564,7 +580,7 @@ function renderStoreContent(name){
   }, 50);
 }
 function setSort(m){sortMode=m;if(currentStore)renderStoreContent(currentStore);}
- 
+
 // ── BRAND TAB ─────────────────────────────────────────────────────────────────
 function renderBrandSelector(){
   const brands=Object.keys(BDATA);
@@ -618,13 +634,13 @@ function renderBrandSelector(){
 }
 function selectBrand(b){currentBrand=b===currentBrand?null:b;renderBrandSelector();}
 function setBrandSort(m){brandSortMode=m;if(currentBrand)renderBrandContent(currentBrand);}
- 
+
 function toggleItem(idx){
   if(openItems.has(idx))openItems.delete(idx);else openItems.add(idx);
   const hdr=document.getElementById(`bih-${idx}`),body=document.getElementById(`bib-${idx}`),arr=document.getElementById(`bia-${idx}`);
   if(hdr&&body&&arr){const o=openItems.has(idx);hdr.classList.toggle("open",o);body.classList.toggle("open",o);arr.classList.toggle("open",o);}
 }
- 
+
 function renderBrandContent(b){
   openItems.clear();
   const allItems=BDATA[b]||[];
@@ -685,7 +701,7 @@ function renderBrandContent(b){
     });
   }, 50);
 }
- 
+
 // ── EXPORT ────────────────────────────────────────────────────────────────────
 function exportStoreExcel(storeName){
   const items=DATA.storeData[storeName]||[];
@@ -726,22 +742,85 @@ function exportBrandExcel(brandName){
   XLSX.utils.book_append_sheet(wb,ws2,'各店铺颜色明细');
   XLSX.writeFile(wb,`${brandName}_品牌分析_${document.getElementById('periodBadge').textContent}.xlsx`);
 }
- 
+
 // ── FILE UPLOAD ───────────────────────────────────────────────────────────────
+// ── DUAL SYSTEM SUPPORT ──────────────────────────────────────────────────────
+// Clean ="xxx" formula text from 创美 system
+function _cc(v){if(v==null)return '';if(typeof v==='string'){let s=v.trim();if(s.startsWith('="')&&s.endsWith('"'))return s.slice(2,-1);if(s.startsWith('='))return s.slice(1).replace(/^"|"$/g,'');return s;}return v;}
+function _nm(v){if(typeof v==='number')return isNaN(v)?0:v;let n=parseFloat(String(v).replace(/,/g,''));return isNaN(n)?0:n;}
+function _fc(row,kws){const ks=Object.keys(row);for(const w of kws){const exact=ks.find(k=>k===w);if(exact)return exact;}for(const w of kws){const f=ks.find(k=>k.includes(w));if(f)return f;}return null;}
+function _gv(r,kws){const k=_fc(r,kws);return k?r[k]:'';}
+// Detect system from column headers
+function _detectSys(headers){const h=headers.join(',');if(h.includes('仓库')&&(h.includes('小计')||h.includes('铭牌价')))return'lx';return'cm';}
+// 创美 sales parser
+function _parseSaleCM(r){
+  let raw=_gv(r,['日期']),dv=0,c=String(_cc(raw));
+  if(/^\d{8}$/.test(c))dv=parseInt(c);
+  else if(raw instanceof Date){const iso=raw.toISOString().slice(0,10);dv=parseInt(iso.replace(/-/g,''));}
+  else if(typeof raw==='number'&&raw>20000000)dv=raw;
+  else if(/\d{4}[-/]\d{2}[-/]\d{2}/.test(c))dv=parseInt(c.replace(/[-/]/g,'').slice(0,8));
+  else dv=parseInt(String(c).replace(/[-/]/g,''))||0;
+  return{店仓:String(_cc(_gv(r,['店仓','门店','店铺']))).trim(),日期:dv,
+    款号:String(_cc(_gv(r,['款号','货号']))).trim(),品名:String(_cc(_gv(r,['品名','商品名称','货品']))).trim(),
+    品牌:String(_cc(_gv(r,['品牌']))).trim(),颜色:String(_cc(_gv(r,['颜色']))).trim(),
+    数量:_nm(_cc(_gv(r,['数量','件数','销量']))),零售金额:Math.round(_nm(_cc(_gv(r,['零售金额','标准金额'])))*10)/10,
+    成交金额:Math.round(_nm(_cc(_gv(r,['成交金额'])))*10)/10};
+}
+// 创美 stock parser
+function _parseStockCM(r){
+  return{店仓:String(_cc(_gv(r,['店仓','门店','店铺']))).trim(),
+    款号:String(_cc(_gv(r,['款号','货号']))).trim(),品名:String(_cc(_gv(r,['品名','商品名称','货品']))).trim(),
+    品牌:String(_cc(_gv(r,['品牌']))).trim(),颜色:String(_cc(_gv(r,['颜色']))).trim(),
+    库存数量:_nm(_cc(_gv(r,['库存数量','库存数']))),库存金额:Math.round(_nm(_cc(_gv(r,['库存金额','库存额'])))*10)/10};
+}
+// 拉夏 sales parser
+function _parseSaleLX(r){
+  let raw=_gv(r,['建单日期','销售时间','日期']),dv=0;
+  if(typeof raw==='string'){const m=raw.match(/(\d{4})[-/](\d{2})[-/](\d{2})/);if(m)dv=parseInt(m[1]+m[2]+m[3]);}
+  else if(raw instanceof Date){const iso=raw.toISOString().slice(0,10);dv=parseInt(iso.replace(/-/g,''));}
+  return{店仓:String(_gv(r,['仓库','门店','店仓'])).trim(),日期:dv,
+    款号:String(_gv(r,['款号','货号'])).trim(),品名:String(_gv(r,['商品名称','品名','货品'])).trim(),
+    品牌:'拉夏贝尔',颜色:String(_gv(r,['颜色'])).trim(),
+    数量:_nm(_gv(r,['数量','件数'])),零售金额:Math.round(_nm(_gv(r,['铭牌价合计','零售金额']))*10)/10,
+    成交金额:Math.round(_nm(_gv(r,['小计','成交金额']))*10)/10};
+}
+// 拉夏 stock parser
+function _parseStockLX(r){
+  return{店仓:String(_gv(r,['仓库','门店','店仓'])).trim(),
+    款号:String(_gv(r,['款号','货号'])).trim(),品名:String(_gv(r,['商品类别','商品名称','品名'])).trim(),
+    品牌:'拉夏贝尔',颜色:'',
+    库存数量:_nm(_gv(r,['库存数量','库存数'])),库存金额:Math.round(_nm(_gv(r,['铭牌价小计','库存金额']))*10)/10};
+}
+// 购物袋过滤（非商品）
+function _isMerchandise(name){if(!name)return true;return!/购物袋|手提袋|纸袋|无纺布.*袋/.test(name);}
+
 function handleFile(e){
   const file=e.target.files[0];if(!file)return;
   document.getElementById("uploadStatus").textContent="⏳ 正在解析…";
   const reader=new FileReader();
   reader.onload=function(ev){
     try{
-      const wb=XLSX.read(ev.target.result,{type:"array"});
-      const sSheet=wb.SheetNames.find(n=>n.includes("销售")),iSheet=wb.SheetNames.find(n=>n.includes("库存"));
-      if(!sSheet||!iSheet)throw new Error("未找到销售或库存工作表");
-      const sd=XLSX.utils.sheet_to_json(wb.Sheets[sSheet]);
-      const id=XLSX.utils.sheet_to_json(wb.Sheets[iSheet]);
+      const wb=XLSX.read(ev.target.result,{type:"array",raw:true,cellDates:true});
+      const sSheets=wb.SheetNames.filter(n=>n.includes("销售"));
+      const iSheets=wb.SheetNames.filter(n=>n.includes("库存"));
+      if(!sSheets.length||!iSheets.length)throw new Error("未找到销售或库存工作表");
+      // Parse all sales sheets
+      const newSales=[];const newInv=[];
+      sSheets.forEach(sn=>{
+        const js=XLSX.utils.sheet_to_json(wb.Sheets[sn],{defval:'',raw:true});
+        if(!js.length)return;
+        const sys=_detectSys(Object.keys(js[0]));
+        js.forEach(r=>{const p=sys==='lx'?_parseSaleLX(r):_parseSaleCM(r);if(p.店仓&&_isMerchandise(p.品名))newSales.push(p);});
+      });
+      iSheets.forEach(sn=>{
+        const js=XLSX.utils.sheet_to_json(wb.Sheets[sn],{defval:'',raw:true});
+        if(!js.length)return;
+        const sys=_detectSys(Object.keys(js[0]));
+        js.forEach(r=>{const p=sys==='lx'?_parseStockLX(r):_parseStockCM(r);if(p.店仓)newInv.push(p);});
+      });
       // Update raw data
-      RAW_SALES=sd.map(r=>({店仓:r['店仓']||'',日期:parseInt(String(r['日期']||'').replace(/-/g,'')),款号:r['款号']||'',品名:r['品名']||'',品牌:r['品牌']||'',颜色:r['颜色']||'',数量:+(r['数量']||0),零售金额:Math.round((+(r['零售金额']||0))*10)/10,成交金额:Math.round((+(r['成交金额']||0))*10)/10}));
-      RAW_INV=id.map(r=>({店仓:r['店仓']||'',款号:r['款号']||r['款号.款号']||'',品名:r['品名']||'',品牌:r['品牌']||'',颜色:r['颜色']||'',库存数量:+(r['库存数量']||0),库存金额:Math.round((+(r['库存金额']||0))*10)/10})).filter(r=>r.品牌!=='不分品牌');
+      RAW_SALES=newSales;
+      RAW_INV=newInv.filter(r=>r.品牌!=='不分品牌');
       // Update date range
       const dates=RAW_SALES.map(r=>r['日期']).filter(Boolean);
       if(dates.length){
@@ -756,23 +835,23 @@ function handleFile(e){
       // Assign brand colors dynamically
       const newBrands=[...new Set(RAW_SALES.map(r=>r['品牌']).filter(Boolean))];
       newBrands.forEach(b=>{ if(!BRAND_DOT[b]) BRAND_DOT[b]=BRAND_PALETTE[Object.keys(BRAND_DOT).length%BRAND_PALETTE.length]; });
-      document.getElementById("uploadStatus").textContent="✅ 已加载："+file.name;
+      document.getElementById("uploadStatus").textContent="✅ 已加载："+file.name+" ("+RAW_SALES.length+"条销售/"+RAW_INV.length+"条库存)";
       rebuildFromRaw();
     }catch(err){document.getElementById("uploadStatus").textContent="❌ 解析失败："+err.message;}
   };
   reader.readAsArrayBuffer(file);
 }
- 
- 
+
+
 // ── GLOBAL ANALYSIS TAB ───────────────────────────────────────────────────────
- 
- 
+
+
 // ── CHARTS ───────────────────────────────────────────────────────────────────
 const chartInstances = {};
 function destroyChart(id){
   if(chartInstances[id]){ chartInstances[id].destroy(); delete chartInstances[id]; }
 }
- 
+
 function drawBarChart(canvasId, labels, data, label, color){
   destroyChart(canvasId);
   const ctx = document.getElementById(canvasId)?.getContext('2d');
@@ -793,7 +872,7 @@ function drawBarChart(canvasId, labels, data, label, color){
     }
   });
 }
- 
+
 function drawDoughnutChart(canvasId, labels, data, colors){
   destroyChart(canvasId);
   const ctx = document.getElementById(canvasId)?.getContext('2d');
@@ -809,7 +888,7 @@ function drawDoughnutChart(canvasId, labels, data, colors){
     }
   });
 }
- 
+
 function drawHorizontalBarChart(canvasId, labels, data, label, color){
   destroyChart(canvasId);
   const ctx = document.getElementById(canvasId)?.getContext('2d');
@@ -831,7 +910,7 @@ function drawHorizontalBarChart(canvasId, labels, data, label, color){
     }
   });
 }
- 
+
 // ── RANKING TAB ───────────────────────────────────────────────────────────────
 let rankingSort = 'act';
 function setRankingSort(m){
@@ -858,7 +937,7 @@ function renderRanking(){
     const dates = [...new Set(RAW_SALES.filter(r=>r['日期']>=dateFrom&&r['日期']<=dateTo).map(r=>r['日期']))];
     return Math.max(dates.length,1);
   })() : 18;
- 
+
   const rows = list.map((s,i)=>{
     const val = s[rankingSort];
     const pct = Math.round((val/maxVal)*100);
@@ -881,7 +960,7 @@ function renderRanking(){
       <div class="rank-meta ${healthCls}">${healthTxt}</div>
     </div>`;
   }).join('');
- 
+
   const legend = `<div style="display:flex;gap:16px;font-size:11px;margin-bottom:14px;flex-wrap:wrap;">
     <span style="color:var(--green)">● 库存充足</span>
     <span style="color:var(--gold)">● ⚡ 即将售罄（&lt;7天）</span>
@@ -897,9 +976,9 @@ function renderRanking(){
   document.getElementById('rankingContent').innerHTML = chartHtml + legend + rows;
   setTimeout(()=>drawBarChart('rankingChart', chartLabels, chartVals, chartLabel, '#7c5cbf'), 50);
 }
- 
+
 // ── HOT TAB ───────────────────────────────────────────────────────────────────
- 
+
 let hotOpenItems = new Set();
 function toggleHot(idx){
   if(hotOpenItems.has(idx)) hotOpenItems.delete(idx);
@@ -912,7 +991,7 @@ function toggleHot(idx){
     body.classList.toggle('open', o);
   }
 }
- 
+
 let hotSort = 'act';
 function setHotSort(m){
   hotSort = m;
@@ -923,7 +1002,7 @@ function renderHot(){
   hotOpenItems.clear();
   const filtered = RAW_SALES.filter(r=>r['日期']>=dateFrom&&r['日期']<=dateTo);
   if(!filtered.length){ document.getElementById('hotContent').innerHTML='<div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div>'; return; }
- 
+
   // Aggregate all items across all stores
   const itemMap = {};
   for(const r of filtered){
@@ -942,7 +1021,14 @@ function renderHot(){
       itemMap[k].storeMap[store].act+=r['成交金额']||0;
     }
   }
-  // Add inventory
+  // Add inventory (with fallback matching by sku-only for cross-system compatibility)
+  const invBySku={};
+  for(const r of RAW_INV){
+    const sku=r['款号'];
+    if(!sku)continue;
+    if(!invBySku[sku])invBySku[sku]=[];
+    invBySku[sku].push(r);
+  }
   for(const r of RAW_INV){
     const sku=r['款号'], name=r['品名'], store=r['店仓']||'';
     const k=sku+'||'+name;
@@ -956,11 +1042,26 @@ function renderHot(){
       }
     }
   }
- 
+  // Fallback: match inventory by sku-only for items that got no inventory from exact match
+  for(const it of Object.values(itemMap)){
+    if(!it.invQty && invBySku[it.sku]){
+      for(const r of invBySku[it.sku]){
+        if(!it.invQty) it.invQty=0;
+        it.invQty+=(r['库存数量']||0);
+        const store=r['店仓']||'';
+        if(store){
+          if(!it.storeMap[store]) it.storeMap[store]={qty:0,ret:0,act:0};
+          if(!it.storeMap[store].invQty) it.storeMap[store].invQty=0;
+          it.storeMap[store].invQty+=(r['库存数量']||0);
+        }
+      }
+    }
+  }
+
   // Calc days in period
   const dates=[...new Set(filtered.map(r=>r['日期']))];
   const periodDays = Math.max(dates.length,1);
- 
+
   // Sort and top 30
   let items = Object.values(itemMap).map(it=>({
     ...it,
@@ -971,14 +1072,14 @@ function renderHot(){
     act: Math.round(it.act*10)/10,
     ret: Math.round(it.ret*10)/10,
   }));
- 
+
   if(hotSort==='act') items.sort((a,b)=>b.act-a.act);
   else if(hotSort==='qty') items.sort((a,b)=>b.qty-a.qty);
   else items.sort((a,b)=>(a.daysLeft||999)-(b.daysLeft||999));
   items = items.slice(0,30);
- 
+
   const maxAct = Math.max(...items.map(i=>i.act),1);
- 
+
   const rows = items.map((it,i)=>{
     const rc = i<3?`rank-${i+1}`:'rank-n';
     const pct = Math.round((it.act/maxAct)*100);
@@ -989,7 +1090,7 @@ function renderHot(){
     else if(it.daysLeft<=3){ daysCls='hot-days-urgent'; daysTxt=`⚡ ${it.daysLeft}天`; }
     else if(it.daysLeft<=7){ daysCls='hot-days-warn'; daysTxt=`⚠️ ${it.daysLeft}天`; }
     else{ daysCls='hot-days-ok'; daysTxt=`约${it.daysLeft}天`; }
- 
+
     // Build store breakdown rows
     const storeDetails = Object.entries(it.storeMap||{})
       .map(([store,s])=>({store,qty:s.qty||0,ret:s.ret||0,act:s.act||0,invQty:s.invQty||0}))
@@ -1000,11 +1101,12 @@ function renderHot(){
       return `<tr>
         <td style="color:${hasSale?'var(--text)':'var(--muted)'}">${s.store.replace(/^[^-]+-/,'')||s.store}</td>
         <td class="td-r ${hasSale?'':'no-sale'}">${hasSale?s.qty+'件':'—'}</td>
+        <td class="td-r ${hasSale?'':'no-sale'}">${hasSale?'¥'+fmt(s.ret):'—'}</td>
         <td class="td-r ${hasSale?'':'no-sale'}">${hasSale?'¥'+fmt(s.act):'—'}</td>
         <td class="td-r"><span class="${ic}">${s.invQty}件</span></td>
       </tr>`;
     }).join('');
- 
+
     return `<div class="hot-row">
       <div class="hot-row-header" id="hh-${i}" onclick="toggleHot(${i})">
         <div style="flex-shrink:0"><span class="rank-badge ${rc}">${i+1}</span></div>
@@ -1015,7 +1117,8 @@ function renderHot(){
             <div style="flex:1;background:var(--border);border-radius:3px;height:5px;max-width:120px">
               <div style="width:${pct}%;height:5px;border-radius:3px;background:linear-gradient(90deg,var(--accent),#9b7de0)"></div>
             </div>
-            <span style="font-size:11px">¥${fmt(it.act)}</span>
+            <span style="font-size:11px">成交 ¥${fmt(it.act)}</span>
+            <span style="font-size:10px;color:var(--muted)">零售 ¥${fmt(it.ret)}</span>
             ${d?`<span class="disc-tag">${d}</span>`:''}
           </div>
         </div>
@@ -1029,13 +1132,13 @@ function renderHot(){
       <div class="hot-row-detail" id="hb-${i}">
         <div style="font-size:10px;color:var(--muted);margin-bottom:8px;">各门店明细（灰色=有库存未销售）</div>
         <table class="sb-table">
-          <thead><tr><th>门店</th><th class="r">销售件数</th><th class="r">成交金额</th><th class="r">库存件数</th></tr></thead>
+          <thead><tr><th>门店</th><th class="r">销售件数</th><th class="r">零售金额</th><th class="r">成交金额</th><th class="r">库存件数</th></tr></thead>
           <tbody>${storeRows}</tbody>
         </table>
       </div>
     </div>`;
   }).join('');
- 
+
   // Stale items (have inventory but zero sales)
   const staleItems = Object.values(itemMap).filter(it=>(it.invQty||0)>0 && it.qty===0).length;
   const staleHtml = staleItems>0 ?
@@ -1043,7 +1146,7 @@ function renderHot(){
       <span style="font-size:12px;color:var(--muted)">⚠️ 发现 <strong style="color:var(--accent)">${staleItems} 款</strong> 有库存但本期零销售（可能积压）</span>
       <button class="sort-tab" onclick="renderStale()" style="font-size:11px">查看滞销款</button>
     </div>` : '';
- 
+
   // Brand distribution donut chart
   const brandActMap = {};
   items.forEach(it=>{ brandActMap[it.brand]=(brandActMap[it.brand]||0)+it.act; });
@@ -1069,10 +1172,11 @@ function renderHot(){
     drawHorizontalBarChart('hotBarChart', top10Labels, top10Data, '成交金额', '#9b7de0');
   }, 50);
 }
- 
+
 function renderStale(){
   const filtered = RAW_SALES.filter(r=>r['日期']>=dateFrom&&r['日期']<=dateTo);
   const soldSkus = new Set(filtered.map(r=>r['款号']+'||'+r['品名']));
+  const soldSkuOnly = new Set(filtered.map(r=>r['款号']));
   // Find items with inventory but no sales
   const invMap={};
   for(const r of RAW_INV){
@@ -1082,20 +1186,20 @@ function renderStale(){
     invMap[k].amt+=r['库存金额']||0;
   }
   const stale = Object.entries(invMap)
-    .filter(([k,v])=>!soldSkus.has(k)&&v.qty>0)
+    .filter(([k,v])=>!soldSkus.has(k)&&!soldSkuOnly.has(v.sku)&&v.qty>0)
     .map(([k,v])=>v)
     .sort((a,b)=>b.amt-a.amt)
     .slice(0,50);
- 
+
   if(!stale.length){ alert('没有找到滞销款'); return; }
- 
+
   const rows = stale.map((it,i)=>`<tr>
     <td>${i+1}</td>
     <td><div style="font-weight:600">${it.name}</div><div style="font-size:10px;color:var(--muted)">${it.sku} · ${it.brand}</div></td>
     <td class="td-r"><span class="inv-health-bad">${it.qty}件</span></td>
     <td class="td-r" style="color:var(--muted)">¥${fmt(it.amt,1)}</td>
   </tr>`).join('');
- 
+
   document.getElementById('hotContent').innerHTML = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
       <div style="font-size:15px;font-weight:700">⚠️ 滞销款（有库存·零销售）</div>
@@ -1107,16 +1211,16 @@ function renderStale(){
       <tbody>${rows}</tbody>
     </table>`;
 }
- 
+
 // ── INIT ──────────────────────────────────────────────────────────────────────
 initSummary();
 renderStoreList();
 // Show upload prompt on first load
 document.getElementById('storeContent').innerHTML='<div class="empty"><div class="e-icon">📂</div><p>请先上传 Excel 数据文件<br><span style="font-size:11px;color:var(--muted)">点击上方「选择文件」上传销售明细</span></p></div>';
 document.getElementById('storeItems').innerHTML='<div style="padding:20px 14px;font-size:12px;color:var(--muted);text-align:center;line-height:1.8">请先上传数据<br>门店列表将自动生成</div>';
- 
+
 </script>
- 
+
 <!-- RANKING TAB -->
 <div id="rankingTab" style="display:none;padding:18px 32px;overflow-y:visible;">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
@@ -1133,7 +1237,7 @@ document.getElementById('storeItems').innerHTML='<div style="padding:20px 14px;f
   </div>
   <div id="rankingContent"><div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div></div>
 </div>
- 
+
 <!-- HOT TAB -->
 <div id="hotTab" style="display:none;padding:18px 32px;overflow-y:visible;">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
@@ -1149,6 +1253,6 @@ document.getElementById('storeItems').innerHTML='<div style="padding:20px 14px;f
   </div>
   <div id="hotContent"><div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div></div>
 </div>
- 
+
 </body>
 </html>
