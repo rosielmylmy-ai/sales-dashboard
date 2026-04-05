@@ -7,15 +7,15 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="烨权">
-<meta name="theme-color" content="#c9a020">
+<meta name="theme-color" content="#2d1554">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>销售追踪看板</title>
 <style>
-:root{--bg:#faf8f0;--surface:#fdf9f0;--card:#ffffff;--border:#e8dfc8;--accent:#c9a020;--accent2:#d4b040;--warn:#d94f6a;--gold:#c47d20;--text:#1a1a2d;--muted:#9080b0;--green:#3db88a;--purple:#7c5cbf;--purple2:#9b7de0;}
+:root{--bg:#f3f0fd;--surface:#f8f5ff;--card:#ffffff;--border:#d8d0f0;--accent:#7c5cbf;--accent2:#9b7de0;--warn:#d94f6a;--gold:#c47d20;--text:#1a1a2d;--muted:#9080b0;--green:#3db88a;--purple:#7c5cbf;--purple2:#9b7de0;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;}
-.header{background:linear-gradient(135deg,#fdf5e0,#f8ecc8);border-bottom:1px solid #e0d4a8;padding:16px 32px;display:flex;box-shadow:0 1px 4px rgba(0,0,0,.06);align-items:center;justify-content:space-between;}
-.header h1{font-size:20px;font-weight:700;background:linear-gradient(90deg,#c9a020,#d4b040);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.header{background:linear-gradient(135deg,#f0eeff,#e8e0ff);border-bottom:1px solid #d0c8f0;padding:16px 32px;display:flex;box-shadow:0 1px 4px rgba(0,0,0,.06);align-items:center;justify-content:space-between;}
+.header h1{font-size:20px;font-weight:700;background:linear-gradient(90deg,#7c5cbf,#9b7de0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .header .subtitle{font-size:11px;color:var(--muted);margin-top:3px;}
 .period-badge{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:5px 12px;font-size:12px;color:var(--accent2);}
 .upload-zone{margin:14px 32px;background:var(--card);border:2px dashed #c8b8f0;border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color .2s;}
@@ -186,7 +186,7 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 .rank-num{width:28px;font-size:12px;font-weight:700;color:var(--muted);text-align:right;flex-shrink:0;}
 .rank-store-name{width:160px;font-size:12px;flex-shrink:0;font-weight:500;}
 .rank-bar-wrap{flex:1;background:var(--border);border-radius:4px;height:18px;position:relative;}
-.rank-bar-fill{height:18px;border-radius:4px;background:linear-gradient(90deg,var(--accent),#d4b040);display:flex;align-items:center;padding-left:8px;min-width:2px;}
+.rank-bar-fill{height:18px;border-radius:4px;background:linear-gradient(90deg,var(--accent),#9b7de0);display:flex;align-items:center;padding-left:8px;min-width:2px;}
 .rank-bar-label{font-size:10px;color:#fff;font-weight:600;white-space:nowrap;}
 .rank-meta{width:90px;text-align:right;font-size:11px;color:var(--muted);flex-shrink:0;}
 .inv-health-ok{color:var(--green);}
@@ -220,10 +220,60 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 ::-webkit-scrollbar-thumb{background:#c8b8f0;border-radius:3px;}
 @media(max-width:900px){
   .main{grid-template-columns:1fr;}
-  .side-list{max-height:180px;}
+  .side-list{max-height:200px;overflow-y:auto;}
   .summary-row,.stats-row,.brand-stats{grid-template-columns:repeat(2,1fr);}
   .brand-selector{gap:8px;}
   .bi-totals{gap:8px;}
+  .header{padding:12px 16px;}
+  .header h1{font-size:17px;}
+  .upload-zone{margin:10px 16px;padding:10px 14px;}
+  .date-bar{padding:8px 16px;}
+  .tab-bar{padding:0 8px;}
+  .tab-btn{padding:9px 10px;font-size:12px;}
+  .summary-row{padding:10px 16px;gap:8px;}
+  .content{padding:14px 12px;}
+  #brandTab{padding:14px 16px;}
+  .content-header{flex-direction:column;gap:6px;}
+  .page-title{font-size:15px;}
+  .rank-store-name{width:100px;font-size:11px;}
+  .rank-bar-row{gap:8px;padding:8px 10px;}
+  .rank-meta{width:70px;font-size:10px;}
+}
+@media(max-width:600px){
+  .summary-row,.stats-row{grid-template-columns:1fr 1fr;gap:6px;}
+  .summary-row{padding:8px 12px;}
+  .sum-card{padding:10px 12px;}
+  .sum-card .value{font-size:16px;}
+  .header{padding:10px 12px;}
+  .upload-zone{margin:8px 12px;}
+  .date-bar{padding:6px 12px;gap:8px;}
+  .date-bar label{font-size:11px;}
+  .tab-btn{padding:8px 6px;font-size:11px;}
+  .content{padding:10px 8px;}
+  #brandTab,#hotTab,#rankingTab,#timeTab{padding:10px 12px !important;}
+  .brand-btn{padding:8px 12px;font-size:12px;}
+  .brand-btn .b-name{font-size:12px;}
+  .bi-totals{flex-wrap:wrap;gap:6px;}
+  .bi-total .bt-val{font-size:11px;}
+  .hot-row-header{padding:10px 12px;gap:8px;flex-wrap:wrap;}
+  .rank-store-name{width:80px;font-size:10px;}
+  .rank-num{width:22px;height:22px;font-size:10px;}
+  .rank-bar-wrap{min-width:40px;}
+  .rank-meta{width:auto;}
+  /* Store detail fix */
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .stat-box .s-val{font-size:14px;}
+  .stat-box .s-label{font-size:9px;}
+  .top-table{font-size:11px;}
+  .top-table th,.top-table td{padding:6px 5px;}
+  .chart-wrap{height:180px !important;}
+  .sort-tabs{flex-wrap:wrap;}
+  .sort-tab{padding:3px 8px;font-size:10px;}
+  .export-btn{font-size:11px;padding:4px 10px;}
+  /* Side list on mobile */
+  .side-list{max-height:160px;}
+  .side-item{padding:6px 10px;font-size:11px;}
+  .grp-title{font-size:8px;padding:5px 10px 2px;}
 }
 
 
@@ -234,6 +284,23 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 </head>
 <body>
 
+<!-- ===== LOADING SCREEN ===== -->
+<div id="loadingScreen" style="position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,#0d0620,#1a0d3a 50%,#2d1554);overflow:hidden">
+<div style="position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(124,92,191,.12),transparent 70%);animation:_gp 2.5s ease-in-out infinite"></div>
+<div style="position:relative;z-index:2;text-align:center">
+  <div style="overflow:hidden;display:inline-block">
+    <div style="font-family:Georgia,'Noto Serif SC','SimSun',serif;font-size:42px;font-weight:300;letter-spacing:12px;color:rgba(255,255,255,.92);opacity:0;transform:translateY(18px);animation:_tIn .6s ease forwards .15s;text-indent:12px">烨权时尚联盟</div>
+  </div>
+  <div style="margin:14px auto 0;height:1px;width:0;background:linear-gradient(90deg,transparent,rgba(155,125,224,.5),transparent);animation:_lIn .5s ease forwards .55s"></div>
+  <div style="margin-top:12px;font-size:11px;letter-spacing:5px;color:rgba(155,125,224,.45);opacity:0;animation:_tIn .4s ease forwards .8s;font-family:'PingFang SC','Microsoft YaHei',sans-serif">销 售 追 踪 看 板</div>
+</div>
+</div>
+<style>
+@keyframes _tIn{to{opacity:1;transform:translateY(0)}}
+@keyframes _lIn{to{width:220px}}
+@keyframes _gp{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.1);opacity:.7}}
+</style>
+<script>setTimeout(function(){const l=document.getElementById('loadingScreen');l.style.transition='opacity .5s';l.style.opacity='0';setTimeout(()=>l.remove(),500)},2200);</script>
 
 <div class="header">
   <div><h1>🏪 销售追踪看板</h1><div class="subtitle">店铺销售 · 品牌钻取分析 · 库存状态</div></div>
@@ -265,6 +332,8 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
   <button class="tab-btn" onclick="switchTab('brand')">🏷️ 品牌分析</button>
   <button class="tab-btn" onclick="switchTab('ranking')">📊 门店排名</button>
   <button class="tab-btn" onclick="switchTab('hot')">🏆 全网爆款</button>
+  <button class="tab-btn" onclick="switchTab('time')">📅 时间分析</button>
+  <button class="tab-btn" onclick="switchTab('inv')">📦 库存分析</button>
 </div>
 <div class="summary-row">
   <div class="sum-card v1"><div class="label">参与门店</div><div class="value" id="sc1">—</div><div class="sub">有销售记录</div></div>
@@ -404,7 +473,7 @@ function rebuildFromRaw(){
   const storeData={};
   for(const[st,its]of Object.entries(byStore)){
     its.sort((a,b)=>b.act-a.act);
-    storeData[st]=its.slice(0,10).map((it,i)=>({rank:i+1,款号:it.sku,品名:it.name,销售数量:it.qty,零售金额:Math.round(it.ret*10)/10,成交金额:Math.round(it.act*10)/10,库存数量:0,库存金额:0,销售颜色:it.colors,库存颜色:{}}));
+    storeData[st]=its.slice(0,20).map((it,i)=>({rank:i+1,款号:it.sku,品名:it.name,销售数量:it.qty,零售金额:Math.round(it.ret*10)/10,成交金额:Math.round(it.act*10)/10,库存数量:0,库存金额:0,销售颜色:it.colors,库存颜色:{}}));
   }
   // Inventory map
   const invMap={}, stInv={}, invByStoreSku={};
@@ -494,14 +563,18 @@ function rebuildFromRaw(){
 // ── TAB ───────────────────────────────────────────────────────────────────────
 function switchTab(t){
   activeTab=t;
-  document.querySelectorAll(".tab-btn").forEach((b,i)=>b.classList.toggle("active",["store","brand","ranking","hot"][i]===t));
+  document.querySelectorAll(".tab-btn").forEach((b,i)=>b.classList.toggle("active",["store","brand","ranking","hot","time","inv"][i]===t));
   document.getElementById("storeTab").style.display=t==="store"?"grid":"none";
   document.getElementById("brandTab").style.display=t==="brand"?"block":"none";
   document.getElementById("rankingTab").style.display=t==="ranking"?"block":"none";
   document.getElementById("hotTab").style.display=t==="hot"?"block":"none";
+  document.getElementById("timeTab").style.display=t==="time"?"block":"none";
+  document.getElementById("invTab").style.display=t==="inv"?"block":"none";
   if(t==="brand") renderBrandSelector();
   if(t==="ranking") renderRanking();
   if(t==="hot") renderHot();
+  if(t==="time") renderTime();
+  if(t==="inv") renderInvAnalysis();
 }
 
 // ── STORE LIST ────────────────────────────────────────────────────────────────
@@ -549,11 +622,11 @@ function renderStoreContent(name){
     const warnIcon=isOut?'<span style="font-size:14px;margin-left:4px">⛔</span>':isWarn?'<span style="font-size:14px;margin-left:4px">⚠️</span>':'';
     return`<tr style="${rowStyle}"><td><span class="rank-badge ${rc}">${it.rank}</span>${warnIcon}</td><td><div style="font-weight:600">${it.品名}</div><div style="font-size:10px;color:var(--muted)">${it.款号}</div>${colorTags(it.销售颜色||{},it.库存颜色||{})}</td><td class="td-r" style="color:var(--muted)">¥${fmt(it.零售金额)}</td><td class="td-r"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div><span>¥${fmt(it.成交金额)}</span>${d?`<span class="disc-tag">${d}</span>`:""}</div></td><td class="td-r">${it.销售数量}件</td><td class="td-r"><span class="${invCls(it.库存数量)}">${it.库存数量>=0?it.库存数量+"件":it.库存数量}</span><span style="font-size:9px;color:var(--muted);display:block">${invLbl(it.库存数量)}</span></td><td class="td-r" style="color:var(--muted)">¥${fmt(it.库存金额,1)}</td></tr>`;
   }).join("");
-  document.getElementById("storeContent").innerHTML=`<div class="content-header"><div><div class="page-title">${name}</div><div class="page-meta">Top 10 单品 · 零售 vs 成交 · 库存</div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;"><div class="sort-tabs"><button class="sort-tab ${sortMode==="amount"?"active":""}" onclick="setSort('amount')">成交额</button><button class="sort-tab ${sortMode==="retail"?"active":""}" onclick="setSort('retail')">零售额</button><button class="sort-tab ${sortMode==="qty"?"active":""}" onclick="setSort('qty')">件数</button></div><button class="export-btn" onclick="exportStoreExcel('${name}')">📥 导出Excel</button></div></div>${stats}<div class="chart-box" style="margin-bottom:16px;">
-  <div class="chart-title">Top 10 成交额 vs 零售额</div>
+  document.getElementById("storeContent").innerHTML=`<div class="content-header"><div><div class="page-title">${name}</div><div class="page-meta">Top 20 单品 · 零售 vs 成交 · 库存</div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;"><div class="sort-tabs"><button class="sort-tab ${sortMode==="amount"?"active":""}" onclick="setSort('amount')">成交额</button><button class="sort-tab ${sortMode==="retail"?"active":""}" onclick="setSort('retail')">零售额</button><button class="sort-tab ${sortMode==="qty"?"active":""}" onclick="setSort('qty')">件数</button></div><button class="export-btn" onclick="exportStoreExcel('${name}')">📥 导出Excel</button></div></div>${stats}<div class="chart-box" style="margin-bottom:16px;">
+  <div class="chart-title">Top 20 成交额 vs 零售额</div>
   <div class="chart-wrap" style="height:180px"><canvas id="storeChart"></canvas></div>
 </div>
-<div class="sec-title">Top 10 销售单品</div><table class="top-table"><thead><tr><th>#</th><th>品名/款号</th><th class="r">零售金额</th><th class="r">成交金额</th><th class="r">件数</th><th class="r">库存</th><th class="r">库存金额</th></tr></thead><tbody>${rows}</tbody></table>`;
+<div class="sec-title">Top 20 销售单品</div><table class="top-table"><thead><tr><th>#</th><th>品名/款号</th><th class="r">零售金额</th><th class="r">成交金额</th><th class="r">件数</th><th class="r">库存</th><th class="r">库存金额</th></tr></thead><tbody>${rows}</tbody></table>`;
   // Draw store chart
   setTimeout(()=>{
     const chartItems = items.slice(0,10);
@@ -714,8 +787,8 @@ function exportStoreExcel(storeName){
   }
   const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(rows);
   ws['!cols']=[8,18,14,10,10,8,8,10,8,24,24].map(w=>({wch:w}));
-  XLSX.utils.book_append_sheet(wb,ws,'Top10销售');
-  XLSX.writeFile(wb,`${storeName}_销售Top10_${document.getElementById('periodBadge').textContent}.xlsx`);
+  XLSX.utils.book_append_sheet(wb,ws,'Top20销售');
+  XLSX.writeFile(wb,`${storeName}_销售Top20_${document.getElementById('periodBadge').textContent}.xlsx`);
 }
 function exportBrandExcel(brandName){
   const items=BDATA[brandName]||[];
@@ -751,7 +824,13 @@ function _nm(v){if(typeof v==='number')return isNaN(v)?0:v;let n=parseFloat(Stri
 function _fc(row,kws){const ks=Object.keys(row);for(const w of kws){const exact=ks.find(k=>k===w);if(exact)return exact;}for(const w of kws){const f=ks.find(k=>k.includes(w));if(f)return f;}return null;}
 function _gv(r,kws){const k=_fc(r,kws);return k?r[k]:'';}
 // Detect system from column headers
-function _detectSys(headers){const h=headers.join(',');if(h.includes('仓库')&&(h.includes('小计')||h.includes('铭牌价')))return'lx';return'cm';}
+function _detectSys(headers){
+  const h=headers.join(',');
+  if(h.includes('仓库')&&(h.includes('小计')||h.includes('铭牌价')))return'lx';
+  if(h.includes('店仓名称')&&h.includes('吊牌金额'))return'dm';
+  if(h.includes('店仓')&&h.includes('吊牌'))return'dm'; // stock sheet has 店仓 not 店仓名称
+  return'cm';
+}
 // 创美 sales parser
 function _parseSaleCM(r){
   let raw=_gv(r,['日期']),dv=0,c=String(_cc(raw));
@@ -771,6 +850,8 @@ function _parseStockCM(r){
   return{店仓:String(_cc(_gv(r,['店仓','门店','店铺']))).trim(),
     款号:String(_cc(_gv(r,['款号','货号']))).trim(),品名:String(_cc(_gv(r,['品名','商品名称','货品']))).trim(),
     品牌:String(_cc(_gv(r,['品牌']))).trim(),颜色:String(_cc(_gv(r,['颜色']))).trim(),
+    季节:String(_cc(_gv(r,['款号.季节.属性描述','季节']))).trim(),
+    年份:String(_cc(_gv(r,['年份']))).trim().replace(/年$/,''),
     库存数量:_nm(_cc(_gv(r,['库存数量','库存数']))),库存金额:Math.round(_nm(_cc(_gv(r,['库存金额','库存额'])))*10)/10};
 }
 // 拉夏 sales parser
@@ -789,7 +870,27 @@ function _parseStockLX(r){
   return{店仓:String(_gv(r,['仓库','门店','店仓'])).trim(),
     款号:String(_gv(r,['款号','货号'])).trim(),品名:String(_gv(r,['商品类别','商品名称','品名'])).trim(),
     品牌:'拉夏贝尔',颜色:'',
+    季节:String(_gv(r,['季节'])).trim(),年份:'',
     库存数量:_nm(_gv(r,['库存数量','库存数'])),库存金额:Math.round(_nm(_gv(r,['铭牌价小计','库存金额']))*10)/10};
+}
+// 大码 sales parser
+function _parseSaleDM(r){
+  let raw=_gv(r,['单据日期','日期']),dv=0;
+  if(typeof raw==='number'&&raw>20000000)dv=raw;
+  else{let c=String(raw);dv=parseInt(c.replace(/[-/]/g,''))||0;}
+  return{店仓:String(_gv(r,['店仓名称','店仓','门店'])).trim(),日期:dv,
+    款号:String(_gv(r,['款号'])).trim(),品名:String(_gv(r,['品名','商品名称'])).trim(),
+    品牌:'大码女装',颜色:String(_gv(r,['颜色'])).trim(),
+    数量:_nm(_gv(r,['零售数量','数量'])),零售金额:Math.round(_nm(_gv(r,['吊牌金额','零售金额']))*10)/10,
+    成交金额:Math.round(_nm(_gv(r,['成交金额']))*10)/10};
+}
+// 大码 stock parser
+function _parseStockDM(r){
+  return{店仓:String(_gv(r,['店仓','店仓名称','门店'])).trim(),
+    款号:String(_gv(r,['款号'])).trim(),品名:String(_gv(r,['品名','商品名称'])).trim(),
+    品牌:'大码女装',颜色:String(_gv(r,['颜色'])).trim(),
+    季节:String(_gv(r,['季节'])).trim(),年份:'',
+    库存数量:_nm(_gv(r,['库存数量'])),库存金额:Math.round(_nm(_gv(r,['库存金额']))*10)/10};
 }
 // 购物袋过滤（非商品）
 function _isMerchandise(name){if(!name)return true;return!/购物袋|手提袋|纸袋|无纺布.*袋/.test(name);}
@@ -810,13 +911,19 @@ function handleFile(e){
         const js=XLSX.utils.sheet_to_json(wb.Sheets[sn],{defval:'',raw:true});
         if(!js.length)return;
         const sys=_detectSys(Object.keys(js[0]));
-        js.forEach(r=>{const p=sys==='lx'?_parseSaleLX(r):_parseSaleCM(r);if(p.店仓&&_isMerchandise(p.品名))newSales.push(p);});
+        js.forEach(r=>{
+          const p=sys==='lx'?_parseSaleLX(r):sys==='dm'?_parseSaleDM(r):_parseSaleCM(r);
+          if(p.店仓&&_isMerchandise(p.品名))newSales.push(p);
+        });
       });
       iSheets.forEach(sn=>{
         const js=XLSX.utils.sheet_to_json(wb.Sheets[sn],{defval:'',raw:true});
         if(!js.length)return;
         const sys=_detectSys(Object.keys(js[0]));
-        js.forEach(r=>{const p=sys==='lx'?_parseStockLX(r):_parseStockCM(r);if(p.店仓)newInv.push(p);});
+        js.forEach(r=>{
+          const p=sys==='lx'?_parseStockLX(r):sys==='dm'?_parseStockDM(r):_parseStockCM(r);
+          if(p.店仓)newInv.push(p);
+        });
       });
       // Update raw data
       RAW_SALES=newSales;
@@ -1160,7 +1267,7 @@ function renderHot(){
       <div class="chart-wrap" style="height:180px"><canvas id="hotDonutChart"></canvas></div>
     </div>
     <div>
-      <div class="chart-title" style="margin-bottom:8px;">Top 10 单品成交额</div>
+      <div class="chart-title" style="margin-bottom:8px;">Top 20 单品成交额</div>
       <div class="chart-wrap" style="height:180px"><canvas id="hotBarChart"></canvas></div>
     </div>
   </div>`;
@@ -1253,6 +1360,256 @@ document.getElementById('storeItems').innerHTML='<div style="padding:20px 14px;f
   </div>
   <div id="hotContent"><div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div></div>
 </div>
+
+<!-- TIME ANALYSIS TAB -->
+<div id="timeTab" style="display:none;padding:18px 32px;overflow-y:visible;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:17px;font-weight:700;">📅 时间分析</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px;">按年度 · 季度 · 月份查看销售趋势与对比</div>
+    </div>
+    <div class="sort-tabs">
+      <button class="sort-tab active" onclick="setTimeView('month')">月度</button>
+      <button class="sort-tab" onclick="setTimeView('quarter')">季度</button>
+      <button class="sort-tab" onclick="setTimeView('year')">年度</button>
+    </div>
+  </div>
+  <div id="timeContent"><div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div></div>
+</div>
+
+<script>
+// ── TIME ANALYSIS ────────────────────────────────────────────────────────────
+let timeView='month';
+function setTimeView(v){
+  timeView=v;
+  document.querySelectorAll('#timeTab .sort-tab').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderTime();
+}
+
+function renderTime(){
+  const filtered=RAW_SALES.filter(r=>r['日期']>=dateFrom&&r['日期']<=dateTo);
+  if(!filtered.length){document.getElementById('timeContent').innerHTML='<div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div>';return;}
+
+  // Group by time period
+  const groups={};
+  filtered.forEach(r=>{
+    const d=String(r['日期']);if(d.length<8)return;
+    const y=d.slice(0,4),m=d.slice(4,6);
+    let key='';
+    if(timeView==='year')key=y+'年';
+    else if(timeView==='quarter'){
+      const q=Math.ceil(parseInt(m)/3);
+      key=y+'年Q'+q;
+    }else{
+      key=y+'年'+parseInt(m)+'月';
+    }
+    if(!groups[key])groups[key]={period:key,sortKey:timeView==='month'?d.slice(0,6):timeView==='quarter'?y+('0'+Math.ceil(parseInt(m)/3)).slice(-1):y,act:0,ret:0,qty:0,stores:new Set(),brands:{}};
+    groups[key].act+=r['成交金额']||0;
+    groups[key].ret+=r['零售金额']||0;
+    groups[key].qty+=r['数量']||0;
+    groups[key].stores.add(r['店仓']);
+    const brand=r['品牌']||'其他';
+    if(!groups[key].brands[brand])groups[key].brands[brand]={act:0,ret:0,qty:0};
+    groups[key].brands[brand].act+=r['成交金额']||0;
+    groups[key].brands[brand].ret+=r['零售金额']||0;
+    groups[key].brands[brand].qty+=r['数量']||0;
+  });
+
+  const periods=Object.values(groups).sort((a,b)=>a.sortKey.localeCompare(b.sortKey));
+  if(!periods.length){document.getElementById('timeContent').innerHTML='<div class="empty"><p>无数据</p></div>';return;}
+
+  const allBrands=[...new Set(filtered.map(r=>r['品牌']||'其他'))].sort();
+  const maxAct=Math.max(...periods.map(p=>p.act),1);
+
+  // Summary cards
+  const totalAct=periods.reduce((a,p)=>a+p.act,0);
+  const totalRet=periods.reduce((a,p)=>a+p.ret,0);
+  const totalQty=periods.reduce((a,p)=>a+p.qty,0);
+  const avgAct=totalAct/periods.length;
+
+  let html=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px;">
+    <div class="stat-box"><div class="s-label">总成交额</div><div class="s-val">¥${fmt(totalAct)}</div></div>
+    <div class="stat-box"><div class="s-label">总零售额</div><div class="s-val y">¥${fmt(totalRet)}</div></div>
+    <div class="stat-box"><div class="s-label">总件数</div><div class="s-val g">${fmt(totalQty,0)}件</div></div>
+    <div class="stat-box"><div class="s-label">平均${timeView==='month'?'月':timeView==='quarter'?'季度':'年'}成交</div><div class="s-val o">¥${fmt(avgAct)}</div></div>
+  </div>`;
+
+  // Chart
+  html+=`<div class="chart-box"><div class="chart-title">${timeView==='month'?'月度':timeView==='quarter'?'季度':'年度'}趋势</div><div class="chart-wrap" style="height:260px"><canvas id="timeChart"></canvas></div></div>`;
+
+  // Brand comparison chart
+  if(allBrands.length>1){
+    html+=`<div class="chart-box"><div class="chart-title">品牌${timeView==='month'?'月度':timeView==='quarter'?'季度':'年度'}对比</div><div class="chart-wrap" style="height:260px"><canvas id="timeBrandChart"></canvas></div></div>`;
+  }
+
+  // Detail table
+  html+=`<div style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:16px;overflow-x:auto;">
+    <table class="g-table"><thead><tr>
+      <th>时间段</th><th class="r">成交额</th><th class="r">零售额</th><th class="r">折扣率</th><th class="r">件数</th><th class="r">客单价</th><th class="r">门店数</th><th>占比</th>
+    </tr></thead><tbody>`;
+  periods.forEach(p=>{
+    const disc=p.ret>0?Math.round(p.act/p.ret*100):0;
+    const pct=(p.act/totalAct*100).toFixed(1);
+    const avgPrice=p.qty>0?Math.round(p.act/p.qty):0;
+    html+=`<tr>
+      <td style="font-weight:600">${p.period}</td>
+      <td class="td-r" style="font-weight:600;color:var(--accent)">¥${fmt(p.act)}</td>
+      <td class="td-r">¥${fmt(p.ret)}</td>
+      <td class="td-r">${disc}%</td>
+      <td class="td-r">${fmt(p.qty,0)}件</td>
+      <td class="td-r">¥${fmt(avgPrice,0)}</td>
+      <td class="td-r">${p.stores.size}</td>
+      <td><div style="display:flex;align-items:center;gap:5px"><div style="width:60px;background:var(--border);border-radius:3px;height:5px"><div style="width:${pct}%;height:5px;border-radius:3px;background:var(--accent)"></div></div><span style="font-size:10px;color:var(--muted)">${pct}%</span></div></td>
+    </tr>`;
+  });
+  html+=`</tbody></table></div>`;
+
+  // Brand breakdown table
+  if(allBrands.length>1){
+    html+=`<div style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:16px;margin-top:16px;overflow-x:auto;">
+    <div class="sec-title">品牌明细</div><table class="g-table"><thead><tr><th>品牌</th>`;
+    periods.forEach(p=>{html+=`<th class="r">${p.period}</th>`;});
+    html+=`<th class="r">合计</th></tr></thead><tbody>`;
+    allBrands.forEach(brand=>{
+      html+=`<tr><td style="font-weight:600">${brand}</td>`;
+      let brandTotal=0;
+      periods.forEach(p=>{
+        const v=p.brands[brand]?.act||0;brandTotal+=v;
+        html+=`<td class="td-r">¥${fmt(v)}</td>`;
+      });
+      html+=`<td class="td-r" style="font-weight:600;color:var(--accent)">¥${fmt(brandTotal)}</td></tr>`;
+    });
+    html+=`</tbody></table></div>`;
+  }
+
+  document.getElementById('timeContent').innerHTML=html;
+
+  // Draw charts
+  setTimeout(()=>{
+    destroyChart('timeChart');
+    const ctx=document.getElementById('timeChart')?.getContext('2d');
+    if(ctx){
+      chartInstances['timeChart']=new Chart(ctx,{type:'bar',data:{
+        labels:periods.map(p=>p.period),
+        datasets:[
+          {label:'成交额',data:periods.map(p=>Math.round(p.act)),backgroundColor:'rgba(124,92,191,.7)',borderRadius:4,order:2},
+          {label:'零售额',data:periods.map(p=>Math.round(p.ret)),backgroundColor:'rgba(124,92,191,.4)',borderRadius:4,order:3},
+          {label:'件数',data:periods.map(p=>p.qty),type:'line',borderColor:'#3db88a',backgroundColor:'rgba(61,184,138,.1)',yAxisID:'y1',tension:.3,pointRadius:4,order:1}
+        ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:11}}}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'¥'+fmt(v)}},y1:{position:'right',beginAtZero:true,grid:{display:false},ticks:{callback:v=>v+'件'}}}}});
+    }
+    if(allBrands.length>1){
+      destroyChart('timeBrandChart');
+      const ctx2=document.getElementById('timeBrandChart')?.getContext('2d');
+      if(ctx2){
+        const brandColors=['rgba(124,92,191,.7)','rgba(196,125,32,.7)','rgba(61,184,138,.7)','rgba(217,79,106,.7)','rgba(78,205,196,.7)','rgba(155,125,224,.7)'];
+        chartInstances['timeBrandChart']=new Chart(ctx2,{type:'bar',data:{
+          labels:periods.map(p=>p.period),
+          datasets:allBrands.map((b,i)=>({label:b,data:periods.map(p=>Math.round(p.brands[b]?.act||0)),backgroundColor:brandColors[i%brandColors.length],borderRadius:3}))
+        },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:11}}}},scales:{y:{beginAtZero:true,stacked:true,ticks:{callback:v=>'¥'+fmt(v)}},x:{stacked:true}}}});
+      }
+    }
+  },50);
+}
+</script>
+
+<!-- INVENTORY ANALYSIS TAB -->
+<div id="invTab" style="display:none;padding:18px 32px;overflow-y:visible;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:17px;font-weight:700;">📦 库存时间分析</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px;">按年份 · 季节分析库存构成，识别老货积压</div>
+    </div>
+    <div class="sort-tabs">
+      <button class="sort-tab active" onclick="setInvView('season')">按季节</button>
+      <button class="sort-tab" onclick="setInvView('yearseason')">按年份+季节</button>
+      <button class="sort-tab" onclick="setInvView('brand')">按品牌</button>
+    </div>
+  </div>
+  <div id="invContent"><div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div></div>
+</div>
+
+<script>
+let invView='season';
+function setInvView(v){
+  invView=v;
+  document.querySelectorAll('#invTab .sort-tab').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderInvAnalysis();
+}
+
+function renderInvAnalysis(){
+  if(!RAW_INV.length){document.getElementById('invContent').innerHTML='<div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div>';return;}
+  const groups={};
+  let totalQty=0,totalAmt=0,totalSku=new Set();
+  RAW_INV.forEach(r=>{
+    const season=r['季节']||'未知';
+    const year=r['年份']||'';
+    const brand=r['品牌']||'未知';
+    const qty=r['库存数量']||0;
+    const amt=r['库存金额']||0;
+    if(qty<=0)return;
+    totalQty+=qty;totalAmt+=amt;totalSku.add(r['款号']);
+    let key='';
+    if(invView==='season')key=season;
+    else if(invView==='yearseason')key=(year?year+'年':'')+season;
+    else key=brand;
+    if(!groups[key])groups[key]={label:key,qty:0,amt:0,skus:new Set(),stores:new Set(),items:[]};
+    groups[key].qty+=qty;groups[key].amt+=amt;groups[key].skus.add(r['款号']);groups[key].stores.add(r['店仓']);groups[key].items.push(r);
+  });
+  const seasonOrder={'春季':1,'春秋':1.5,'夏季':2,'秋季':3,'冬季':4,'未知':9};
+  let sorted=Object.values(groups);
+  if(invView==='yearseason')sorted.sort((a,b)=>{const ya=a.label.match(/(\d{4})/)?.[1]||'0',yb=b.label.match(/(\d{4})/)?.[1]||'0';if(ya!==yb)return yb.localeCompare(ya);const sa=a.label.replace(/\d{4}年?/,''),sb=b.label.replace(/\d{4}年?/,'');return(seasonOrder[sa]||9)-(seasonOrder[sb]||9);});
+  else if(invView==='season')sorted.sort((a,b)=>(seasonOrder[a.label]||9)-(seasonOrder[b.label]||9));
+  else sorted.sort((a,b)=>b.amt-a.amt);
+
+  let html=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px;">
+    <div class="stat-box"><div class="s-label">总库存件数</div><div class="s-val">${fmt(totalQty,0)}件</div></div>
+    <div class="stat-box"><div class="s-label">总库存金额</div><div class="s-val y">¥${fmt(totalAmt)}</div></div>
+    <div class="stat-box"><div class="s-label">库存款数</div><div class="s-val g">${totalSku.size}款</div></div>
+    <div class="stat-box"><div class="s-label">分类数</div><div class="s-val o">${sorted.length}个</div></div>
+  </div>`;
+  html+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;">
+    <div class="chart-box"><div class="chart-title">库存金额占比</div><div class="chart-wrap" style="height:220px"><canvas id="invDonut"></canvas></div></div>
+    <div class="chart-box"><div class="chart-title">库存件数分布</div><div class="chart-wrap" style="height:220px"><canvas id="invBar"></canvas></div></div>
+  </div>`;
+
+  sorted.forEach((g,gi)=>{
+    const pctAmt=(g.amt/totalAmt*100).toFixed(1);
+    let ageTag='';
+    if(invView==='yearseason'){
+      const yr=parseInt(g.label.match(/(\d{4})/)?.[1]||'9999');
+      if(yr<=2024)ageTag='<span style="background:rgba(217,79,106,.12);color:var(--warn);border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;margin-left:6px">⚠️ 老货积压</span>';
+      else if(yr===2025)ageTag='<span style="background:rgba(196,125,32,.12);color:var(--gold);border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;margin-left:6px">上季货品</span>';
+    }
+    const itemMap={};
+    g.items.forEach(r=>{const k=r['款号'];if(!itemMap[k])itemMap[k]={sku:r['款号'],name:r['品名'],brand:r['品牌'],qty:0,amt:0,stores:new Set()};itemMap[k].qty+=r['库存数量']||0;itemMap[k].amt+=r['库存金额']||0;itemMap[k].stores.add(r['店仓']);});
+    const topItems=Object.values(itemMap).sort((a,b)=>b.amt-a.amt).slice(0,10);
+    html+=`<div style="background:var(--card);border:1px solid var(--border);border-radius:11px;margin-bottom:10px;overflow:hidden;">
+      <div style="padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="document.getElementById('invg-${gi}').style.display=document.getElementById('invg-${gi}').style.display==='none'?'block':'none'">
+        <div style="flex:1"><div style="font-weight:700;font-size:14px">${g.label}${ageTag}</div><div style="font-size:11px;color:var(--muted);margin-top:3px">${g.skus.size}款 · ${g.stores.size}家门店</div></div>
+        <div style="text-align:right"><div style="font-size:13px;font-weight:700;color:var(--accent)">¥${fmt(g.amt)}</div><div style="font-size:10px;color:var(--muted)">${fmt(g.qty,0)}件 · 占${pctAmt}%</div></div>
+        <div style="width:80px"><div style="background:var(--border);border-radius:3px;height:6px"><div style="width:${Math.min(parseFloat(pctAmt),100)}%;height:6px;border-radius:3px;background:var(--accent)"></div></div></div>
+        <div style="font-size:11px;color:var(--muted)">▼</div>
+      </div>
+      <div id="invg-${gi}" style="display:none;padding:10px 16px 14px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:8px">库存金额 Top 10 款</div>
+        <table class="sb-table"><thead><tr><th>款号</th><th>品名</th><th>品牌</th><th class="r">件数</th><th class="r">金额</th><th class="r">门店数</th></tr></thead><tbody>`;
+    topItems.forEach(it=>{html+=`<tr><td>${it.sku}</td><td>${it.name}</td><td>${it.brand}</td><td class="td-r">${it.qty}件</td><td class="td-r" style="color:var(--accent);font-weight:600">¥${fmt(it.amt)}</td><td class="td-r">${it.stores.size}</td></tr>`;});
+    html+=`</tbody></table></div></div>`;
+  });
+
+  document.getElementById('invContent').innerHTML=html;
+  setTimeout(()=>{
+    const labels=sorted.map(g=>g.label);const amtData=sorted.map(g=>Math.round(g.amt));const qtyData=sorted.map(g=>g.qty);
+    const colors=['#7c5cbf','#9b7de0','#c47d20','#06d6a0','#e05050','#4ecdc4','#f0a060','#a080d0','#60c0a0','#d06080'];
+    destroyChart('invDonut');const ctx1=document.getElementById('invDonut')?.getContext('2d');
+    if(ctx1){chartInstances['invDonut']=new Chart(ctx1,{type:'doughnut',data:{labels,datasets:[{data:amtData,backgroundColor:colors.slice(0,labels.length),borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10}}}}}});}
+    destroyChart('invBar');const ctx2=document.getElementById('invBar')?.getContext('2d');
+    if(ctx2){chartInstances['invBar']=new Chart(ctx2,{type:'bar',data:{labels,datasets:[{label:'件数',data:qtyData,backgroundColor:'rgba(124,92,191,.6)',borderRadius:4},{label:'金额(万)',data:amtData.map(v=>Math.round(v/10000*10)/10),backgroundColor:'rgba(196,125,32,.5)',borderRadius:4,yAxisID:'y1'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'件'}},y1:{position:'right',beginAtZero:true,grid:{display:false},ticks:{callback:v=>v+'万'}}}}});}
+  },50);
+}
+</script>
 
 </body>
 </html>
