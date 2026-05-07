@@ -1258,8 +1258,9 @@ function _detectSys(headers){
   if(h.includes('仓库')&&(h.includes('小计')||h.includes('铭牌价')))return'lx';
   // 大码销售：店仓名称 + 吊牌
   if(h.includes('店仓名称')&&h.includes('吊牌'))return'dm';
-  // 大码库存：店仓 + (店款 / 单件在单 / 尺寸名 / 可配数量) — 大码库存特有字段
-  if(h.includes('店仓')&&(h.includes('店款')||h.includes('单件在单')||h.includes('可配数量')||h.includes('尺寸名')))return'dm';
+  // 大码库存：店仓 + (店款 / 单件在单 / 可配数量) — 这3个字段是大码库存独有，创美都没有
+  // 注意：不能用"尺寸名"判定——创美销售也有"尺寸名"列
+  if(h.includes('店仓')&&(h.includes('店款')||h.includes('单件在单')||h.includes('可配数量')))return'dm';
   // 大码销售/库存兜底：店仓 + 吊牌
   if(h.includes('店仓')&&h.includes('吊牌'))return'dm';
   return'cm';
