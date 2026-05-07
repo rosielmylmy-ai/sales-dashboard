@@ -358,7 +358,7 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
     <div class="brand-selector" id="brandSelector"></div>
   </div>
   <div id="brandContent" style="padding:0 32px 24px;overflow-y:visible;">
-    <div class="empty"><div class="e-icon">👆</div><p>选择上方品牌查看 Top 30 单品<br>及各店铺销售与库存明细</p></div>
+    <div class="empty"><div class="e-icon">👆</div><p>选择上方品牌查看 Top 50 单品<br>及各店铺销售与库存明细</p></div>
   </div>
 </div>
 
@@ -637,7 +637,7 @@ function rebuildFromRaw(){
   const dynamicBrands=[...new Set(Object.values(bSaleMap).map(x=>x.brand))].filter(Boolean);
   dynamicBrands.forEach(brand=>{ if(!BRAND_DOT[brand])BRAND_DOT[brand]=BRAND_PALETTE[Object.keys(BRAND_DOT).length%BRAND_PALETTE.length]; });
   for(const brand of dynamicBrands){
-    const bItems=Object.values(bSaleMap).filter(x=>x.brand===brand).sort((a,b)=>b.t_act-a.t_act).slice(0,30);
+    const bItems=Object.values(bSaleMap).filter(x=>x.brand===brand).sort((a,b)=>b.t_act-a.t_act).slice(0,50);
     newBdata[brand]=bItems.map(it=>{
       const k=brand+'||'+it.sku+'||'+it.name;
       const k2=brand+'||'+it.sku;
@@ -794,7 +794,7 @@ function renderBrandSelector(){
       <div style="font-size:11px;color:var(--muted);margin-top:3px">${fmt(b.qty)}件 · 零售¥${fmt(b.ret)}</div>
     </div>`).join('')}
   </div>
-  <div style="font-size:12px;color:var(--muted);text-align:center;padding:10px">👆 点击上方品牌卡片查看 Top 30 单品及各店铺明细</div>`;
+  <div style="font-size:12px;color:var(--muted);text-align:center;padding:10px">👆 点击上方品牌卡片查看 Top 50 单品及各店铺明细</div>`;
   document.getElementById("brandContent").innerHTML = compChart;
   setTimeout(()=>{
     destroyChart('brandCompChart');
@@ -856,7 +856,7 @@ function renderBrandContent(b){
     return`<div class="brand-item-row" style="${rowBg}"><div class="brand-item-header" id="bih-${idx}" onclick="toggleItem(${idx})"><div class="bi-rank"><span class="rank-badge ${rc}">${idx+1}</span>${anyWarn?(storesOut.length>0?'<span style="font-size:12px;margin-left:2px">⛔</span>':'<span style="font-size:12px;margin-left:2px">⚠️</span>'):''}</div><div class="bi-info"><div class="bi-name">${item.品名}${seasonTag(item.款号)}${anyWarn?`<span style="font-size:10px;font-weight:normal;color:${storesOut.length>0?'#f04e4e':'var(--gold)'};margin-left:6px">${storesOut.length>0?storesOut.length+'店售罄':storesLow.length+'店低库存'}</span>`:''}` +
     `</div><div class="bi-sku">${item.款号}</div>${colorTags(item.销售颜色||{},item.库存颜色||{})}</div><div class="bi-totals"><div class="bi-total"><div class="bt-label" style="${brandSortMode==='retail'?'color:var(--accent);font-weight:700':''}">零售金额</div><div class="bt-val" style="color:${brandSortMode==='retail'?'var(--accent)':'var(--muted)'}">¥${fmt(item.总零售金额)}</div></div><div class="bi-total"><div class="bt-label" style="${brandSortMode==='amount'?'color:var(--accent);font-weight:700':''}">成交金额</div><div class="bt-val" style="color:${brandSortMode==='amount'?'var(--accent)':'var(--warn)'}">¥${fmt(item.总成交金额)}${d?`<span class="disc-tag">${d}</span>`:''}</div></div><div class="bi-total"><div class="bt-label" style="${brandSortMode==='qty'?'color:var(--accent);font-weight:700':''}">总件数</div><div class="bt-val" style="color:${brandSortMode==='qty'?'var(--accent)':'var(--green)'}">${item.总销售件数}件</div></div><div class="bi-total"><div class="bt-label">总库存</div><div class="bt-val" style="color:${(item.总库存件数||0)===0?'#d94f6a':'var(--green)'}">${fmt(item.总库存件数||0)}件</div></div><div class="bi-total"><div class="bt-label">参与门店</div><div class="bt-val" style="color:var(--accent2)">${item.店铺明细.filter(s=>s.销售件数>0).length}店</div></div></div><div class="bi-arrow" id="bia-${idx}">▼</div></div><div class="store-breakdown" id="bib-${idx}"><div style="font-size:10px;color:var(--muted);margin-bottom:8px;">各门店销售与库存明细（灰色=有库存但未销售）</div><table class="sb-table"><thead><tr><th>门店</th><th class="r">销售件数</th><th class="r">零售金额</th><th class="r">成交金额</th><th class="r">库存件数</th><th class="r">库存金额</th></tr></thead><tbody>${storeRows}</tbody></table></div></div>`;
   }).join("");
-  document.getElementById("brandContent").innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;"><div style="display:flex;align-items:center;gap:9px;"><div style="width:11px;height:11px;border-radius:50%;background:${dot}"></div><div style="font-size:15px;font-weight:700">${b} — Top ${items.length} 销售单品</div><div style="font-size:11px;color:var(--muted)">点击单品展开各店铺明细</div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;"><div class="sort-tabs"><button class="sort-tab ${brandSortMode==='amount'?'active':''}" onclick="setBrandSort('amount')">按成交额</button><button class="sort-tab ${brandSortMode==='retail'?'active':''}" onclick="setBrandSort('retail')">按零售额</button><button class="sort-tab ${brandSortMode==='qty'?'active':''}" onclick="setBrandSort('qty')">按件数</button></div><button class="export-btn" onclick="exportBrandExcel('${b}')">📥 导出Excel</button></div></div>${statsHtml}<div class="sec-title">单品排名（点击展开店铺明细）</div>${itemsHtml}`;
+  document.getElementById("brandContent").innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;"><div style="display:flex;align-items:center;gap:9px;"><div style="width:11px;height:11px;border-radius:50%;background:${dot}"></div><div style="font-size:15px;font-weight:700">${b} — Top ${items.length} 销售单品</div><div style="font-size:11px;color:var(--muted)">点击单品展开各店铺明细</div></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;"><div class="sort-tabs"><button class="sort-tab ${brandSortMode==='amount'?'active':''}" onclick="setBrandSort('amount')">按成交额</button><button class="sort-tab ${brandSortMode==='retail'?'active':''}" onclick="setBrandSort('retail')">按零售额</button><button class="sort-tab ${brandSortMode==='qty'?'active':''}" onclick="setBrandSort('qty')">按件数</button></div><button class="export-btn" onclick="exportBrandExcel('${b}')">📥 导出Excel</button><button class="export-btn" style="background:rgba(108,99,255,.14);border-color:rgba(108,99,255,.35);color:#6c63ff" onclick="exportBrandPivot('${b}')">📊 导出分析透视表</button></div></div>${statsHtml}<div class="sec-title">单品排名（点击展开店铺明细）</div>${itemsHtml}`;
   // Draw brand detail chart - Top 20 items bar chart
   setTimeout(()=>{
     const top20 = items.slice(0,20);
@@ -922,6 +922,76 @@ function exportBrandExcel(brandName){
   const ws2=XLSX.utils.aoa_to_sheet(detailRows);ws2['!cols']=[6,18,14,12,20,8,10,10,8,10,8,24,24].map(w=>({wch:w}));
   XLSX.utils.book_append_sheet(wb,ws2,'各店铺颜色明细');
   XLSX.writeFile(wb,`${brandName}_品牌分析_${document.getElementById('periodBadge').textContent}.xlsx`);
+}
+
+// 导出"分析表"透视表：店铺 × Top50款 的销售数 / 库存
+function exportBrandPivot(brandName){
+  const items=(BDATA[brandName]||[]).slice(0,50);
+  if(!items.length){alert('该品牌暂无数据');return;}
+  const TOP_LABEL='TOP'+items.length+'款';
+  // 收集所有出现过的店铺(含只有库存的)
+  const storeSet=new Set();
+  items.forEach(it=>it.店铺明细.forEach(s=>storeSet.add(s.店仓)));
+  const stores=[...storeSet].sort();
+  // 构建店铺→款号→{sale,stock} 索引
+  const lookup={}; // store||sku → {sale,stock}
+  items.forEach(it=>it.店铺明细.forEach(s=>{
+    lookup[s.店仓+'||'+it.款号]={sale:s.销售件数||0,stock:s.库存件数||0};
+  }));
+  // 表头 4 行
+  const r0=[TOP_LABEL,null,null];
+  const r1=['品名',null,null];
+  const r2=['款号','TOP汇总',null];
+  const r3=['门店','销售数汇总','库存汇总'];
+  items.forEach((it,i)=>{
+    r0.push(i+1,null);
+    r1.push(it.品名||'',null);
+    r2.push(it.款号,null);
+    r3.push('销售数','库存');
+  });
+  const rows=[r0,r1,r2,r3];
+  // 各店铺行
+  const colTotalsSale=new Array(items.length).fill(0);
+  const colTotalsStock=new Array(items.length).fill(0);
+  let grandSale=0,grandStock=0;
+  for(const store of stores){
+    let storeSale=0,storeStock=0;
+    const cells=[];
+    items.forEach((it,i)=>{
+      const v=lookup[store+'||'+it.款号]||{sale:0,stock:0};
+      cells.push(v.sale||null,v.stock||null);
+      storeSale+=v.sale||0;storeStock+=v.stock||0;
+      colTotalsSale[i]+=v.sale||0;colTotalsStock[i]+=v.stock||0;
+    });
+    rows.push([store,storeSale||null,storeStock||null,...cells]);
+    grandSale+=storeSale;grandStock+=storeStock;
+  }
+  // 总计行
+  const totalCells=[];
+  items.forEach((it,i)=>totalCells.push(colTotalsSale[i],colTotalsStock[i]));
+  rows.push(['总计',grandSale,grandStock,...totalCells]);
+
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  // 列宽：第一列店铺名宽，汇总两列中等，每个款两列各 8
+  const cols=[{wch:18},{wch:11},{wch:10}];
+  for(let i=0;i<items.length;i++){cols.push({wch:8},{wch:8});}
+  ws['!cols']=cols;
+  // 合并表头：每款占两列(销售数+库存)
+  const merges=[];
+  for(let i=0;i<items.length;i++){
+    const c=3+i*2;
+    merges.push({s:{r:0,c},e:{r:0,c:c+1}}); // 排名 1/2/3...
+    merges.push({s:{r:1,c},e:{r:1,c:c+1}}); // 品名
+    merges.push({s:{r:2,c},e:{r:2,c:c+1}}); // 款号
+  }
+  // 第一列前三行合并成 "TOP30款 / 品名 / 款号" 标题
+  // "TOP汇总" 横跨 销售数汇总+库存汇总 两列
+  merges.push({s:{r:2,c:1},e:{r:2,c:2}});
+  ws['!merges']=merges;
+
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'分析表');
+  XLSX.writeFile(wb,`${brandName}_分析透视表_${_period()}.xlsx`);
 }
 
 // ── EXPORTS: Ranking / Hot / Time / Inv / Sale ──────────────────────────────
