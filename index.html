@@ -924,74 +924,73 @@ function exportBrandExcel(brandName){
   XLSX.writeFile(wb,`${brandName}_品牌分析_${document.getElementById('periodBadge').textContent}.xlsx`);
 }
 
-// 导出"分析表"透视表：店铺 × Top50款 的销售数 / 库存
+// 导出"分析表"透视表：店铺 × Top50款，根据当前排序按钮导出对应指标
 function exportBrandPivot(brandName){
   const items=(BDATA[brandName]||[]).slice(0,50);
   if(!items.length){alert('该品牌暂无数据');return;}
+  // 根据当前排序模式决定导出哪个指标
+  const metricLabel=brandSortMode==='retail'?'零售额':brandSortMode==='qty'?'销售数':'成交额';
   const TOP_LABEL='TOP'+items.length+'款';
-  // 收集所有出现过的店铺(含只有库存的)
   const storeSet=new Set();
   items.forEach(it=>it.店铺明细.forEach(s=>storeSet.add(s.店仓)));
   const stores=[...storeSet].sort();
-  // 构建店铺→款号→{sale,stock} 索引
-  const lookup={}; // store||sku → {sale,stock}
+  // 构建索引，同时保存件数、零售金额、成交金额
+  const lookup={};
   items.forEach(it=>it.店铺明细.forEach(s=>{
-    lookup[s.店仓+'||'+it.款号]={sale:s.销售件数||0,stock:s.库存件数||0};
+    lookup[s.店仓+'||'+it.款号]={sale:s.销售件数||0,stock:s.库存件数||0,ret:s.零售金额||0,act:s.成交金额||0};
   }));
+  const getMetricVal=v=>brandSortMode==='retail'?v.ret:brandSortMode==='qty'?v.sale:v.act;
   // 表头 4 行
   const r0=[TOP_LABEL,null,null];
   const r1=['品名',null,null];
   const r2=['款号','TOP汇总',null];
-  const r3=['门店','销售数汇总','库存汇总'];
+  const r3=['门店',metricLabel+'汇总','库存汇总'];
   items.forEach((it,i)=>{
     r0.push(i+1,null);
     r1.push(it.品名||'',null);
     r2.push(it.款号,null);
-    r3.push('销售数','库存');
+    r3.push(metricLabel,'库存');
   });
   const rows=[r0,r1,r2,r3];
   // 各店铺行
-  const colTotalsSale=new Array(items.length).fill(0);
+  const colTotalsMetric=new Array(items.length).fill(0);
   const colTotalsStock=new Array(items.length).fill(0);
-  let grandSale=0,grandStock=0;
+  let grandMetric=0,grandStock=0;
   for(const store of stores){
-    let storeSale=0,storeStock=0;
+    let storeMetric=0,storeStock=0;
     const cells=[];
     items.forEach((it,i)=>{
-      const v=lookup[store+'||'+it.款号]||{sale:0,stock:0};
-      cells.push(v.sale||null,v.stock||null);
-      storeSale+=v.sale||0;storeStock+=v.stock||0;
-      colTotalsSale[i]+=v.sale||0;colTotalsStock[i]+=v.stock||0;
+      const v=lookup[store+'||'+it.款号]||{sale:0,stock:0,ret:0,act:0};
+      const mv=getMetricVal(v);
+      cells.push(mv||null,v.stock||null);
+      storeMetric+=mv||0;storeStock+=v.stock||0;
+      colTotalsMetric[i]+=mv||0;colTotalsStock[i]+=v.stock||0;
     });
-    rows.push([store,storeSale||null,storeStock||null,...cells]);
-    grandSale+=storeSale;grandStock+=storeStock;
+    rows.push([store,storeMetric||null,storeStock||null,...cells]);
+    grandMetric+=storeMetric;grandStock+=storeStock;
   }
   // 总计行
   const totalCells=[];
-  items.forEach((it,i)=>totalCells.push(colTotalsSale[i],colTotalsStock[i]));
-  rows.push(['总计',grandSale,grandStock,...totalCells]);
+  items.forEach((it,i)=>totalCells.push(colTotalsMetric[i],colTotalsStock[i]));
+  rows.push(['总计',grandMetric,grandStock,...totalCells]);
 
   const ws=XLSX.utils.aoa_to_sheet(rows);
-  // 列宽：第一列店铺名宽，汇总两列中等，每个款两列各 8
   const cols=[{wch:18},{wch:11},{wch:10}];
   for(let i=0;i<items.length;i++){cols.push({wch:8},{wch:8});}
   ws['!cols']=cols;
-  // 合并表头：每款占两列(销售数+库存)
   const merges=[];
   for(let i=0;i<items.length;i++){
     const c=3+i*2;
-    merges.push({s:{r:0,c},e:{r:0,c:c+1}}); // 排名 1/2/3...
-    merges.push({s:{r:1,c},e:{r:1,c:c+1}}); // 品名
-    merges.push({s:{r:2,c},e:{r:2,c:c+1}}); // 款号
+    merges.push({s:{r:0,c},e:{r:0,c:c+1}});
+    merges.push({s:{r:1,c},e:{r:1,c:c+1}});
+    merges.push({s:{r:2,c},e:{r:2,c:c+1}});
   }
-  // 第一列前三行合并成 "TOP30款 / 品名 / 款号" 标题
-  // "TOP汇总" 横跨 销售数汇总+库存汇总 两列
   merges.push({s:{r:2,c:1},e:{r:2,c:2}});
   ws['!merges']=merges;
 
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'分析表');
-  XLSX.writeFile(wb,`${brandName}_分析透视表_${_period()}.xlsx`);
+  XLSX.writeFile(wb,`${brandName}_分析透视表_${metricLabel}_${_period()}.xlsx`);
 }
 
 // ── EXPORTS: Ranking / Hot / Time / Inv / Sale ──────────────────────────────
