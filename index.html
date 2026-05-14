@@ -18,22 +18,22 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 .header h1{font-size:20px;font-weight:700;background:linear-gradient(90deg,#7c5cbf,#9b7de0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .header .subtitle{font-size:11px;color:var(--muted);margin-top:3px;}
 .period-badge{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:5px 12px;font-size:12px;color:var(--accent2);}
-.upload-zone{margin:14px 32px;background:var(--card);border:2px dashed #c8b8f0;border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color .2s;}
+.upload-zone{margin:8px 32px;background:var(--card);border:2px dashed #c8b8f0;border-radius:10px;padding:6px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color .2s;}
 .upload-zone:hover{border-color:var(--accent);}
 .upload-zone input{display:none;}
-.upload-icon{width:38px;height:38px;background:rgba(124,92,191,.1);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
-.upload-text strong{display:block;font-size:13px;margin-bottom:2px;}
-.upload-text span{font-size:11px;color:var(--muted);}
-.upload-btn{margin-left:auto;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:12px;cursor:pointer;font-family:inherit;flex-shrink:0;}
-.upload-status{font-size:11px;color:var(--green);margin-top:2px;}
+.upload-icon{width:24px;height:24px;background:rgba(124,92,191,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.upload-text strong{display:block;font-size:12px;margin-bottom:1px;}
+.upload-text span{font-size:10px;color:var(--muted);}
+.upload-btn{margin-left:auto;background:var(--accent);color:#fff;border:none;border-radius:7px;padding:5px 12px;font-size:11px;cursor:pointer;font-family:inherit;flex-shrink:0;}
+.upload-status{font-size:10px;color:var(--green);margin-top:1px;}
 .tab-bar{display:flex;border-bottom:1px solid var(--border);padding:0 32px;background:var(--surface);}
 .tab-btn{padding:11px 22px;font-size:13px;font-family:inherit;background:none;border:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;font-weight:500;}
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
-.summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;padding:14px 32px;}
-.sum-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.04);}
-.sum-card .label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;}
-.sum-card .value{font-size:20px;font-weight:700;}
-.sum-card .sub{font-size:10px;color:var(--muted);margin-top:2px;}
+.summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:8px 32px;}
+.sum-card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:9px 13px;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.sum-card .label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
+.sum-card .value{font-size:15px;font-weight:700;}
+.sum-card .sub{font-size:9px;color:var(--muted);margin-top:1px;}
 .sum-card.v1 .value{color:var(--accent);}
 .sum-card.v2 .value{color:var(--accent2);}
 .sum-card.v3 .value{color:var(--gold);}
@@ -276,8 +276,31 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
   .grp-title{font-size:8px;padding:5px 10px 2px;}
 }
 
-
-
+/* 款铺分布矩阵 */
+.dist-scroll{overflow:auto;max-height:78vh;border:1px solid var(--border);border-radius:10px;background:var(--card);}
+.dist-table{border-collapse:separate;border-spacing:0;font-size:11px;}
+.dist-table th,.dist-table td{padding:6px 8px;border-bottom:1px solid var(--border);background:var(--card);white-space:nowrap;font-variant-numeric:tabular-nums;}
+.dist-table thead th{position:sticky;top:0;z-index:3;background:var(--surface);font-weight:600;color:var(--muted);font-size:10px;letter-spacing:.04em;}
+.dist-fixed{position:sticky;z-index:2;background:var(--card);}
+.dist-table thead .dist-fixed{z-index:4;background:var(--surface);}
+.dist-c0{left:0;min-width:36px;text-align:center;color:var(--muted);}
+.dist-c1{left:36px;min-width:170px;border-right:1px solid var(--border);}
+.dist-c2{left:206px;min-width:64px;text-align:right;}
+.dist-c3{left:270px;min-width:60px;text-align:right;}
+.dist-c4{left:330px;min-width:64px;text-align:right;border-right:2px solid var(--border);}
+.dist-store{min-width:62px;text-align:right;}
+.dist-cell{text-align:right;line-height:1.25;cursor:help;}
+.dist-cell.empty-cell{background:transparent;}
+.dist-cell.dist-active{background:rgba(61,184,138,.10);}
+.dist-cell.dist-stale{background:rgba(217,79,106,.10);}
+.dist-cell.dist-no-sale{background:rgba(150,140,180,.08);color:var(--muted);}
+.dist-num{font-weight:600;color:var(--text);}
+.dist-cell.dist-no-sale .dist-num{color:var(--muted);font-weight:500;}
+.dist-disc{font-size:10px;color:var(--muted);}
+.dist-table tbody tr:hover td{background:rgba(124,92,191,.06);}
+.dist-table tbody tr:hover td.dist-active{background:rgba(61,184,138,.18);}
+.dist-table tbody tr:hover td.dist-stale{background:rgba(217,79,106,.18);}
+.dist-table tbody tr:hover td.dist-no-sale{background:rgba(150,140,180,.16);}
 </style>
 </head>
 
@@ -332,6 +355,7 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
   <button class="tab-btn" onclick="switchTab('brand')">🏷️ 品牌分析</button>
   <button class="tab-btn" onclick="switchTab('ranking')">📊 门店排名</button>
   <button class="tab-btn" onclick="switchTab('hot')">🏆 全网爆款</button>
+  <button class="tab-btn" onclick="switchTab('dist')">📍 款铺分布</button>
   <button class="tab-btn" onclick="switchTab('time')">📅 时间分析</button>
   <button class="tab-btn" onclick="switchTab('inv')">📦 库存分析</button>
   <button class="tab-btn" onclick="switchTab('sale')">📈 销售分析</button>
@@ -362,7 +386,7 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 
@@ -661,6 +685,7 @@ function rebuildFromRaw(){
   if(activeTab==='global')renderGlobalTab();
   if(activeTab==='ranking')renderRanking();
   if(activeTab==='hot')renderHot();
+  if(activeTab==='dist')renderDist();
   if(activeTab==='time')renderTime();
   if(activeTab==='inv')renderInvAnalysis();
   if(activeTab==='sale')renderSaleAnalysis();
@@ -669,17 +694,19 @@ function rebuildFromRaw(){
 // ── TAB ───────────────────────────────────────────────────────────────────────
 function switchTab(t){
   activeTab=t;
-  document.querySelectorAll(".tab-btn").forEach((b,i)=>b.classList.toggle("active",["store","brand","ranking","hot","time","inv","sale"][i]===t));
+  document.querySelectorAll(".tab-btn").forEach((b,i)=>b.classList.toggle("active",["store","brand","ranking","hot","dist","time","inv","sale"][i]===t));
   document.getElementById("storeTab").style.display=t==="store"?"grid":"none";
   document.getElementById("brandTab").style.display=t==="brand"?"block":"none";
   document.getElementById("rankingTab").style.display=t==="ranking"?"block":"none";
   document.getElementById("hotTab").style.display=t==="hot"?"block":"none";
+  document.getElementById("distTab").style.display=t==="dist"?"block":"none";
   document.getElementById("timeTab").style.display=t==="time"?"block":"none";
   document.getElementById("invTab").style.display=t==="inv"?"block":"none";
   document.getElementById("saleTab").style.display=t==="sale"?"block":"none";
   if(t==="brand") renderBrandSelector();
   if(t==="ranking") renderRanking();
   if(t==="hot") renderHot();
+  if(t==="dist") renderDist();
   if(t==="time") renderTime();
   if(t==="inv") renderInvAnalysis();
   if(t==="sale") renderSaleAnalysis();
@@ -1323,11 +1350,15 @@ function _parseSaleDM(r){
 }
 // 大码 stock parser
 function _parseStockDM(r){
+  const qty=_nm(_gv(r,['库存数量']));
+  // 新版库存表无"库存金额"列时，用「标准价 × 库存数量」回算
+  let amt=_nm(_gv(r,['库存金额']));
+  if(!amt){const price=_nm(_gv(r,['标准价','吊牌价','会员价']));amt=qty*price;}
   return{店仓:String(_gv(r,['店仓','店仓名称','门店'])).trim(),
     款号:String(_gv(r,['款号'])).trim(),品名:String(_gv(r,['品名','商品名称'])).trim(),
     品牌:'大码女装',颜色:String(_gv(r,['颜色'])).trim(),
     季节:String(_gv(r,['季节'])).trim(),年份:'',
-    库存数量:_nm(_gv(r,['库存数量'])),库存金额:Math.round(_nm(_gv(r,['库存金额']))*10)/10};
+    库存数量:qty,库存金额:Math.round(amt*10)/10};
 }
 // 购物袋过滤（非商品）
 function _isMerchandise(name){if(!name)return true;return!/购物袋|手提袋|纸袋|无纺布.*袋/.test(name);}
@@ -2338,6 +2369,365 @@ function renderSaleAnalysis(){
     destroyChart('saleBar');const ctx2=document.getElementById('saleBar')?.getContext('2d');
     if(ctx2){chartInstances['saleBar']=new Chart(ctx2,{type:'bar',data:{labels,datasets:[{label:'件数',data:qtyData,backgroundColor:'rgba(124,92,191,.6)',borderRadius:4},{label:'成交额(万)',data:actData.map(v=>Math.round(v/10000*10)/10),backgroundColor:'rgba(196,125,32,.5)',borderRadius:4,yAxisID:'y1'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'件'}},y1:{position:'right',beginAtZero:true,grid:{display:false},ticks:{callback:v=>v+'万'}}}}});}
   },50);
+}
+</script>
+
+<!-- 款铺分布 TAB -->
+<div id="distTab" style="display:none;padding:18px 32px;overflow-y:visible;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:17px;font-weight:700;">📍 款铺分布</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px;">畅销款 × 店铺 矩阵 · 格内显示「累计销量 / 折扣率」· 悬停看完整四项</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+    <div class="sort-tabs">
+      <button class="sort-tab active" data-grp="sort" onclick="setDistSort('qtyTotal',this)">累计销量</button>
+      <button class="sort-tab" data-grp="sort" onclick="setDistSort('qty7',this)">7日销量</button>
+      <button class="sort-tab" data-grp="sort" onclick="setDistSort('actTotal',this)">成交额</button>
+    </div>
+    <div class="sort-tabs">
+      <button class="sort-tab" data-grp="top" onclick="setDistTopN(30,this)">Top30</button>
+      <button class="sort-tab active" data-grp="top" onclick="setDistTopN(50,this)">Top50</button>
+      <button class="sort-tab" data-grp="top" onclick="setDistTopN(100,this)">Top100</button>
+      <button class="sort-tab" data-grp="top" onclick="setDistTopN('all',this)">全部</button>
+    </div>
+    <button class="export-btn" onclick="exportDistExcel()">📥 导出完整矩阵</button>
+    </div>
+  </div>
+  <div id="distContent"><div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div></div>
+</div>
+
+<script>
+let distSort='qtyTotal';
+let distTopN=50;
+function setDistSort(v,btn){
+  distSort=v;
+  document.querySelectorAll('#distTab .sort-tab[data-grp="sort"]').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDist();
+}
+function setDistTopN(v,btn){
+  distTopN=v;
+  document.querySelectorAll('#distTab .sort-tab[data-grp="top"]').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDist();
+}
+
+// 日期数字 YYYYMMDD → Date 对象
+function _ymdToDate(n){
+  const s=String(n);
+  return new Date(parseInt(s.slice(0,4)),parseInt(s.slice(4,6))-1,parseInt(s.slice(6,8)));
+}
+function _dayDiff(a,b){
+  if(!a||!b)return 0;
+  return Math.round((_ymdToDate(b)-_ymdToDate(a))/86400000);
+}
+function _ymdAdd(n,days){
+  const d=_ymdToDate(n);d.setDate(d.getDate()+days);
+  return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
+}
+
+// 构建 (款号, 店仓) 矩阵
+function _buildDistData(){
+  if(!RAW_SALES.length)return null;
+  const fromN=dateFrom,toN=dateTo;
+  const sevenFromN=_ymdAdd(toN,-6);
+  const fourteenFromN=_ymdAdd(toN,-13);
+
+  const itemMap={};      // sku => 款汇总
+  const cellMap={};      // sku||store => 单格数据
+  const storeSet=new Set();
+
+  for(const r of RAW_SALES){
+    const d=r['日期'];if(d<fromN||d>toN)continue;
+    const sku=r['款号'];if(!sku)continue;
+    const store=r['店仓'];if(!store)continue;
+    const qty=r['数量']||0,ret=r['零售金额']||0,act=r['成交金额']||0;
+    if(!itemMap[sku])itemMap[sku]={sku,name:r['品名']||'',color:r['颜色']||'',brand:r['品牌']||'',
+      qtyTotal:0,qty7:0,qty14:0,actTotal:0,retTotal:0,
+      invTotal:0,storeInvCount:0,channelStores:new Set()};
+    const it=itemMap[sku];
+    it.qtyTotal+=qty;it.actTotal+=act;it.retTotal+=ret;
+    if(d>=sevenFromN)it.qty7+=qty;
+    if(d>=fourteenFromN)it.qty14+=qty;
+
+    storeSet.add(store);
+    const k=sku+'||'+store;
+    if(!cellMap[k])cellMap[k]={qty7:0,act7:0,ret7:0,qtyT:0,actT:0,retT:0,firstDate:d,lastDate:d,inv:0};
+    const c=cellMap[k];
+    c.qtyT+=qty;c.actT+=act;c.retT+=ret;
+    if(d>=sevenFromN){c.qty7+=qty;c.act7+=act;c.ret7+=ret;}
+    if(d<c.firstDate)c.firstDate=d;
+    if(d>c.lastDate)c.lastDate=d;
+  }
+
+  // 合入库存（即使该店无销售也算覆盖店）
+  for(const r of RAW_INV){
+    const sku=r['款号'],store=r['店仓'];
+    if(!sku||!store)continue;
+    const q=r['库存数量']||0;
+    if(itemMap[sku]){
+      itemMap[sku].invTotal+=q;
+      if(q>0)itemMap[sku].channelStores.add(store);
+    }
+    const k=sku+'||'+store;
+    if(cellMap[k]){
+      cellMap[k].inv+=q;
+    }else if(itemMap[sku]&&q>0){
+      storeSet.add(store);
+      cellMap[k]={qty7:0,act7:0,ret7:0,qtyT:0,actT:0,retT:0,firstDate:0,lastDate:0,inv:q};
+    }
+  }
+
+  // 派生指标
+  for(const k in cellMap){
+    const c=cellMap[k];
+    c.disc7=c.ret7>0?c.act7/c.ret7:0;
+    c.discT=c.retT>0?c.actT/c.retT:0;
+    c.recvDays=c.firstDate?(_dayDiff(c.firstDate,toN)+1):0;
+    c.staleDays=c.lastDate?_dayDiff(c.lastDate,toN):0;
+    c.sellRate=(c.qtyT+c.inv)>0?c.qtyT/(c.qtyT+c.inv):0;
+  }
+  for(const sku in itemMap){
+    const it=itemMap[sku];
+    it.storeInvCount=it.channelStores.size;
+    it.avgStoreInv=it.storeInvCount>0?it.invTotal/it.storeInvCount:0;
+    it.channelSellRate=(it.qtyTotal+it.invTotal)>0?it.qtyTotal/(it.qtyTotal+it.invTotal):0;
+    it.daily14=it.qty14/14;
+  }
+
+  // 店铺按总销量 desc 排序
+  const stores=[...storeSet];
+  const storeQty={};
+  for(const k in cellMap){const st=k.split('||')[1];storeQty[st]=(storeQty[st]||0)+cellMap[k].qtyT;}
+  stores.sort((a,b)=>(storeQty[b]||0)-(storeQty[a]||0));
+
+  return{itemMap,cellMap,stores};
+}
+
+function _sortDistItems(items){
+  if(distSort==='qty7')items.sort((a,b)=>b.qty7-a.qty7);
+  else if(distSort==='actTotal')items.sort((a,b)=>b.actTotal-a.actTotal);
+  else items.sort((a,b)=>b.qtyTotal-a.qtyTotal);
+  return items;
+}
+
+function renderDist(){
+  if(!RAW_SALES.length){document.getElementById('distContent').innerHTML='<div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div>';return;}
+  const data=_buildDistData();
+  if(!data||!Object.keys(data.itemMap).length){document.getElementById('distContent').innerHTML='<div class="empty"><p>当前时间范围内无销售数据</p></div>';return;}
+  const {itemMap,cellMap,stores}=data;
+  let items=_sortDistItems(Object.values(itemMap));
+  if(distTopN!=='all')items=items.slice(0,distTopN);
+
+  // 表头
+  let head=`<tr>
+    <th class="dist-fixed dist-c0">#</th>
+    <th class="dist-fixed dist-c1">品名 / 款号</th>
+    <th class="dist-fixed dist-c2">累计销量</th>
+    <th class="dist-fixed dist-c3">7日销量</th>
+    <th class="dist-fixed dist-c4">渠道库存</th>`;
+  for(const s of stores){
+    const short=s.replace(/^[^-]+-/,'').replace(/^江苏/,'').replace(/（加盟）/,'').slice(0,8);
+    head+=`<th class="dist-store" title="${s}">${short}</th>`;
+  }
+  head+=`</tr>`;
+
+  let rows='';
+  items.forEach((it,i)=>{
+    let row=`<tr>
+      <td class="dist-fixed dist-c0">${i+1}</td>
+      <td class="dist-fixed dist-c1"><div style="font-weight:600">${it.name||'—'}</div><div style="font-size:10px;color:var(--muted)">${it.sku}${it.color?' · '+it.color:''}</div></td>
+      <td class="dist-fixed dist-c2"><strong>${it.qtyTotal}</strong></td>
+      <td class="dist-fixed dist-c3" style="color:var(--accent)">${it.qty7}</td>
+      <td class="dist-fixed dist-c4" style="color:var(--muted)">${it.invTotal}</td>`;
+    for(const s of stores){
+      const c=cellMap[it.sku+'||'+s];
+      if(!c||(c.qtyT===0&&c.inv===0)){
+        row+=`<td class="dist-cell empty-cell"></td>`;
+      }else{
+        let cls='dist-no-sale';
+        if(c.qtyT>0)cls=(c.staleDays>=7?'dist-stale':'dist-active');
+        const discTxt=c.discT?c.discT.toFixed(2):(c.inv>0?'—':'');
+        const numTxt=c.qtyT>0?c.qtyT:(c.inv>0?'·':'');
+        const tip=`近7销:${c.qty7} 折扣:${c.disc7?c.disc7.toFixed(2):'—'}\n累计销:${c.qtyT} 折扣:${c.discT?c.discT.toFixed(2):'—'}\n收货:${c.recvDays}天 断销:${c.staleDays}天\n库存:${c.inv} 进销率:${(c.sellRate*100).toFixed(0)}%`;
+        row+=`<td class="dist-cell ${cls}" title="${tip}"><div class="dist-num">${numTxt}</div><div class="dist-disc">${discTxt}</div></td>`;
+      }
+    }
+    row+=`</tr>`;
+    rows+=row;
+  });
+
+  const totalQty=items.reduce((s,x)=>s+x.qtyTotal,0);
+  const totalQty7=items.reduce((s,x)=>s+x.qty7,0);
+  const totalInv=items.reduce((s,x)=>s+x.invTotal,0);
+
+  const stat=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:14px;">
+    <div class="stat-box"><div class="s-label">展示款数</div><div class="s-val">${items.length}款</div></div>
+    <div class="stat-box"><div class="s-label">覆盖店铺</div><div class="s-val o">${stores.length}家</div></div>
+    <div class="stat-box"><div class="s-label">累计销量</div><div class="s-val g">${fmt(totalQty,0)}件</div></div>
+    <div class="stat-box"><div class="s-label">7日销量</div><div class="s-val y">${fmt(totalQty7,0)}件</div></div>
+  </div>`;
+
+  const legend=`<div style="display:flex;gap:14px;font-size:11px;color:var(--muted);margin-bottom:10px;flex-wrap:wrap">
+    <span><span style="display:inline-block;width:11px;height:11px;border-radius:3px;background:rgba(61,184,138,.30);vertical-align:middle"></span> 有销售</span>
+    <span><span style="display:inline-block;width:11px;height:11px;border-radius:3px;background:rgba(217,79,106,.25);vertical-align:middle"></span> 断销 ≥ 7 天</span>
+    <span><span style="display:inline-block;width:11px;height:11px;border-radius:3px;background:rgba(150,140,180,.20);vertical-align:middle"></span> 仅库存零销售</span>
+    <span style="margin-left:auto">格内：<strong>累计销量</strong> / 折扣率 · 悬停看完整四项指标</span>
+  </div>`;
+
+  document.getElementById('distContent').innerHTML=stat+legend+`<div class="dist-scroll"><table class="dist-table"><thead>${head}</thead><tbody>${rows}</tbody></table></div>`;
+}
+
+// 导出完整矩阵（方案 A：复刻 Excel 4 行 × 2 列结构）
+function exportDistExcel(){
+  if(!RAW_SALES.length){alert('无数据可导出');return;}
+  const data=_buildDistData();
+  if(!data){alert('无数据可导出');return;}
+  const {itemMap,cellMap,stores}=data;
+  let items=_sortDistItems(Object.values(itemMap));
+  if(distTopN!=='all')items=items.slice(0,distTopN);
+
+  const rows=[];
+  // 表头 4 行（左侧 4 列 + 每店 2 列）
+  const hdr=(c1,c2,c3,c4,storeLabel)=>{
+    const r=['',c1,c2,c3,'',''];
+    for(const s of stores){r.push(storeLabel?s:'');r.push('');}
+    return r;
+  };
+  rows.push(['图片','款色号','总销量','近7日销量','',''].concat(stores.flatMap(s=>[s,''])));
+  rows.push(['','','渠道库存','店铺库存','',''].concat(stores.flatMap(()=>['',''])));
+  rows.push(['','','有货店铺数','店均库存','',''].concat(stores.flatMap(()=>['',''])));
+  rows.push(['','','近14天销售力','进销率','',''].concat(stores.flatMap(()=>['','']))) ;
+
+  items.forEach(it=>{
+    const dailyTxt=it.daily14?(Math.round(it.daily14*10)/10):'';
+    const channelSellPct=(it.channelSellRate*100).toFixed(0)+'%';
+    const avgStoreInv=it.avgStoreInv?Math.round(it.avgStoreInv*10)/10:0;
+    // 4 行块
+    const line1=['',it.sku+(it.color?' '+it.color:''),it.qtyTotal,it.qty7,'近七天销量','近七天折扣'];
+    const line2=['','',it.invTotal,it.invTotal,'累计销量','累计折扣'];
+    const line3=['','',it.storeInvCount,avgStoreInv,'收货天数','断销天数'];
+    const line4=['','',dailyTxt,channelSellPct,'总库存','进销率'];
+    for(const s of stores){
+      const c=cellMap[it.sku+'||'+s];
+      if(!c){
+        line1.push('','');line2.push('','');line3.push('','');line4.push('','');
+      }else{
+        line1.push(c.qty7||'',c.disc7?Number(c.disc7.toFixed(2)):'');
+        line2.push(c.qtyT||'',c.discT?Number(c.discT.toFixed(2)):'');
+        line3.push(c.recvDays||'',c.staleDays||'');
+        line4.push(c.inv||'',(c.sellRate*100).toFixed(0)+'%');
+      }
+    }
+    rows.push(line1,line2,line3,line4);
+  });
+
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  // 列宽
+  const cols=[{wch:6},{wch:18},{wch:10},{wch:10},{wch:10},{wch:10}];
+  for(let i=0;i<stores.length;i++){cols.push({wch:8});cols.push({wch:8});}
+  ws['!cols']=cols;
+  // 行高：表头稍高，数据行紧凑
+  const rowHeights=[{hpt:24},{hpt:24},{hpt:24},{hpt:24}];
+  for(let i=0;i<items.length*4;i++)rowHeights.push({hpt:18});
+  ws['!rows']=rowHeights;
+
+  // 颜色常量
+  const C_PURPLE='4B2C8A',C_PURPLE_LT='EFE9FA',C_ZEBRA='F8F5FF';
+  const C_GREEN_LT='DEF5EB',C_RED_LT='FCE3E8',C_GRAY_LT='F0EEF4';
+  const C_BORDER='D8D0F0',C_TEXT='1A1A2D',C_MUTED='9080B0';
+  const C_RED='D94F6A',C_GREEN='3DB88A',C_GOLD='C47D20';
+  const bd=()=>({style:'thin',color:{rgb:C_BORDER}});
+  const border=()=>({top:bd(),bottom:bd(),left:bd(),right:bd()});
+
+  // 遍历每个单元格写样式
+  const range=XLSX.utils.decode_range(ws['!ref']);
+  for(let R=range.s.r;R<=range.e.r;R++){
+    const isHeader=R<4;
+    const itemIdx=isHeader?-1:Math.floor((R-4)/4);
+    const blockRow=isHeader?R:(R-4)%4;
+    const isZebra=!isHeader&&itemIdx%2===1;
+    const isBlockEnd=!isHeader&&blockRow===3;
+    for(let C=range.s.c;C<=range.e.c;C++){
+      const addr=XLSX.utils.encode_cell({r:R,c:C});
+      if(!ws[addr])ws[addr]={t:'s',v:''};
+      const v=ws[addr].v;
+      const isLeftFixed=C<6;
+      const storeCol=C-6;
+      const blockCol=storeCol%2;
+      const isStoreBoundary=!isLeftFixed&&blockCol===1;
+
+      const s={
+        font:{name:'微软雅黑',sz:10,color:{rgb:C_TEXT}},
+        alignment:{vertical:'center',horizontal:'center',wrapText:true},
+        border:border()
+      };
+
+      if(isHeader){
+        // 表头 4 行：紫底白字加粗
+        s.font.bold=true;s.font.sz=11;s.font.color={rgb:'FFFFFF'};
+        s.fill={patternType:'solid',fgColor:{rgb:C_PURPLE}};
+      }else if(isLeftFixed){
+        // 左 6 列：浅紫底加粗
+        s.font.bold=true;
+        s.fill={patternType:'solid',fgColor:{rgb:C_PURPLE_LT}};
+        if(C===1)s.alignment.horizontal='left';
+        else if(C===4||C===5){s.font.color={rgb:C_MUTED};s.font.sz=9;s.font.bold=false;}
+        else s.alignment.horizontal='right';
+      }else{
+        // 数据区：店铺 × 款 矩阵
+        s.alignment.horizontal='right';
+        if(isZebra)s.fill={patternType:'solid',fgColor:{rgb:C_ZEBRA}};
+        if(blockRow<=1&&blockCol===0){
+          // 销量格子
+          if(typeof v==='number'&&v>0){
+            s.font.bold=true;
+            s.fill={patternType:'solid',fgColor:{rgb:C_GREEN_LT}};
+          }
+        }else if(blockRow<=1&&blockCol===1){
+          // 折扣格子
+          if(typeof v==='number'&&v>0){
+            if(v<0.7){s.font.color={rgb:C_RED};s.font.bold=true;}
+            else if(v>=0.9)s.font.color={rgb:C_GREEN};
+            else s.font.color={rgb:C_GOLD};
+          }
+        }else if(blockRow===2&&blockCol===1){
+          // 断销天数
+          if(typeof v==='number'&&v>=7){
+            s.font.color={rgb:C_RED};s.font.bold=true;
+            s.fill={patternType:'solid',fgColor:{rgb:C_RED_LT}};
+          }
+        }else if(blockRow===3&&blockCol===0){
+          // 总库存：库存>0 但累计销量为 0 的格子打灰色（仅库存）
+          // 通过查同款同店上方 blockRow=1 的累计销量
+          const qtyAddr=XLSX.utils.encode_cell({r:R-2,c:C});
+          const qtyVal=ws[qtyAddr]?ws[qtyAddr].v:0;
+          if(typeof v==='number'&&v>0&&(!qtyVal||qtyVal===0)){
+            s.fill={patternType:'solid',fgColor:{rgb:C_GRAY_LT}};
+            s.font.color={rgb:C_MUTED};
+          }
+        }
+      }
+      // 块末加粗下边框，分隔款
+      if(isBlockEnd)s.border.bottom={style:'medium',color:{rgb:C_PURPLE}};
+      // 店铺间加粗右边框，每 2 列分隔
+      if(isStoreBoundary)s.border.right={style:'medium',color:{rgb:C_BORDER}};
+      // 左侧固定区右边界
+      if(C===5)s.border.right={style:'medium',color:{rgb:C_PURPLE}};
+
+      ws[addr].s=s;
+    }
+  }
+
+  // 冻结窗格：锁 4 行表头 + 6 列左侧
+  ws['!freeze']={xSplit:'6',ySplit:'4',topLeftCell:'G5',activePane:'bottomRight',state:'frozen'};
+
+  const wb=XLSX.utils.book_new();
+  if(!wb.Workbook)wb.Workbook={};
+  wb.Workbook.Views=[{RTL:false,zoom:90}];
+  XLSX.utils.book_append_sheet(wb,ws,'款铺分布');
+  XLSX.writeFile(wb,`款铺分布_${_period()}.xlsx`);
 }
 </script>
 
