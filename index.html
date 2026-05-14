@@ -330,13 +330,14 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
   <div class="period-badge" id="periodBadge">未上传数据</div>
 </div>
 <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
-  <input type="file" id="fileInput" accept=".xlsx,.xls" onchange="handleFile(event)">
+  <input type="file" id="fileInput" accept=".xlsx,.xls" multiple onchange="handleFile(event)">
   <div class="upload-icon">📂</div>
   <div class="upload-text">
     <strong>上传新数据</strong>
-    <span>支持 .xlsx，创美系统 + 拉夏系统均可，需包含「销售」和「库存」工作表</span>
+    <span>支持 .xlsx，可多选；后续上传将追加到现有数据（不去重）</span>
     <div class="upload-status" id="uploadStatus">请上传Excel数据文件</div>
   </div>
+  <button class="upload-btn" id="clearBtn" onclick="event.stopPropagation();clearAllUpload()" style="display:none;background:transparent;color:var(--warn);border:1px solid var(--warn);margin-right:4px;">清空</button>
   <button class="upload-btn" onclick="event.stopPropagation();document.getElementById('fileInput').click()">选择文件</button>
 </div>
 
@@ -1361,7 +1362,17 @@ function _parseStockDM(r){
     库存数量:qty,库存金额:Math.round(amt*10)/10};
 }
 // 购物袋过滤（非商品）
-function _isMerchandise(name){if(!name)return true;return!/购物袋|手提袋|纸袋|无纺布.*袋/.test(name);}
+function _isMerchandise(name){if(!name)return true;return!/购物袋|手提袋|纸袋|无纺布.*袋|复杂促销|满件折额|模特|衣架|裤架|试衣间|照明灯|展示架|陈列|道具/.test(name);}
+// 行分类：返回该行属于哪一类过滤原因（用于统计报告）
+function _filterCat(p){
+  if(_isAggregateRow(p))return'agg';                                            // 汇总/合计行
+  const n=String(p.品名||'').trim();
+  if(/复杂促销|满件折额/.test(n))return'promo';                                  // 促销记账行
+  if(/购物袋|手提袋|纸袋|无纺布.*袋/.test(n))return'bag';                         // 包装类
+  if(/模特|衣架|裤架|试衣间|照明灯|展示架|陈列|道具/.test(n))return'fixture';     // 陈列道具
+  if(!String(p.店仓||'').trim())return'noStore';                                 // 缺店仓
+  return'ok';
+}
 // 汇总/合计行过滤：Excel 末尾的合计行会把 店仓/款号/品名 写成"合计/汇总/总计/小计/总和"，要剔除
 function _isAggregateRow(p){
   const re=/^(合计|总计|汇总|小计|总和|合并|total|subtotal)$/i;
@@ -1371,62 +1382,146 @@ function _isAggregateRow(p){
   return false;
 }
 
-function handleFile(e){
-  const file=e.target.files[0];if(!file)return;
-  document.getElementById("uploadStatus").textContent="⏳ 正在解析…";
-  const reader=new FileReader();
-  reader.onload=function(ev){
-    try{
-      const wb=XLSX.read(ev.target.result,{type:"array",raw:true,cellDates:true});
-      const sSheets=wb.SheetNames.filter(n=>n.includes("销售"));
-      const iSheets=wb.SheetNames.filter(n=>n.includes("库存"));
-      if(!sSheets.length||!iSheets.length)throw new Error("未找到销售或库存工作表");
-      // Parse all sales sheets
-      const newSales=[];const newInv=[];
-      sSheets.forEach(sn=>{
-        const js=XLSX.utils.sheet_to_json(wb.Sheets[sn],{defval:'',raw:true});
-        if(!js.length)return;
-        const sys=_detectSys(Object.keys(js[0]));
-        js.forEach(r=>{
-          const p=sys==='lx'?_parseSaleLX(r):sys==='dm'?_parseSaleDM(r):_parseSaleCM(r);
-          if(p.店仓&&_isMerchandise(p.品名)&&!_isAggregateRow(p))newSales.push(p);
+// 已上传文件元信息（累计），用于多文件追加场景下展示
+let UPLOADED_FILES=[];
+
+// 解析单个文件 → Promise<{sales, inv, stat, version, name, error?}>
+function _parseOneFile(file){
+  return new Promise(resolve=>{
+    const reader=new FileReader();
+    reader.onload=function(ev){
+      try{
+        const wb=XLSX.read(ev.target.result,{type:"array",raw:true,cellDates:true});
+        const sSheets=wb.SheetNames.filter(n=>n.includes("销售"));
+        const iSheets=wb.SheetNames.filter(n=>n.includes("库存"));
+        if(!sSheets.length&&!iSheets.length){
+          return resolve({name:file.name,error:'未找到"销售"或"库存"工作表（可能是分析报表/模板）'});
+        }
+        const stat={s:{agg:0,promo:0,bag:0,fixture:0,noStore:0},i:{agg:0,promo:0,bag:0,fixture:0,noStore:0}};
+        const sales=[],inv=[];
+        sSheets.forEach(sn=>{
+          const js=XLSX.utils.sheet_to_json(wb.Sheets[sn],{defval:'',raw:true});
+          if(!js.length)return;
+          const sys=_detectSys(Object.keys(js[0]));
+          js.forEach(r=>{
+            const p=sys==='lx'?_parseSaleLX(r):sys==='dm'?_parseSaleDM(r):_parseSaleCM(r);
+            const cat=_filterCat(p);
+            if(cat==='ok')sales.push(p);else stat.s[cat]++;
+          });
         });
-      });
-      iSheets.forEach(sn=>{
-        const js=XLSX.utils.sheet_to_json(wb.Sheets[sn],{defval:'',raw:true});
-        if(!js.length)return;
-        const sys=_detectSys(Object.keys(js[0]));
-        js.forEach(r=>{
-          const p=sys==='lx'?_parseStockLX(r):sys==='dm'?_parseStockDM(r):_parseStockCM(r);
-          if(p.店仓&&_isMerchandise(p.品名)&&!_isAggregateRow(p))newInv.push(p);
+        iSheets.forEach(sn=>{
+          const js=XLSX.utils.sheet_to_json(wb.Sheets[sn],{defval:'',raw:true});
+          if(!js.length)return;
+          const sys=_detectSys(Object.keys(js[0]));
+          js.forEach(r=>{
+            const p=sys==='lx'?_parseStockLX(r):sys==='dm'?_parseStockDM(r):_parseStockCM(r);
+            const cat=_filterCat(p);
+            if(cat==='ok')inv.push(p);else stat.i[cat]++;
+          });
         });
-      });
-      // Update raw data
-      RAW_SALES=newSales;
-      RAW_INV=newInv.filter(r=>r.品牌!=='不分品牌');
-      // 统一款号-品名(用销售里更具体的品名覆盖库存里的商品类别)
-      unifyItemNames();
-      // 构建款号季节映射(供所有tab使用)
-      buildSkuSeasonMap();
-      // Update date range
-      const dates=RAW_SALES.map(r=>r['日期']).filter(Boolean);
-      if(dates.length){
-        dateFrom=Math.min(...dates);dateTo=Math.max(...dates);
-        const toStr=d=>{const s=String(d);return s.slice(0,4)+'-'+s.slice(4,6)+'-'+s.slice(6,8);};
-        document.getElementById('dateFrom').value=toStr(dateFrom);
-        document.getElementById('dateTo').value=toStr(dateTo);
-        const fd=fmtDate(String(dateFrom)),td=fmtDate(String(dateTo));
-        document.getElementById('dateRangeLabel').textContent=fd+' – '+td;
-        document.getElementById('periodBadge').textContent=fd+' – '+td;
+        if(!sales.length&&!inv.length){
+          return resolve({name:file.name,error:'解析后没有任何有效销售/库存记录'});
+        }
+        const mt=new Date(file.lastModified);
+        const version=`${mt.getFullYear()}-${(mt.getMonth()+1).toString().padStart(2,'0')}-${mt.getDate().toString().padStart(2,'0')}`;
+        resolve({name:file.name,sales,inv,stat,version});
+      }catch(err){
+        resolve({name:file.name,error:err.message});
       }
-      // Assign brand colors dynamically
-      const newBrands=[...new Set(RAW_SALES.map(r=>r['品牌']).filter(Boolean))];
-      newBrands.forEach(b=>{ if(!BRAND_DOT[b]) BRAND_DOT[b]=BRAND_PALETTE[Object.keys(BRAND_DOT).length%BRAND_PALETTE.length]; });
-      document.getElementById("uploadStatus").textContent="✅ 已加载："+file.name+" ("+RAW_SALES.length+"条销售/"+RAW_INV.length+"条库存)";
-      rebuildFromRaw();
-    }catch(err){document.getElementById("uploadStatus").textContent="❌ 解析失败："+err.message;}
-  };
-  reader.readAsArrayBuffer(file);
+    };
+    reader.onerror=()=>resolve({name:file.name,error:'文件读取失败'});
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+async function handleFile(e){
+  const files=Array.from(e.target.files);if(!files.length)return;
+  const statusEl=document.getElementById("uploadStatus");
+  statusEl.textContent=`⏳ 正在解析 ${files.length} 个文件…`;
+
+  const newSalesAll=[],newInvAll=[],successFiles=[],errorFiles=[];
+  for(const file of files){
+    const r=await _parseOneFile(file);
+    if(r.error){errorFiles.push(r);continue;}
+    newSalesAll.push(...r.sales);
+    newInvAll.push(...r.inv);
+    successFiles.push(r);
+  }
+
+  // 全部失败
+  if(!newSalesAll.length&&!newInvAll.length){
+    statusEl.textContent="❌ 所有文件均未提取到有效数据";
+    const detail=errorFiles.map(r=>`• ${r.name}：${r.error}`).join('\n');
+    alert('⚠️ 所有文件均无效。\n\n'+detail+'\n\n可能原因：\n• 文件是分析报表/矩阵模板\n• 列名与预期不符（创美/拉夏/大码三种格式之外）');
+    document.getElementById('fileInput').value='';
+    return;
+  }
+
+  // 追加到现有数据（6A：不去重）
+  RAW_SALES=[...RAW_SALES,...newSalesAll];
+  RAW_INV=[...RAW_INV,...newInvAll].filter(r=>r.品牌!=='不分品牌');
+  UPLOADED_FILES.push(...successFiles);
+
+  // 后处理
+  unifyItemNames();
+  buildSkuSeasonMap();
+  const dates=RAW_SALES.map(r=>r['日期']).filter(Boolean);
+  if(dates.length){
+    dateFrom=Math.min(...dates);dateTo=Math.max(...dates);
+    const toStr=d=>{const s=String(d);return s.slice(0,4)+'-'+s.slice(4,6)+'-'+s.slice(6,8);};
+    document.getElementById('dateFrom').value=toStr(dateFrom);
+    document.getElementById('dateTo').value=toStr(dateTo);
+    const fd=fmtDate(String(dateFrom)),td=fmtDate(String(dateTo));
+    document.getElementById('dateRangeLabel').textContent=fd+' – '+td;
+    document.getElementById('periodBadge').textContent=fd+' – '+td;
+  }
+  const newBrands=[...new Set(RAW_SALES.map(r=>r['品牌']).filter(Boolean))];
+  newBrands.forEach(b=>{if(!BRAND_DOT[b])BRAND_DOT[b]=BRAND_PALETTE[Object.keys(BRAND_DOT).length%BRAND_PALETTE.length];});
+
+  // 拼状态栏：累计文件数 + 总记录数 + 本次过滤摘要
+  const fmtFilter=(s)=>{const lbl={agg:'汇总',promo:'促销',bag:'包装',fixture:'道具',noStore:'缺店仓'};const a=[];for(const k in s)if(s[k]>0)a.push(`${s[k]}${lbl[k]}`);return a.join('+');};
+  const totalFiltered={s:{agg:0,promo:0,bag:0,fixture:0,noStore:0},i:{agg:0,promo:0,bag:0,fixture:0,noStore:0}};
+  successFiles.forEach(r=>{for(const k in r.stat.s)totalFiltered.s[k]+=r.stat.s[k];for(const k in r.stat.i)totalFiltered.i[k]+=r.stat.i[k];});
+  const sFil=fmtFilter(totalFiltered.s),iFil=fmtFilter(totalFiltered.i);
+  let msg=`✅ 累计 ${UPLOADED_FILES.length} 个文件 · ${RAW_SALES.length} 销售 / ${RAW_INV.length} 库存`;
+  if(successFiles.length<UPLOADED_FILES.length||UPLOADED_FILES.length>1){
+    msg+=`（本次 +${newSalesAll.length}/+${newInvAll.length}）`;
+  }
+  if(sFil||iFil){
+    msg+=` · 本次已过滤 `;
+    if(sFil)msg+=`[销售：${sFil}]`;
+    if(iFil)msg+=`[库存：${iFil}]`;
+  }
+  if(errorFiles.length)msg+=`  ⚠️ ${errorFiles.length} 个文件失败`;
+  statusEl.textContent=msg;
+  // 鼠标悬停看每个文件详情
+  statusEl.title=UPLOADED_FILES.map(r=>`• ${r.name} (版本 ${r.version}) · ${r.sales.length}销售/${r.inv.length}库存`).join('\n')
+    +(errorFiles.length?'\n\n失败:\n'+errorFiles.map(r=>`• ${r.name}：${r.error}`).join('\n'):'');
+
+  // 失败文件单独弹窗
+  if(errorFiles.length){
+    alert('⚠️ 以下文件解析失败（其它文件正常加载）：\n\n'+errorFiles.map(r=>`• ${r.name}\n  ${r.error}`).join('\n'));
+  }
+
+  // 显示「清空」按钮，重置 input 让同一文件可重传
+  document.getElementById('clearBtn').style.display='';
+  document.getElementById('fileInput').value='';
+  rebuildFromRaw();
+}
+
+function clearAllUpload(){
+  if(!confirm(`确定清空全部 ${UPLOADED_FILES.length} 个已上传文件的数据？\n（不会删除磁盘上的 Excel 文件）`))return;
+  RAW_SALES=[];RAW_INV=[];UPLOADED_FILES=[];
+  const statusEl=document.getElementById('uploadStatus');
+  statusEl.textContent='请上传Excel数据文件';statusEl.title='';
+  document.getElementById('clearBtn').style.display='none';
+  document.getElementById('fileInput').value='';
+  initSummary();renderStoreList();
+  document.getElementById('storeContent').innerHTML='<div class="empty"><div class="e-icon">📂</div><p>请先上传 Excel 数据文件<br><span style="font-size:11px;color:var(--muted)">点击上方「选择文件」上传销售明细</span></p></div>';
+  // 通知所有 tab 重置为空状态
+  ['rankingContent','hotContent','distContent','timeContent','invContent','saleContent','brandContent'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.innerHTML='<div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div>';
+  });
 }
 
 
