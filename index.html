@@ -680,6 +680,7 @@ function rebuildFromRaw(){
   }
   BDATA=newBdata;
   currentStore=null;currentBrand=null;
+  if(typeof hotOpenItems!=='undefined')hotOpenItems.clear();  // 数据重建时清空爆款展开状态
   initSummary();renderStoreList();
   document.getElementById('storeContent').innerHTML='<div class="empty"><div class="e-icon">👈</div><p>请从左侧选择门店</p></div>';
   if(activeTab==='brand'){renderBrandSelector();document.getElementById('brandContent').innerHTML='<div class="empty"><div class="e-icon">👆</div><p>选择上方品牌查看分析</p></div>';}
@@ -913,9 +914,40 @@ function renderBrandContent(b){
 
 // ── EXPORT ────────────────────────────────────────────────────────────────────
 function exportStoreExcel(storeName){
-  const items=DATA.storeData[storeName]||[];
   const inv=DATA.storeInv[storeName]||{},sal=DATA.storeSales[storeName]||{};
-  const rows=[['门店',storeName],['零售金额',sal.总零售金额||0],['成交金额',sal.总成交金额||0],['销售件数',sal.总销售数量||0],['库存金额',inv.总库存金额||0],[],['排名','品名','款号','季节','零售金额','成交金额','销售件数','库存件数','库存金额','库存状态','销售颜色','库存颜色']];
+  // 从原始数据重算：避免被 build 时写死的"按成交额前20"限制
+  const filtered=RAW_SALES.filter(r=>r['日期']>=dateFrom&&r['日期']<=dateTo&&r['店仓']===storeName);
+  const itMap={};
+  for(const r of filtered){
+    const sku=r['款号'],name=r['品名'],color=r['颜色']||'';
+    if(!sku)continue;
+    const k=sku+'||'+name;
+    if(!itMap[k])itMap[k]={款号:sku,品名:name,销售数量:0,零售金额:0,成交金额:0,销售颜色:{},库存数量:0,库存金额:0,库存颜色:{}};
+    itMap[k].销售数量+=r['数量']||0;
+    itMap[k].零售金额+=r['零售金额']||0;
+    itMap[k].成交金额+=r['成交金额']||0;
+    if(color){if(!itMap[k].销售颜色[color])itMap[k].销售颜色[color]=0;itMap[k].销售颜色[color]+=r['数量']||0;}
+  }
+  // 合入该店该款的库存
+  for(const r of RAW_INV){
+    if(r['店仓']!==storeName)continue;
+    const sku=r['款号'],name=r['品名'],color=r['颜色']||'';
+    const k=sku+'||'+name;
+    const target=itMap[k]||Object.values(itMap).find(x=>x.款号===sku);
+    if(target){
+      target.库存数量+=r['库存数量']||0;
+      target.库存金额+=r['库存金额']||0;
+      if(color&&(r['库存数量']||0)>0){if(!target.库存颜色[color])target.库存颜色[color]=0;target.库存颜色[color]+=r['库存数量']||0;}
+    }
+  }
+  let allItems=Object.values(itMap).map(it=>({...it,零售金额:Math.round(it.零售金额*10)/10,成交金额:Math.round(it.成交金额*10)/10,库存金额:Math.round(it.库存金额*10)/10}));
+  // 按当前 UI 排序模式排序
+  if(sortMode==='qty')allItems.sort((a,b)=>b.销售数量-a.销售数量);
+  else if(sortMode==='retail')allItems.sort((a,b)=>b.零售金额-a.零售金额);
+  else allItems.sort((a,b)=>b.成交金额-a.成交金额);
+  const items=allItems.slice(0,20).map((it,i)=>({...it,rank:i+1}));
+  const sortLabel=sortMode==='qty'?'按销售件数':sortMode==='retail'?'按零售金额':'按成交金额';
+  const rows=[['门店',storeName],['排序方式',sortLabel],['零售金额',sal.总零售金额||0],['成交金额',sal.总成交金额||0],['销售件数',sal.总销售数量||0],['库存金额',inv.总库存金额||0],[],['排名','品名','款号','季节','零售金额','成交金额','销售件数','库存件数','库存金额','库存状态','销售颜色','库存颜色']];
   for(const it of items){
     const sc=Object.entries(it.销售颜色||{}).map(([c,n])=>c+'×'+n).join(' / ');
     const ic=Object.entries(it.库存颜色||{}).map(([c,n])=>c+'×'+n).join(' / ');
@@ -927,9 +959,15 @@ function exportStoreExcel(storeName){
   XLSX.writeFile(wb,`${storeName}_销售Top20_${document.getElementById('periodBadge').textContent}.xlsx`);
 }
 function exportBrandExcel(brandName){
-  const items=BDATA[brandName]||[];
+  const rawItems=BDATA[brandName]||[];
+  // 按当前 UI 排序模式排序（注意：BDATA build 时已按成交额取了前 50，这里在前 50 内重排序）
+  const items=[...rawItems];
+  if(brandSortMode==='retail')items.sort((a,b)=>b.总零售金额-a.总零售金额);
+  else if(brandSortMode==='qty')items.sort((a,b)=>b.总销售件数-a.总销售件数);
+  else items.sort((a,b)=>b.总成交金额-a.总成交金额);
+  const sortLabel=brandSortMode==='retail'?'按零售金额':brandSortMode==='qty'?'按销售件数':'按成交金额';
   const wb=XLSX.utils.book_new();
-  const overviewRows=[['品牌',brandName],['时间范围',document.getElementById('periodBadge').textContent],[],['排名','品名','款号','季节','总销售件数','总零售金额','总成交金额','参与门店数','销售颜色','库存颜色']];
+  const overviewRows=[['品牌',brandName],['时间范围',document.getElementById('periodBadge').textContent],['排序方式',sortLabel],[],['排名','品名','款号','季节','总销售件数','总零售金额','总成交金额','参与门店数','销售颜色','库存颜色']];
   for(let i=0;i<items.length;i++){
     const it=items[i];
     const sc=Object.entries(it.销售颜色||{}).map(([c,n])=>c+'×'+n).join(' / ');
@@ -1042,8 +1080,11 @@ function exportRankingExcel(){
     return{店铺:s,成交金额:sales[s]?.总成交金额||0,零售金额:sales[s]?.总零售金额||0,销售件数:qty,
       库存金额:inv[s]?.总库存金额||0,库存件数:invQty,日均销量:Math.round(dailySales*10)/10,
       预计可售天数:daysLeft>=999?'充足':daysLeft,库存健康度:health};
-  }).sort((a,b)=>b.成交金额-a.成交金额);
-  const rows=[['时间范围',_period()],['门店总数',list.length],[],
+  });
+  // 按当前 UI 选中的排序模式排序
+  const sortField=rankingSort==='ret'?'零售金额':rankingSort==='qty'?'销售件数':rankingSort==='inv'?'库存金额':'成交金额';
+  list.sort((a,b)=>b[sortField]-a[sortField]);
+  const rows=[['时间范围',_period()],['门店总数',list.length],['排序方式','按'+sortField],[],
     ['排名','店铺','成交金额','零售金额','销售件数','库存金额','库存件数','日均销量','预计可售天数','库存健康度']];
   list.forEach((s,i)=>rows.push([i+1,s.店铺,s.成交金额,s.零售金额,s.销售件数,s.库存金额,s.库存件数,s.日均销量,s.预计可售天数,s.库存健康度]));
   const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(rows);
@@ -1079,9 +1120,14 @@ function exportHotExcel(){
     else if(daysLeft<=3)status='⚡ 紧急('+daysLeft+'天)';
     else if(daysLeft<=7)status='⚠️ 预警('+daysLeft+'天)';
     else status='约'+daysLeft+'天';
-    return{...it,periodDays,dailySales:Math.round(dailySales*10)/10,daysLeft:daysLeft>=999?'充足':daysLeft,status};
-  }).sort((a,b)=>b.act-a.act);
-  const rows=[['时间范围',_period()],['参与款数',items.length],[],
+    return{...it,periodDays,dailySales:Math.round(dailySales*10)/10,daysLeft:daysLeft>=999?'充足':daysLeft,daysLeftRaw:daysLeft,status};
+  });
+  // 按当前 UI 选中的排序模式排序（成交额/件数/预警天数）
+  if(hotSort==='qty')items.sort((a,b)=>b.qty-a.qty);
+  else if(hotSort==='days')items.sort((a,b)=>a.daysLeftRaw-b.daysLeftRaw);
+  else items.sort((a,b)=>b.act-a.act);
+  const sortLabel=hotSort==='qty'?'按销售件数':hotSort==='days'?'按预警天数':'按成交金额';
+  const rows=[['时间范围',_period()],['参与款数',items.length],['排序方式',sortLabel],[],
     ['排名','款号','品名','季节','品牌','销售件数','零售金额','成交金额','折扣率','门店数','库存件数','日均销量','可售天数','状态']];
   items.forEach((it,i)=>{
     const d=it.ret>0?Math.round(it.act/it.ret*100)+'%':'';
@@ -1457,8 +1503,8 @@ async function handleFile(e){
     return;
   }
 
-  // 追加到现有数据（6A：不去重）
-  RAW_SALES=[...RAW_SALES,...newSalesAll];
+  // 追加到现有数据（6A：不去重）。统一过滤掉"不分品牌"（之前只过滤了库存，会造成两边不一致）
+  RAW_SALES=[...RAW_SALES,...newSalesAll].filter(r=>r.品牌!=='不分品牌');
   RAW_INV=[...RAW_INV,...newInvAll].filter(r=>r.品牌!=='不分品牌');
   UPLOADED_FILES.push(...successFiles);
 
@@ -1512,6 +1558,7 @@ async function handleFile(e){
 function clearAllUpload(){
   if(!confirm(`确定清空全部 ${UPLOADED_FILES.length} 个已上传文件的数据？\n（不会删除磁盘上的 Excel 文件）`))return;
   RAW_SALES=[];RAW_INV=[];UPLOADED_FILES=[];
+  if(typeof hotOpenItems!=='undefined')hotOpenItems.clear();
   const statusEl=document.getElementById('uploadStatus');
   statusEl.textContent='请上传Excel数据文件';statusEl.title='';
   document.getElementById('clearBtn').style.display='none';
@@ -1630,7 +1677,7 @@ function renderRanking(){
     const healthCls = daysLeft===0&&s.invQty===0 ? '' : daysLeft<7 ? 'inv-health-warn' : daysLeft>90&&s.invQty>0 ? 'inv-health-bad' : 'inv-health-ok';
     const healthTxt = s.invQty===0 ? '' : daysLeft>=999 ? '库存充足' : daysLeft>90 ? `⚠️ 库存积压` : daysLeft<7 ? `⚡ 约${daysLeft}天` : `约${daysLeft}天`;
     const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
-    return `<div class="rank-bar-row" onclick="switchTab('store');selectStore('${s.name.replace(/'/g,"\'")}')">
+    return `<div class="rank-bar-row" onclick="switchTab('store');selectStore('${s.name.replace(/'/g,"\\'")}')">
       <div class="rank-num">${medal||i+1}</div>
       <div class="rank-store-name">${s.name.replace(/^[^-]+-/,'')||s.name}</div>
       <div class="rank-bar-wrap">
@@ -1662,13 +1709,15 @@ function renderRanking(){
 // ── HOT TAB ───────────────────────────────────────────────────────────────────
 
 let hotOpenItems = new Set();
-function toggleHot(idx){
-  if(hotOpenItems.has(idx)) hotOpenItems.delete(idx);
-  else hotOpenItems.add(idx);
-  const hdr = document.getElementById('hh-'+idx);
-  const body = document.getElementById('hb-'+idx);
+// 接收 sku，使切换排序后展开状态依然能正确恢复（旧版用 idx，排序变了就错位）
+function toggleHot(sku){
+  if(hotOpenItems.has(sku)) hotOpenItems.delete(sku);
+  else hotOpenItems.add(sku);
+  // 用属性选择器找到对应行
+  const hdr = document.querySelector(`#hotContent [data-hot-sku="${sku}"] .hot-row-header`);
+  const body = document.querySelector(`#hotContent [data-hot-sku="${sku}"] .hot-row-detail`);
   if(hdr && body){
-    const o = hotOpenItems.has(idx);
+    const o = hotOpenItems.has(sku);
     hdr.classList.toggle('open', o);
     body.classList.toggle('open', o);
   }
@@ -1678,10 +1727,11 @@ let hotSort = 'act';
 function setHotSort(m){
   hotSort = m;
   document.querySelectorAll('#hotTab .sort-tab').forEach((b,i)=>b.classList.toggle('active',['act','qty','days'][i]===m));
-  renderHot();
+  renderHot();  // 不清空展开状态，因为按 sku 索引
 }
 function renderHot(){
-  hotOpenItems.clear();
+  // 注：不在此清空 hotOpenItems —— 切换排序/日期时展开状态应保留
+  // 仅在 rebuildFromRaw / 数据完全变化时通过外部清空（见 clearAllUpload / handleFile）
   const filtered = RAW_SALES.filter(r=>r['日期']>=dateFrom&&r['日期']<=dateTo);
   if(!filtered.length){ document.getElementById('hotContent').innerHTML='<div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div>'; return; }
 
@@ -1757,7 +1807,9 @@ function renderHot(){
 
   if(hotSort==='act') items.sort((a,b)=>b.act-a.act);
   else if(hotSort==='qty') items.sort((a,b)=>b.qty-a.qty);
-  else items.sort((a,b)=>(a.daysLeft||999)-(b.daysLeft||999));
+  // 按预警天数（升序）：已售罄=0 排最前（最紧急），含销售的款按 daysLeft 实数，无销售无库存(也是0)与已售罄并列在前
+  // 注：原写法 a.daysLeft||999 把 0 当 falsy 推到 999，错误地让已售罄排到最后。直接用数值即可。
+  else items.sort((a,b)=>a.daysLeft-b.daysLeft);
   items = items.slice(0,30);
 
   const maxAct = Math.max(...items.map(i=>i.act),1);
@@ -1789,8 +1841,10 @@ function renderHot(){
       </tr>`;
     }).join('');
 
-    return `<div class="hot-row">
-      <div class="hot-row-header" id="hh-${i}" onclick="toggleHot(${i})">
+    const isOpen = hotOpenItems.has(it.sku);
+    const openCls = isOpen ? ' open' : '';
+    return `<div class="hot-row" data-hot-sku="${it.sku}">
+      <div class="hot-row-header${openCls}" onclick="toggleHot('${it.sku}')">
         <div style="flex-shrink:0"><span class="rank-badge ${rc}">${i+1}</span></div>
         <div style="flex:1;min-width:0">
           <div style="font-weight:600;font-size:13px">${it.name}${seasonTag(it.sku)} <span style="font-size:10px;color:var(--muted);font-weight:normal">${it.brand}</span></div>
@@ -1811,7 +1865,7 @@ function renderHot(){
         </div>
         <div style="font-size:11px;color:var(--muted);margin-left:6px">▼</div>
       </div>
-      <div class="hot-row-detail" id="hb-${i}">
+      <div class="hot-row-detail${openCls}">
         <div style="font-size:10px;color:var(--muted);margin-bottom:8px;">各门店明细（灰色=有库存未销售）</div>
         <table class="sb-table">
           <thead><tr><th>门店</th><th class="r">销售件数</th><th class="r">零售金额</th><th class="r">成交金额</th><th class="r">库存件数</th></tr></thead>
@@ -1966,8 +2020,8 @@ document.getElementById('storeItems').innerHTML='<div style="padding:20px 14px;f
 let timeView='month';
 function setTimeView(v){
   timeView=v;
-  document.querySelectorAll('#timeTab .sort-tab').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
+  const order=['month','quarter','year'];
+  document.querySelectorAll('#timeTab .sort-tab').forEach((b,i)=>b.classList.toggle('active',order[i]===v));
   renderTime();
 }
 
@@ -2122,8 +2176,8 @@ function renderTime(){
 let invView='season';
 function setInvView(v){
   invView=v;
-  document.querySelectorAll('#invTab .sort-tab').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
+  const order=['season','yearseason','brand'];
+  document.querySelectorAll('#invTab .sort-tab').forEach((b,i)=>b.classList.toggle('active',order[i]===v));
   renderInvAnalysis();
 }
 
@@ -2339,8 +2393,8 @@ function exportRestockExcel(){
 let saleView='season';
 function setSaleView(v){
   saleView=v;
-  document.querySelectorAll('#saleTab .sort-tab').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
+  const order=['season','yearseason','brand'];
+  document.querySelectorAll('#saleTab .sort-tab').forEach((b,i)=>b.classList.toggle('active',order[i]===v));
   renderSaleAnalysis();
 }
 
