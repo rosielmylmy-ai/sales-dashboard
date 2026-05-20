@@ -14,20 +14,31 @@
 :root{--bg:#f3f0fd;--surface:#f8f5ff;--card:#ffffff;--border:#d8d0f0;--accent:#7c5cbf;--accent2:#9b7de0;--warn:#d94f6a;--gold:#c47d20;--text:#1a1a2d;--muted:#9080b0;--green:#3db88a;--purple:#7c5cbf;--purple2:#9b7de0;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;}
-.header{background:linear-gradient(135deg,#f0eeff,#e8e0ff);border-bottom:1px solid #d0c8f0;padding:16px 32px;display:flex;box-shadow:0 1px 4px rgba(0,0,0,.06);align-items:center;justify-content:space-between;}
-.header h1{font-size:20px;font-weight:700;background:linear-gradient(90deg,#7c5cbf,#9b7de0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.header .subtitle{font-size:11px;color:var(--muted);margin-top:3px;}
+.header{background:linear-gradient(135deg,#f0eeff,#e8e0ff);border-bottom:1px solid #d0c8f0;padding:8px 32px;display:flex;box-shadow:0 1px 4px rgba(0,0,0,.06);align-items:center;gap:18px;}
+.header h1{font-size:17px;font-weight:700;background:linear-gradient(90deg,#7c5cbf,#9b7de0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;}
+.header .subtitle{font-size:10px;color:var(--muted);margin-top:1px;}
+.header-left{flex-shrink:0;}
+.header-status{flex:1;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0;}
+.header-status .hs-line{white-space:nowrap;}
+.header-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.hdr-toggle{background:var(--card);border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 9px;font-size:11px;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap;}
+.hdr-toggle:hover{color:var(--accent);border-color:var(--accent);}
+.hdr-toggle.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.hdr-period{color:var(--accent2);border-color:rgba(78,205,196,.4);background:rgba(78,205,196,.08);}
+.hdr-period:hover{background:rgba(78,205,196,.16);color:var(--accent2);border-color:var(--accent2);}
+.hdr-period.active{background:var(--accent2);border-color:var(--accent2);color:#fff;}
 .period-badge{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:5px 12px;font-size:12px;color:var(--accent2);}
 .upload-zone{margin:8px 32px;background:var(--card);border:2px dashed #c8b8f0;border-radius:10px;padding:6px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color .2s;}
 .upload-zone:hover{border-color:var(--accent);}
 .upload-zone input{display:none;}
+.upload-zone.collapsed,.summary-row.collapsed,.date-bar.collapsed{display:none;}
 .upload-icon{width:24px;height:24px;background:rgba(124,92,191,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
 .upload-text strong{display:block;font-size:12px;margin-bottom:1px;}
 .upload-text span{font-size:10px;color:var(--muted);}
 .upload-btn{margin-left:auto;background:var(--accent);color:#fff;border:none;border-radius:7px;padding:5px 12px;font-size:11px;cursor:pointer;font-family:inherit;flex-shrink:0;}
 .upload-status{font-size:10px;color:var(--green);margin-top:1px;}
 .tab-bar{display:flex;border-bottom:1px solid var(--border);padding:0 32px;background:var(--surface);}
-.tab-btn{padding:11px 22px;font-size:13px;font-family:inherit;background:none;border:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;font-weight:500;}
+.tab-btn{padding:8px 22px;font-size:13px;font-family:inherit;background:none;border:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;font-weight:500;}
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
 .summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:8px 32px;}
 .sum-card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:9px 13px;box-shadow:0 1px 4px rgba(0,0,0,.04);}
@@ -39,7 +50,7 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 .sum-card.v3 .value{color:var(--gold);}
 .sum-card.v4 .value{color:var(--green);}
 /* STORE TAB */
-.main{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 270px);}
+.main{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 90px);}
 .side-list{background:var(--surface);border-right:1px solid var(--border);overflow-y:visible;}
 .side-search{padding:11px 13px;border-bottom:1px solid var(--border);}
 .side-search input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:7px;padding:6px 10px;color:var(--text);font-size:12px;font-family:inherit;outline:none;}
@@ -132,7 +143,7 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 
 
 
-.date-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.date-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:6px 32px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .date-bar label{font-size:12px;color:var(--muted);}
 .date-input{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:5px 10px;color:var(--text);font-size:12px;font-family:inherit;outline:none;cursor:pointer;}
 .date-input:focus{border-color:var(--accent);}
@@ -224,12 +235,14 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
   .summary-row,.stats-row,.brand-stats{grid-template-columns:repeat(2,1fr);}
   .brand-selector{gap:8px;}
   .bi-totals{gap:8px;}
-  .header{padding:12px 16px;}
-  .header h1{font-size:17px;}
+  .header{padding:8px 16px;gap:10px;flex-wrap:wrap;}
+  .header h1{font-size:15px;}
+  .header .subtitle{display:none;}
+  .header-status{font-size:10px;order:3;flex-basis:100%;}
   .upload-zone{margin:10px 16px;padding:10px 14px;}
-  .date-bar{padding:8px 16px;}
+  .date-bar{padding:6px 16px;}
   .tab-bar{padding:0 8px;}
-  .tab-btn{padding:9px 10px;font-size:12px;}
+  .tab-btn{padding:8px 10px;font-size:12px;}
   .summary-row{padding:10px 16px;gap:8px;}
   .content{padding:14px 12px;}
   #brandTab{padding:14px 16px;}
@@ -244,7 +257,9 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
   .summary-row{padding:8px 12px;}
   .sum-card{padding:10px 12px;}
   .sum-card .value{font-size:16px;}
-  .header{padding:10px 12px;}
+  .header{padding:7px 12px;}
+  .hdr-toggle{padding:3px 7px;font-size:10px;}
+  .hdr-period{max-width:130px;overflow:hidden;text-overflow:ellipsis;}
   .upload-zone{margin:8px 12px;}
   .date-bar{padding:6px 12px;gap:8px;}
   .date-bar label{font-size:11px;}
@@ -279,15 +294,16 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 /* 款铺分布矩阵 */
 .dist-scroll{overflow:auto;max-height:78vh;border:1px solid var(--border);border-radius:10px;background:var(--card);}
 .dist-table{border-collapse:separate;border-spacing:0;font-size:11px;}
-.dist-table th,.dist-table td{padding:6px 8px;border-bottom:1px solid var(--border);background:var(--card);white-space:nowrap;font-variant-numeric:tabular-nums;}
+.dist-table th,.dist-table td{padding:5px 6px;border-bottom:1px solid var(--border);background:var(--card);white-space:nowrap;font-variant-numeric:tabular-nums;}
 .dist-table thead th{position:sticky;top:0;z-index:3;background:var(--surface);font-weight:600;color:var(--muted);font-size:10px;letter-spacing:.04em;}
 .dist-fixed{position:sticky;z-index:2;background:var(--card);}
 .dist-table thead .dist-fixed{z-index:4;background:var(--surface);}
-.dist-c0{left:0;min-width:36px;text-align:center;color:var(--muted);}
-.dist-c1{left:36px;min-width:170px;border-right:1px solid var(--border);}
-.dist-c2{left:206px;min-width:64px;text-align:right;}
-.dist-c3{left:270px;min-width:60px;text-align:right;}
-.dist-c4{left:330px;min-width:64px;text-align:right;border-right:2px solid var(--border);}
+.dist-c0{left:0;min-width:32px;text-align:center;color:var(--muted);}
+.dist-c1{left:32px;min-width:130px;max-width:160px;border-right:1px solid var(--border);font-size:11px;}
+.dist-c1 > div:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.dist-c2{left:162px;min-width:60px;text-align:right;}
+.dist-c3{left:222px;min-width:56px;text-align:right;}
+.dist-c4{left:278px;min-width:60px;text-align:right;border-right:2px solid var(--border);}
 .dist-store{min-width:62px;text-align:right;}
 .dist-cell{text-align:right;line-height:1.25;cursor:help;}
 .dist-cell.empty-cell{background:transparent;}
@@ -301,6 +317,38 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 .dist-table tbody tr:hover td.dist-active{background:rgba(61,184,138,.18);}
 .dist-table tbody tr:hover td.dist-stale{background:rgba(217,79,106,.18);}
 .dist-table tbody tr:hover td.dist-no-sale{background:rgba(150,140,180,.16);}
+
+/* TRANSFER TAB */
+.tr-section{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px;}
+.tr-section-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.tr-section-title .tr-hint{font-size:10px;color:var(--muted);font-weight:normal;}
+.tr-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;align-items:end;}
+.tr-form label{display:flex;flex-direction:column;gap:3px;font-size:10px;color:var(--muted);}
+.tr-form select,.tr-form input{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:12px;font-family:inherit;color:var(--text);outline:none;}
+.tr-form select:focus,.tr-form input:focus{border-color:var(--accent);}
+.tr-form button{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:inherit;height:30px;white-space:nowrap;}
+.tr-form button:hover{opacity:.85;}
+.tr-table{width:100%;border-collapse:collapse;font-size:11px;}
+.tr-table th{font-size:10px;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);font-weight:600;letter-spacing:.04em;background:var(--surface);position:sticky;top:0;}
+.tr-table th.r{text-align:right;}
+.tr-table th.c{text-align:center;}
+.tr-table td{padding:7px 8px;border-bottom:1px solid rgba(180,170,220,.3);}
+.tr-table td.r{text-align:right;}
+.tr-table td.c{text-align:center;}
+.tr-table tr:hover td{background:rgba(124,92,191,.05);}
+.tr-rec-row{background:rgba(78,205,196,.04);}
+.tr-rec-row td{font-size:11px;}
+.tr-action-btn{background:var(--accent2);color:#fff;border:none;border-radius:5px;padding:3px 9px;font-size:10px;cursor:pointer;font-family:inherit;white-space:nowrap;}
+.tr-action-btn:hover{opacity:.85;}
+.tr-action-btn.del{background:transparent;color:var(--warn);border:1px solid rgba(217,79,106,.4);}
+.tr-action-btn.del:hover{background:rgba(217,79,106,.1);}
+.tr-badge{display:inline-block;background:rgba(124,92,191,.12);color:var(--accent);border-radius:4px;padding:1px 7px;font-size:10px;font-weight:600;}
+.tr-badge.warn{background:rgba(217,79,106,.12);color:var(--warn);}
+.tr-badge.ok{background:rgba(61,184,138,.12);color:var(--green);}
+.tr-empty{text-align:center;color:var(--muted);padding:24px 12px;font-size:12px;}
+.tr-sku-cell{font-size:11px;}
+.tr-sku-cell .nm{font-weight:600;color:var(--text);}
+.tr-sku-cell .sk{font-size:9px;color:var(--muted);}
 </style>
 </head>
 
@@ -326,10 +374,20 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
 <script>setTimeout(function(){const l=document.getElementById('loadingScreen');l.style.transition='opacity .5s';l.style.opacity='0';setTimeout(()=>l.remove(),500)},2200);</script>
 
 <div class="header">
-  <div><h1>🏪 销售追踪看板</h1><div class="subtitle">店铺销售 · 品牌钻取分析 · 库存状态</div></div>
-  <div class="period-badge" id="periodBadge">未上传数据</div>
+  <div class="header-left">
+    <h1>🏪 销售追踪看板</h1>
+    <div class="subtitle">店铺销售 · 品牌钻取 · 库存状态</div>
+  </div>
+  <div class="header-status" id="headerStatus">
+    <span class="hs-line" id="hsData">未上传数据</span>
+  </div>
+  <div class="header-actions">
+    <button class="hdr-toggle hdr-period" id="periodBadge" onclick="toggleSection('date')" title="筛选日期">📅 未上传数据</button>
+    <button class="hdr-toggle active" id="tglUpload" onclick="toggleSection('upload')" title="数据上传">📁 数据</button>
+    <button class="hdr-toggle" id="tglSummary" onclick="toggleSection('summary')" title="汇总卡片">📊 汇总</button>
+  </div>
 </div>
-<div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
   <input type="file" id="fileInput" accept=".xlsx,.xls" multiple onchange="handleFile(event)">
   <div class="upload-icon">📂</div>
   <div class="upload-text">
@@ -341,7 +399,7 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
   <button class="upload-btn" onclick="event.stopPropagation();document.getElementById('fileInput').click()">选择文件</button>
 </div>
 
-<div class="date-bar" id="dateBar">
+<div class="date-bar collapsed" id="dateBar">
   <label>📅 日期范围：</label>
   <input type="date" id="dateFrom" class="date-input" value="">
   <span style="color:var(--muted);font-size:12px">至</span>
@@ -360,8 +418,9 @@ body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft
   <button class="tab-btn" onclick="switchTab('time')">📅 时间分析</button>
   <button class="tab-btn" onclick="switchTab('inv')">📦 库存分析</button>
   <button class="tab-btn" onclick="switchTab('sale')">📈 销售分析</button>
+  <button class="tab-btn" onclick="switchTab('transfer')">🔄 调货单</button>
 </div>
-<div class="summary-row">
+<div class="summary-row collapsed" id="summaryRow">
   <div class="sum-card v1"><div class="label">参与门店</div><div class="value" id="sc1">—</div><div class="sub">有销售记录</div></div>
   <div class="sum-card v2"><div class="label">总零售金额</div><div class="value" id="sc2">—</div><div class="sub">标牌价合计</div></div>
   <div class="sum-card v3"><div class="label">总成交金额</div><div class="value" id="sc3">—</div><div class="sub">实际收款合计</div></div>
@@ -537,6 +596,30 @@ function colorTags(sc,ic){
 }
 
 // ── SUMMARY ───────────────────────────────────────────────────────────────────
+// ── HEADER 可折叠区域控制 ─────────────────────────────────────────────────────
+// 上传区和汇总卡片默认折叠（节省顶部空间），用户点 header 按钮可展开
+function _sectionEls(name){
+  if(name==='upload')return {el:document.getElementById('uploadZone'),btn:document.getElementById('tglUpload')};
+  if(name==='summary')return {el:document.getElementById('summaryRow'),btn:document.getElementById('tglSummary')};
+  if(name==='date')return {el:document.getElementById('dateBar'),btn:document.getElementById('periodBadge')};
+  return null;
+}
+function toggleSection(name){
+  const s=_sectionEls(name);if(!s||!s.el)return;
+  const isCollapsed=s.el.classList.contains('collapsed');
+  if(isCollapsed)expandSection(name);else collapseSection(name);
+}
+function expandSection(name){
+  const s=_sectionEls(name);if(!s||!s.el)return;
+  s.el.classList.remove('collapsed');
+  if(s.btn)s.btn.classList.add('active');
+}
+function collapseSection(name){
+  const s=_sectionEls(name);if(!s||!s.el)return;
+  s.el.classList.add('collapsed');
+  if(s.btn)s.btn.classList.remove('active');
+}
+
 function initSummary(){
   const filtered=RAW_SALES.filter(r=>r['日期']>=dateFrom&&r['日期']<=dateTo);
   const stores=new Set(filtered.map(r=>r['店仓'])).size;
@@ -555,8 +638,10 @@ function applyDateFilter(){
   const t=document.getElementById('dateTo').value.replace(/-/g,'');
   if(!f||!t)return;
   dateFrom=parseInt(f); dateTo=parseInt(t);
-  document.getElementById('dateRangeLabel').textContent=fmtDate(f)+' – '+fmtDate(t);
-  document.getElementById('periodBadge').textContent=fmtDate(f)+' – '+fmtDate(t);
+  const label=fmtDate(f)+' – '+fmtDate(t);
+  document.getElementById('dateRangeLabel').textContent=label;
+  document.getElementById('periodBadge').textContent='📅 '+label;
+  collapseSection('date');
   rebuildFromRaw();
 }
 
@@ -573,7 +658,7 @@ function resetDateFilter(){
     document.getElementById('dateTo').value='';
   }
   document.getElementById('dateRangeLabel').textContent='全部数据';
-  document.getElementById('periodBadge').textContent='全部数据';
+  document.getElementById('periodBadge').textContent='📅 全部数据';
   rebuildFromRaw();
 }
 
@@ -693,6 +778,7 @@ function rebuildFromRaw(){
   if(activeTab==='time')renderTime();
   if(activeTab==='inv')renderInvAnalysis();
   if(activeTab==='sale')renderSaleAnalysis();
+  if(activeTab==='transfer')renderTransfer();
 }
 
 // ── TAB ───────────────────────────────────────────────────────────────────────
@@ -707,6 +793,7 @@ function switchTab(t){
   document.getElementById("timeTab").style.display=t==="time"?"block":"none";
   document.getElementById("invTab").style.display=t==="inv"?"block":"none";
   document.getElementById("saleTab").style.display=t==="sale"?"block":"none";
+  document.getElementById("transferTab").style.display=t==="transfer"?"block":"none";
   if(t==="brand") renderBrandSelector();
   if(t==="ranking") renderRanking();
   if(t==="hot") renderHot();
@@ -714,6 +801,7 @@ function switchTab(t){
   if(t==="time") renderTime();
   if(t==="inv") renderInvAnalysis();
   if(t==="sale") renderSaleAnalysis();
+  if(t==="transfer") renderTransfer();
 }
 
 // ── STORE LIST ────────────────────────────────────────────────────────────────
@@ -963,7 +1051,7 @@ function exportStoreExcel(storeName){
   const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(rows);
   ws['!cols']=[8,18,14,12,10,10,8,8,10,8,24,24].map(w=>({wch:w}));
   XLSX.utils.book_append_sheet(wb,ws,'Top20销售');
-  XLSX.writeFile(wb,`${storeName}_销售Top20_${document.getElementById('periodBadge').textContent}.xlsx`);
+  XLSX.writeFile(wb,`${storeName}_销售Top20_${_period()}.xlsx`);
 }
 function exportBrandExcel(brandName){
   const rawItems=BDATA[brandName]||[];
@@ -974,7 +1062,7 @@ function exportBrandExcel(brandName){
   else items.sort((a,b)=>b.总成交金额-a.总成交金额);
   const sortLabel=brandSortMode==='retail'?'按零售金额':brandSortMode==='qty'?'按销售件数':'按成交金额';
   const wb=XLSX.utils.book_new();
-  const overviewRows=[['品牌',brandName],['时间范围',document.getElementById('periodBadge').textContent],['排序方式',sortLabel],[],['排名','品名','款号','季节','总销售件数','总零售金额','总成交金额','参与门店数','销售颜色','库存颜色']];
+  const overviewRows=[['品牌',brandName],['时间范围',_period()],['排序方式',sortLabel],[],['排名','品名','款号','季节','总销售件数','总零售金额','总成交金额','参与门店数','销售颜色','库存颜色']];
   for(let i=0;i<items.length;i++){
     const it=items[i];
     const sc=Object.entries(it.销售颜色||{}).map(([c,n])=>c+'×'+n).join(' / ');
@@ -994,7 +1082,7 @@ function exportBrandExcel(brandName){
   }
   const ws2=XLSX.utils.aoa_to_sheet(detailRows);ws2['!cols']=[6,18,14,12,20,8,10,10,8,10,8,24,24].map(w=>({wch:w}));
   XLSX.utils.book_append_sheet(wb,ws2,'各店铺颜色明细');
-  XLSX.writeFile(wb,`${brandName}_品牌分析_${document.getElementById('periodBadge').textContent}.xlsx`);
+  XLSX.writeFile(wb,`${brandName}_品牌分析_${_period()}.xlsx`);
 }
 
 // 导出"分析表"透视表：店铺 × Top50款，根据当前排序按钮导出对应指标
@@ -1073,7 +1161,7 @@ function exportBrandPivot(brandName){
 }
 
 // ── EXPORTS: Ranking / Hot / Time / Inv / Sale ──────────────────────────────
-function _period(){return document.getElementById('periodBadge').textContent||'全部';}
+function _period(){return (document.getElementById('periodBadge').textContent||'全部').replace(/^📅\s*/,'');}
 
 function exportRankingExcel(){
   const sales=DATA.storeSales||{},inv=DATA.storeInv||{};
@@ -1362,6 +1450,7 @@ function _parseSaleCM(r){
   return{店仓:String(_cc(_gv(r,['店仓','门店','店铺']))).trim(),日期:dv,
     款号:String(_cc(_gv(r,['款号','货号']))).trim(),品名:String(_cc(_gv(r,['品名','商品名称','货品']))).trim(),
     品牌:String(_cc(_gv(r,['品牌']))).trim(),颜色:String(_cc(_gv(r,['颜色']))).trim(),
+    尺码:String(_cc(_gv(r,['尺码','尺寸','尺寸名','规格']))).trim(),
     季节:String(_cc(_gv(r,['款号.季节.属性描述','季节']))).trim(),
     年份:String(_cc(_gv(r,['年份']))).trim().replace(/年$/,''),
     数量:_nm(_cc(_gv(r,['数量','件数','销量']))),零售金额:Math.round(_nm(_cc(_gv(r,['零售金额','标准金额'])))*10)/10,
@@ -1372,6 +1461,7 @@ function _parseStockCM(r){
   return{店仓:String(_cc(_gv(r,['店仓','门店','店铺']))).trim(),
     款号:String(_cc(_gv(r,['款号','货号']))).trim(),品名:String(_cc(_gv(r,['品名','商品名称','货品']))).trim(),
     品牌:String(_cc(_gv(r,['品牌']))).trim(),颜色:String(_cc(_gv(r,['颜色']))).trim(),
+    尺码:String(_cc(_gv(r,['尺码','尺寸','尺寸名','规格']))).trim(),
     季节:String(_cc(_gv(r,['款号.季节.属性描述','季节']))).trim(),
     年份:String(_cc(_gv(r,['年份']))).trim().replace(/年$/,''),
     库存数量:_nm(_cc(_gv(r,['库存数量','库存数']))),库存金额:Math.round(_nm(_cc(_gv(r,['库存金额','库存额'])))*10)/10};
@@ -1384,6 +1474,7 @@ function _parseSaleLX(r){
   return{店仓:String(_gv(r,['仓库','门店','店仓'])).trim(),日期:dv,
     款号:String(_gv(r,['款号','货号'])).trim(),品名:String(_gv(r,['商品名称','品名','货品'])).trim(),
     品牌:'拉夏贝尔',颜色:String(_gv(r,['颜色'])).trim(),
+    尺码:String(_gv(r,['尺码','尺寸','尺寸名','规格'])).trim(),
     季节:String(_gv(r,['季节'])).trim(),年份:'',
     数量:_nm(_gv(r,['数量','件数'])),零售金额:Math.round(_nm(_gv(r,['铭牌价合计','零售金额']))*10)/10,
     成交金额:Math.round(_nm(_gv(r,['小计','成交金额']))*10)/10};
@@ -1393,6 +1484,7 @@ function _parseStockLX(r){
   return{店仓:String(_gv(r,['仓库','门店','店仓'])).trim(),
     款号:String(_gv(r,['款号','货号'])).trim(),品名:String(_gv(r,['商品名称','品名','商品类别'])).trim(),
     品牌:'拉夏贝尔',颜色:String(_gv(r,['颜色'])).trim(),
+    尺码:String(_gv(r,['尺码','尺寸','尺寸名','规格'])).trim(),
     季节:String(_gv(r,['季节'])).trim(),年份:'',
     库存数量:_nm(_gv(r,['库存数量','库存数'])),库存金额:Math.round(_nm(_gv(r,['铭牌价小计','库存金额']))*10)/10};
 }
@@ -1404,6 +1496,7 @@ function _parseSaleDM(r){
   return{店仓:String(_gv(r,['店仓名称','店仓','门店'])).trim(),日期:dv,
     款号:String(_gv(r,['款号'])).trim(),品名:String(_gv(r,['品名','商品名称'])).trim(),
     品牌:'大码女装',颜色:String(_gv(r,['颜色'])).trim(),
+    尺码:String(_gv(r,['尺码','尺寸','尺寸名','规格'])).trim(),
     季节:String(_gv(r,['季节'])).trim(),年份:'',
     数量:_nm(_gv(r,['零售数量','数量'])),零售金额:Math.round(_nm(_gv(r,['吊牌金额','零售金额']))*10)/10,
     成交金额:Math.round(_nm(_gv(r,['成交金额']))*10)/10};
@@ -1417,6 +1510,7 @@ function _parseStockDM(r){
   return{店仓:String(_gv(r,['店仓','店仓名称','门店'])).trim(),
     款号:String(_gv(r,['款号'])).trim(),品名:String(_gv(r,['品名','商品名称'])).trim(),
     品牌:'大码女装',颜色:String(_gv(r,['颜色'])).trim(),
+    尺码:String(_gv(r,['尺码','尺寸','尺寸名','规格'])).trim(),
     季节:String(_gv(r,['季节'])).trim(),年份:'',
     库存数量:qty,库存金额:Math.round(amt*10)/10};
 }
@@ -1532,7 +1626,7 @@ async function handleFile(e){
     document.getElementById('dateTo').value=toStr(dateTo);
     const fd=fmtDate(String(dateFrom)),td=fmtDate(String(dateTo));
     document.getElementById('dateRangeLabel').textContent=fd+' – '+td;
-    document.getElementById('periodBadge').textContent=fd+' – '+td;
+    document.getElementById('periodBadge').textContent='📅 '+fd+' – '+td;
   }
   const newBrands=[...new Set(RAW_SALES.map(r=>r['品牌']).filter(Boolean))];
   newBrands.forEach(b=>{if(!BRAND_DOT[b])BRAND_DOT[b]=BRAND_PALETTE[Object.keys(BRAND_DOT).length%BRAND_PALETTE.length];});
@@ -1565,6 +1659,9 @@ async function handleFile(e){
   // 显示「清空」按钮，重置 input 让同一文件可重传
   document.getElementById('clearBtn').style.display='';
   document.getElementById('fileInput').value='';
+  // 更新 header 紧凑状态条 + 自动收起上传区
+  document.getElementById('hsData').textContent=`${UPLOADED_FILES.length}文件 · ${RAW_SALES.length}销售 / ${RAW_INV.length}库存`;
+  collapseSection('upload');
   rebuildFromRaw();
 }
 
@@ -1576,10 +1673,16 @@ function clearAllUpload(){
   statusEl.textContent='请上传Excel数据文件';statusEl.title='';
   document.getElementById('clearBtn').style.display='none';
   document.getElementById('fileInput').value='';
+  // 重置 header 状态条 + 展开上传区方便用户再上传
+  document.getElementById('hsData').textContent='未上传数据';
+  document.getElementById('periodBadge').textContent='📅 未上传数据';
+  expandSection('upload');
+  collapseSection('summary');
+  collapseSection('date');
   initSummary();renderStoreList();
   document.getElementById('storeContent').innerHTML='<div class="empty"><div class="e-icon">📂</div><p>请先上传 Excel 数据文件<br><span style="font-size:11px;color:var(--muted)">点击上方「选择文件」上传销售明细</span></p></div>';
   // 通知所有 tab 重置为空状态
-  ['rankingContent','hotContent','distContent','timeContent','invContent','saleContent','brandContent'].forEach(id=>{
+  ['rankingContent','hotContent','distContent','timeContent','invContent','saleContent','brandContent','transferContent'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.innerHTML='<div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div>';
   });
 }
@@ -2402,6 +2505,21 @@ function exportRestockExcel(){
   <div id="saleContent"><div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div></div>
 </div>
 
+<!-- TRANSFER TAB -->
+<div id="transferTab" style="display:none;padding:18px 32px;overflow-y:visible;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:17px;font-weight:700;">🔄 调货单</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px;">智能推荐 + 手动加单 · 调出店 → 调入店 · 用于打通销售→库存→调货闭环</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+      <button class="export-btn" onclick="clearTransferList()" style="background:rgba(217,79,106,.12);border-color:rgba(217,79,106,.4);color:var(--warn);">🗑️ 清空清单</button>
+      <button class="export-btn" onclick="exportTransferExcel()">📥 导出调货单</button>
+    </div>
+  </div>
+  <div id="transferContent"><div class="empty"><div class="e-icon">📂</div><p>请先上传数据</p></div></div>
+</div>
+
 <script>
 let saleView='season';
 function setSaleView(v){
@@ -2699,7 +2817,7 @@ function renderDist(){
   items.forEach((it,i)=>{
     let row=`<tr>
       <td class="dist-fixed dist-c0">${i+1}</td>
-      <td class="dist-fixed dist-c1"><div style="font-weight:600">${it.name||'—'}</div><div style="font-size:10px;color:var(--muted)">${it.sku}${it.color?' · '+it.color:''}</div></td>
+      <td class="dist-fixed dist-c1"><div style="font-weight:600">${it.name||'—'}</div><div style="font-size:9px;color:var(--muted)">${it.sku}${it.color?' · '+it.color:''}</div></td>
       <td class="dist-fixed dist-c2"><strong>${it.qtyTotal}</strong></td>
       <td class="dist-fixed dist-c3" style="color:var(--accent)">${it.qty7}</td>
       <td class="dist-fixed dist-c4" style="color:var(--muted)">${it.invTotal}</td>`;
@@ -2890,6 +3008,329 @@ function exportDistExcel(){
   wb.Workbook.Views=[{RTL:false,zoom:90}];
   XLSX.utils.book_append_sheet(wb,ws,'款铺分布');
   XLSX.writeFile(wb,`款铺分布_${_period()}.xlsx`);
+}
+
+// ═══════════════ TRANSFER (调货单) ═══════════════════════════════════════════
+// 数据结构：每条调货 = {id, fromStore, toStore, sku, name, brand, color, size, qty, note, source}
+// source: 'manual' 手动 | 'rec' 推荐
+let TRANSFER_LIST = [];
+let _trIdSeq = 1;
+
+function renderTransfer(){
+  const el=document.getElementById('transferContent');
+  if(!RAW_SALES.length||!RAW_INV.length){el.innerHTML='<div class="empty"><div class="e-icon">📂</div><p>请先上传销售和库存数据</p></div>';return;}
+  // 推荐结果（按需计算，避免每次重渲染都全量算）
+  const recs = _computeTransferRecs();
+  el.innerHTML = `
+    <div class="tr-section">
+      <div class="tr-section-title">📋 当前调货清单 <span class="tr-hint">${TRANSFER_LIST.length} 条 · 可手动加单/编辑/删除/导出</span></div>
+      <div id="trListBox"></div>
+    </div>
+
+    <div class="tr-section">
+      <div class="tr-section-title">➕ 手动添加调货 <span class="tr-hint">选择两个店 + 款号 + 数量即可</span></div>
+      <div class="tr-form">
+        <label>调出店<select id="trFromStore" onchange="_trSyncManual()"></select></label>
+        <label>调入店<select id="trToStore"></select></label>
+        <label>款号 / 品名<select id="trManSku" onchange="_trSyncManual()"></select></label>
+        <label>颜色<select id="trManColor"></select></label>
+        <label>尺码<select id="trManSize"></select></label>
+        <label>数量<input type="number" id="trManQty" value="1" min="1" max="999"></label>
+        <label>备注<input type="text" id="trManNote" placeholder="可选" maxlength="40"></label>
+        <button onclick="addManualTransfer()">➕ 加入清单</button>
+      </div>
+      <div id="trManHint" style="font-size:10px;color:var(--muted);margin-top:8px;"></div>
+    </div>
+
+    <div class="tr-section">
+      <div class="tr-section-title">💡 智能推荐 <span class="tr-hint">A店售罄(库存=0+有销售) ＆ B店有货 · 共 ${recs.length} 条匹配</span></div>
+      <div id="trRecBox"></div>
+    </div>
+  `;
+  _renderTrList();
+  _renderTrRecs(recs);
+  _trBuildManualSelects();
+}
+
+// 构建推荐：扫描所有店×款，找出 A=售罄+有销售、B=有库存的配对
+function _computeTransferRecs(){
+  // 1) 在当前日期范围内，每店每款的销售合计
+  const filtered = RAW_SALES.filter(r=>r['日期']>=dateFrom&&r['日期']<=dateTo);
+  const saleMap = {};  // key: store||sku -> {qty, brand, name, colors:Set}
+  const skuInfo = {};  // sku -> {brand, name}
+  for(const r of filtered){
+    const sku=r['款号'],store=r['店仓'];if(!sku||!store)continue;
+    const k=store+'||'+sku;
+    if(!saleMap[k])saleMap[k]={qty:0,brand:r['品牌']||'',name:r['品名']||'',colors:new Set()};
+    saleMap[k].qty+=r['数量']||0;
+    if(r['颜色'])saleMap[k].colors.add(r['颜色']);
+    if(!skuInfo[sku])skuInfo[sku]={brand:r['品牌']||'',name:r['品名']||''};
+  }
+  // 2) 每店每款的库存：按 (店,款) 聚合，并保留颜色/尺码明细
+  const invMap = {};  // store||sku -> {qty, colors:{color:qty}, sizes:{size:qty}}
+  for(const r of RAW_INV){
+    const sku=r['款号'],store=r['店仓'];if(!sku||!store)continue;
+    const k=store+'||'+sku;
+    if(!invMap[k])invMap[k]={qty:0,colors:{},sizes:{},colorSize:{}};
+    const q=r['库存数量']||0;
+    invMap[k].qty+=q;
+    const col=r['颜色']||'(无颜色)',sz=r['尺码']||'';
+    if(q>0){
+      if(!invMap[k].colors[col])invMap[k].colors[col]=0;invMap[k].colors[col]+=q;
+      if(sz){if(!invMap[k].sizes[sz])invMap[k].sizes[sz]=0;invMap[k].sizes[sz]+=q;}
+      const cs=col+'|'+sz;
+      if(!invMap[k].colorSize[cs])invMap[k].colorSize[cs]=0;invMap[k].colorSize[cs]+=q;
+    }
+    if(!skuInfo[sku])skuInfo[sku]={brand:r['品牌']||'',name:r['品名']||''};
+  }
+  // 3) 找缺货店（库存=0 + 有销售）和有货店
+  const recs=[];
+  // 全部 sku 列表
+  const allSkus=new Set([...Object.keys(skuInfo)]);
+  for(const sku of allSkus){
+    const info=skuInfo[sku];
+    // 该款的所有店：分两组
+    const lackStores=[];  // 缺货：售罄+有销售
+    const haveStores=[]; // 有货
+    // 遍历所有可能的店（在销售或库存中出现的）
+    const stores=new Set();
+    for(const k of Object.keys(saleMap)){if(k.endsWith('||'+sku))stores.add(k.split('||')[0]);}
+    for(const k of Object.keys(invMap)){if(k.endsWith('||'+sku))stores.add(k.split('||')[0]);}
+    for(const st of stores){
+      const sale=saleMap[st+'||'+sku];
+      const inv=invMap[st+'||'+sku];
+      const saleQty=sale?sale.qty:0;
+      const invQty=inv?inv.qty:0;
+      if(invQty===0&&saleQty>0){
+        lackStores.push({store:st,saleQty,saleColors:sale?[...sale.colors]:[]});
+      }else if(invQty>0){
+        haveStores.push({store:st,invQty,colors:inv.colors,sizes:inv.sizes,colorSize:inv.colorSize});
+      }
+    }
+    if(!lackStores.length||!haveStores.length)continue;
+    // 对每个缺货店，按"有货库存大→小"排序提供候选
+    for(const lk of lackStores){
+      // 排除给自己（万一同店冲突）
+      const candidates=haveStores.filter(h=>h.store!==lk.store).sort((a,b)=>b.invQty-a.invQty);
+      if(!candidates.length)continue;
+      // 取 Top 3 候选作为推荐
+      for(let i=0;i<Math.min(3,candidates.length);i++){
+        const cand=candidates[i];
+        // 优先同色：在 cand.colors 里找跟 lk.saleColors 重合的
+        const sameColor=lk.saleColors.find(c=>cand.colors[c]>0);
+        const recColor=sameColor||Object.keys(cand.colors)[0]||'';
+        const recQty=Math.min(lk.saleQty,cand.colors[recColor]||cand.invQty);
+        recs.push({
+          sku, brand:info.brand, name:info.name,
+          fromStore:cand.store, toStore:lk.store,
+          color:recColor, size:'',  // 尺码留空让用户在表中下拉选
+          recQty:Math.max(1,recQty),
+          fromInv:cand.invQty, toSale:lk.saleQty,
+          sameColor:!!sameColor,
+          colorOptions:Object.entries(cand.colors).map(([c,q])=>({c,q})),
+          sizeOptions:Object.entries(cand.sizes).map(([s,q])=>({s,q})),
+        });
+      }
+    }
+  }
+  // 排序：先看缺货量（toSale 越大越优先），同量看可调出量（fromInv 越大越好）
+  recs.sort((a,b)=>b.toSale-a.toSale||b.fromInv-a.fromInv);
+  return recs;
+}
+
+function _renderTrList(){
+  const box=document.getElementById('trListBox');if(!box)return;
+  if(!TRANSFER_LIST.length){
+    box.innerHTML='<div class="tr-empty">📭 清单为空。可从下方"智能推荐"一键添加，或"手动添加"自己填一条。</div>';
+    return;
+  }
+  let rows='';
+  TRANSFER_LIST.forEach((t,i)=>{
+    const srcTag=t.source==='rec'?'<span class="tr-badge ok">推荐</span>':'<span class="tr-badge">手动</span>';
+    rows+=`<tr>
+      <td class="c">${i+1}</td>
+      <td>${t.fromStore}</td>
+      <td>${t.toStore}</td>
+      <td class="tr-sku-cell"><div class="nm">${t.name||'—'}</div><div class="sk">${t.sku}</div></td>
+      <td>${t.brand||'—'}</td>
+      <td>${t.color||'—'}</td>
+      <td>${t.size||'—'}</td>
+      <td class="r"><strong>${t.qty}</strong></td>
+      <td>${srcTag}</td>
+      <td style="color:var(--muted);font-size:10px;">${t.note||''}</td>
+      <td class="c"><button class="tr-action-btn del" onclick="removeTransfer(${t.id})">删除</button></td>
+    </tr>`;
+  });
+  const total=TRANSFER_LIST.reduce((a,t)=>a+t.qty,0);
+  box.innerHTML=`<div style="overflow-x:auto;">
+    <table class="tr-table">
+      <thead><tr><th class="c">#</th><th>调出店</th><th>调入店</th><th>品名/款号</th><th>品牌</th><th>颜色</th><th>尺码</th><th class="r">数量</th><th>来源</th><th>备注</th><th class="c">操作</th></tr></thead>
+      <tbody>${rows}</tbody>
+      <tfoot><tr><td colspan="7" style="text-align:right;padding-top:10px;font-weight:600;">合计：</td><td class="r" style="padding-top:10px;font-weight:700;color:var(--accent);">${total} 件</td><td colspan="3"></td></tr></tfoot>
+    </table>
+  </div>`;
+}
+
+function _renderTrRecs(recs){
+  const box=document.getElementById('trRecBox');if(!box)return;
+  if(!recs.length){
+    box.innerHTML='<div class="tr-empty">🎉 太好了！当前数据没有"售罄+他店有货"的明显机会。<br><span style="font-size:10px;">（也可能是销售或库存数据未覆盖足够店铺/时段）</span></div>';
+    return;
+  }
+  // 只显示前 100 条（避免页面太长）
+  const show=recs.slice(0,100);
+  let rows='';
+  show.forEach((r,i)=>{
+    const colorTag=r.sameColor?'<span class="tr-badge ok">同色</span>':'<span class="tr-badge">异色</span>';
+    const sizeSel=r.sizeOptions.length?`<select id="rs-${i}" style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 4px;font-size:11px;"><option value="">不限</option>${r.sizeOptions.map(o=>`<option value="${o.s}">${o.s} (库${o.q})</option>`).join('')}</select>`:'<span style="font-size:10px;color:var(--muted);">无</span>';
+    const colorSel=r.colorOptions.length>1?`<select id="rc-${i}" style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 4px;font-size:11px;">${r.colorOptions.map(o=>`<option value="${o.c}" ${o.c===r.color?'selected':''}>${o.c} (库${o.q})</option>`).join('')}</select>`:(r.color||'—');
+    rows+=`<tr class="tr-rec-row">
+      <td class="c">${i+1}</td>
+      <td>${r.fromStore} <span class="tr-badge" style="background:rgba(78,205,196,.1);color:var(--accent2);">库存${r.fromInv}</span></td>
+      <td>${r.toStore} <span class="tr-badge warn">售罄&销${r.toSale}</span></td>
+      <td class="tr-sku-cell"><div class="nm">${r.name||'—'}</div><div class="sk">${r.sku}</div></td>
+      <td>${r.brand||'—'}</td>
+      <td>${colorSel} ${colorTag}</td>
+      <td>${sizeSel}</td>
+      <td class="r"><input type="number" id="rq-${i}" value="${r.recQty}" min="1" max="${r.fromInv}" style="width:50px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 4px;font-size:11px;text-align:right;"></td>
+      <td class="c"><button class="tr-action-btn" onclick="addRecToList(${i})">加入</button></td>
+    </tr>`;
+  });
+  // 把 recs 临时挂在 window 上，addRecToList 用
+  window.__trRecs = show;
+  const more=recs.length>show.length?`<div style="font-size:10px;color:var(--muted);text-align:center;padding:8px;">仅展示前 ${show.length} 条（共 ${recs.length} 条），优先级最高的已置顶</div>`:'';
+  box.innerHTML=`<div style="overflow-x:auto;">
+    <table class="tr-table">
+      <thead><tr><th class="c">#</th><th>调出店（B 有货）</th><th>调入店（A 售罄）</th><th>品名/款号</th><th>品牌</th><th>颜色</th><th>尺码</th><th class="r">数量</th><th class="c">操作</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    ${more}
+  </div>`;
+}
+
+function addRecToList(idx){
+  const recs=window.__trRecs;if(!recs||!recs[idx])return;
+  const r=recs[idx];
+  const colorSel=document.getElementById('rc-'+idx),sizeSel=document.getElementById('rs-'+idx),qtyIn=document.getElementById('rq-'+idx);
+  const color=colorSel?(colorSel.tagName==='SELECT'?colorSel.value:r.color):r.color;
+  const size=sizeSel?(sizeSel.tagName==='SELECT'?sizeSel.value:''):'';
+  const qty=parseInt(qtyIn?.value)||r.recQty;
+  if(qty<1){alert('数量必须 ≥ 1');return;}
+  TRANSFER_LIST.push({
+    id:_trIdSeq++, fromStore:r.fromStore, toStore:r.toStore,
+    sku:r.sku, name:r.name, brand:r.brand,
+    color, size, qty, note:'', source:'rec'
+  });
+  _renderTrList();
+}
+
+function removeTransfer(id){
+  TRANSFER_LIST=TRANSFER_LIST.filter(t=>t.id!==id);
+  _renderTrList();
+}
+
+function clearTransferList(){
+  if(!TRANSFER_LIST.length){alert('清单已经是空的');return;}
+  if(!confirm(`确定清空全部 ${TRANSFER_LIST.length} 条调货记录？`))return;
+  TRANSFER_LIST=[];_renderTrList();
+}
+
+// 手动添加：构建店铺/款号下拉
+function _trBuildManualSelects(){
+  const stores=[...new Set([...RAW_SALES.map(r=>r['店仓']),...RAW_INV.map(r=>r['店仓'])])].filter(Boolean).sort();
+  const fromSel=document.getElementById('trFromStore'),toSel=document.getElementById('trToStore');
+  if(!fromSel||!toSel)return;
+  const opts='<option value="">— 选择 —</option>'+stores.map(s=>`<option value="${s}">${s}</option>`).join('');
+  fromSel.innerHTML=opts;toSel.innerHTML=opts;
+  // 款号下拉：所有库存>0 的款（因为只有有库存的才能调出）
+  const skuSet=new Set();const skuInfo={};
+  for(const r of RAW_INV){if((r['库存数量']||0)>0&&r['款号']){skuSet.add(r['款号']);if(!skuInfo[r['款号']])skuInfo[r['款号']]={name:r['品名']||'',brand:r['品牌']||''};}}
+  const skuArr=[...skuSet].sort();
+  const skuSel=document.getElementById('trManSku');
+  if(skuSel)skuSel.innerHTML='<option value="">— 选择 —</option>'+skuArr.map(s=>`<option value="${s}">${(skuInfo[s]?.name||'—')} · ${s}</option>`).join('');
+  _trSyncManual();
+}
+
+// 当 fromStore 或 sku 变化时，更新颜色/尺码下拉，显示该店该款的实际库存
+function _trSyncManual(){
+  const fromStore=document.getElementById('trFromStore')?.value;
+  const sku=document.getElementById('trManSku')?.value;
+  const colorSel=document.getElementById('trManColor'),sizeSel=document.getElementById('trManSize');
+  const hint=document.getElementById('trManHint');
+  if(!colorSel||!sizeSel)return;
+  if(!fromStore||!sku){
+    colorSel.innerHTML='<option value="">先选店和款号</option>';
+    sizeSel.innerHTML='<option value="">先选店和款号</option>';
+    if(hint)hint.textContent='';
+    return;
+  }
+  // 找该店该款的库存明细
+  const rows=RAW_INV.filter(r=>r['店仓']===fromStore&&r['款号']===sku&&(r['库存数量']||0)>0);
+  if(!rows.length){
+    colorSel.innerHTML='<option value="">该店此款无库存</option>';
+    sizeSel.innerHTML='<option value="">—</option>';
+    if(hint)hint.innerHTML='<span style="color:var(--warn);">⚠️ 该店此款库存为 0，无法调出</span>';
+    return;
+  }
+  const colors={},sizes={};
+  for(const r of rows){
+    const c=r['颜色']||'(无颜色)',s=r['尺码']||'';
+    colors[c]=(colors[c]||0)+(r['库存数量']||0);
+    if(s)sizes[s]=(sizes[s]||0)+(r['库存数量']||0);
+  }
+  colorSel.innerHTML=Object.entries(colors).map(([c,q])=>`<option value="${c==='(无颜色)'?'':c}">${c} (库${q})</option>`).join('');
+  sizeSel.innerHTML='<option value="">不限</option>'+Object.entries(sizes).map(([s,q])=>`<option value="${s}">${s} (库${q})</option>`).join('');
+  const totalInv=rows.reduce((a,r)=>a+(r['库存数量']||0),0);
+  if(hint)hint.innerHTML=`<span style="color:var(--green);">✓ 该店此款共 ${totalInv} 件可调出，分 ${Object.keys(colors).length} 色 ${Object.keys(sizes).length} 码</span>`;
+}
+
+function addManualTransfer(){
+  const fromStore=document.getElementById('trFromStore').value;
+  const toStore=document.getElementById('trToStore').value;
+  const sku=document.getElementById('trManSku').value;
+  const color=document.getElementById('trManColor').value;
+  const size=document.getElementById('trManSize').value;
+  const qty=parseInt(document.getElementById('trManQty').value)||0;
+  const note=document.getElementById('trManNote').value.trim();
+  if(!fromStore||!toStore){alert('请选择调出店和调入店');return;}
+  if(fromStore===toStore){alert('调出店和调入店不能相同');return;}
+  if(!sku){alert('请选择款号');return;}
+  if(qty<1){alert('数量必须 ≥ 1');return;}
+  // 查 name/brand
+  const inv=RAW_INV.find(r=>r['款号']===sku);
+  const name=inv?.['品名']||'',brand=inv?.['品牌']||'';
+  TRANSFER_LIST.push({id:_trIdSeq++,fromStore,toStore,sku,name,brand,color,size,qty,note,source:'manual'});
+  _renderTrList();
+  // 清表单
+  document.getElementById('trManQty').value=1;
+  document.getElementById('trManNote').value='';
+}
+
+function exportTransferExcel(){
+  if(!TRANSFER_LIST.length){alert('调货清单为空，无可导出内容');return;}
+  // 按 (调出店, 调入店) 分组，给每组分配编号
+  const groupMap={};
+  TRANSFER_LIST.forEach(t=>{const k=t.fromStore+'||'+t.toStore;if(!groupMap[k])groupMap[k]=[];groupMap[k].push(t);});
+  const groups=Object.keys(groupMap).sort();
+  // 表头：调出店 | 调入店 | 编号 | 一级类别 | 二级类别 | 款号 | 颜色 | 尺码 | 数量 | 备注
+  const rows=[['调出店铺','调入店铺','编号','款号','品名','品牌','颜色','尺码','数量','来源','备注']];
+  let seq=1;
+  for(const k of groups){
+    const groupItems=groupMap[k];
+    const groupId='L'+String(seq).padStart(4,'0');seq++;
+    for(const t of groupItems){
+      rows.push([t.fromStore,t.toStore,groupId,t.sku,t.name||'',t.brand||'',t.color||'',t.size||'',t.qty,t.source==='rec'?'推荐':'手动',t.note||'']);
+    }
+  }
+  // 总计行
+  const total=TRANSFER_LIST.reduce((a,t)=>a+t.qty,0);
+  rows.push([]);
+  rows.push(['','','','','','','','合计',total,'','']);
+  const wb=XLSX.utils.book_new();
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols']=[18,18,10,14,18,10,10,8,8,8,18].map(w=>({wch:w}));
+  XLSX.utils.book_append_sheet(wb,ws,'调货单');
+  XLSX.writeFile(wb,`调货单_${TRANSFER_LIST.length}条_${_period()}.xlsx`);
 }
 </script>
 
