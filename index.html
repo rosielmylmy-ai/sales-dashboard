@@ -662,7 +662,9 @@ function rebuildFromRaw(){
   const dynamicBrands=[...new Set(Object.values(bSaleMap).map(x=>x.brand))].filter(Boolean);
   dynamicBrands.forEach(brand=>{ if(!BRAND_DOT[brand])BRAND_DOT[brand]=BRAND_PALETTE[Object.keys(BRAND_DOT).length%BRAND_PALETTE.length]; });
   for(const brand of dynamicBrands){
-    const bItems=Object.values(bSaleMap).filter(x=>x.brand===brand).sort((a,b)=>b.t_act-a.t_act).slice(0,50);
+    // 注：不再 build 时切前 50。这样切换排序后能拿到"按件数 Top 50"等其它维度的真正 Top 款。
+    // 渲染和导出层各自决定要不要截断。
+    const bItems=Object.values(bSaleMap).filter(x=>x.brand===brand).sort((a,b)=>b.t_act-a.t_act);
     newBdata[brand]=bItems.map(it=>{
       const k=brand+'||'+it.sku+'||'+it.name;
       const k2=brand+'||'+it.sku;
@@ -854,11 +856,16 @@ function toggleItem(idx){
 function renderBrandContent(b){
   openItems.clear();
   const allItems=BDATA[b]||[];
-  const items=[...allItems].sort((a,c)=>brandSortMode==='retail'?c.总零售金额-a.总零售金额:brandSortMode==='qty'?c.总销售件数-a.总销售件数:c.总成交金额-a.总成交金额);
+  // 按当前模式排序后取前 50 用于 UI（不再是 build 时固定的"成交额前50"）
+  const sorted=[...allItems].sort((a,c)=>brandSortMode==='retail'?c.总零售金额-a.总零售金额:brandSortMode==='qty'?c.总销售件数-a.总销售件数:c.总成交金额-a.总成交金额);
+  const items=sorted.slice(0,50);
   const dot=BRAND_DOT[b]||"#7b82a0";
-  const totalSales=items.reduce((a,v)=>a+v.总成交金额,0),totalRetail=items.reduce((a,v)=>a+v.总零售金额,0),totalQty=items.reduce((a,v)=>a+v.总销售件数,0);
+  // 品牌汇总用全部款（不是 Top 50 的小计），与其它 tab 数字对得上
+  const totalSales=allItems.reduce((a,v)=>a+v.总成交金额,0),totalRetail=allItems.reduce((a,v)=>a+v.总零售金额,0),totalQty=allItems.reduce((a,v)=>a+v.总销售件数,0);
   const maxAmt=Math.max(...items.map(i=>brandSortMode==='retail'?i.总零售金额:brandSortMode==='qty'?i.总销售件数:i.总成交金额),1);
-  const statsHtml=`<div class="brand-stats"><div class="stat-box"><div class="s-label">品牌零售金额</div><div class="s-val">¥${fmt(totalRetail)}</div></div><div class="stat-box"><div class="s-label">品牌成交金额</div><div class="s-val o">¥${fmt(totalSales)}</div></div><div class="stat-box"><div class="s-label">品牌销售件数</div><div class="s-val g">${fmt(totalQty)}件</div></div><div class="stat-box"><div class="s-label">上榜款数</div><div class="s-val y">${items.length}款</div></div></div>`;
+  const moreCount=allItems.length-items.length;
+  const moreNote=moreCount>0?` <span style="font-size:10px;color:var(--muted);font-weight:normal">(品牌共${allItems.length}款，列表显示前${items.length}款)</span>`:'';
+  const statsHtml=`<div class="brand-stats"><div class="stat-box"><div class="s-label">品牌零售金额</div><div class="s-val">¥${fmt(totalRetail)}</div></div><div class="stat-box"><div class="s-label">品牌成交金额</div><div class="s-val o">¥${fmt(totalSales)}</div></div><div class="stat-box"><div class="s-label">品牌销售件数</div><div class="s-val g">${fmt(totalQty)}件</div></div><div class="stat-box"><div class="s-label">品牌总款数</div><div class="s-val y">${allItems.length}款${moreCount>0?`<span style="font-size:10px;color:var(--muted);font-weight:normal"> (显示前${items.length})</span>`:''}</div></div></div>`;
   const itemsHtml=items.map((item,idx)=>{
     const rc=idx<3?`rank-${idx+1}`:"rank-n";
     const sortVal=brandSortMode==='retail'?item.总零售金额:brandSortMode==='qty'?item.总销售件数:item.总成交金额;
@@ -992,8 +999,14 @@ function exportBrandExcel(brandName){
 
 // 导出"分析表"透视表：店铺 × Top50款，根据当前排序按钮导出对应指标
 function exportBrandPivot(brandName){
-  const items=(BDATA[brandName]||[]).slice(0,50);
-  if(!items.length){alert('该品牌暂无数据');return;}
+  const allItems=BDATA[brandName]||[];
+  if(!allItems.length){alert('该品牌暂无数据');return;}
+  // 按当前排序模式重新排序后再取前 50（之前直接 slice(0,50)，款的顺序永远是按成交额）
+  const sorted=[...allItems];
+  if(brandSortMode==='retail')sorted.sort((a,b)=>b.总零售金额-a.总零售金额);
+  else if(brandSortMode==='qty')sorted.sort((a,b)=>b.总销售件数-a.总销售件数);
+  else sorted.sort((a,b)=>b.总成交金额-a.总成交金额);
+  const items=sorted.slice(0,50);
   // 根据当前排序模式决定导出哪个指标
   const metricLabel=brandSortMode==='retail'?'零售额':brandSortMode==='qty'?'销售数':'成交额';
   const TOP_LABEL='TOP'+items.length+'款';
